@@ -336,3 +336,13 @@ def seleccion_de_jugadores(lista_jugadores):
       if not validar_seleccion("Desea seguir añadiendo jugadores?"):
         imprimir_equipo(lista_de_jugadores)
         return lista_de_jugadores
+
+
+def registro_de_equipos(jugadores):
+  equipos=[]
+  for jugador in jugadores:
+    equipo = jugadores[jugador][equipo]
+    equipos.append(equipo)
+
+lista_equipos=registro_de_equipos(BBDD_JUGADORES)
+print(lista_equipos)
