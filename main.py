@@ -261,96 +261,148 @@ def print_menu_equipo():
   "E. Menu anterior"
   )
 
+def print_menu_torneo():
+  print("---------------\nMENU TORNEO\n---------------")
+  print("Por favor selecciona una opcion:\n",
+  "A. Jugar proxima fecha\n",
+  "B. Ver fixture\n",
+  "C. Salir",
+  )
+
 def print_equipo(equipo_usuario):
   if len(equipo_usuario) == 0:
     print("Sin jugadores en equipo") 
   else:
+    print()
     for jugador in equipo_usuario:
       datos_jugador = BBDD_JUGADORES.get(jugador)
       print(f"{datos_jugador['nombre']} {datos_jugador['apellido']} - Posicion: {datos_jugador['posicion']}")
-  
+    input("\nPresione enter para continuar")
 
-def logica_añadir_jugadores(usuario):
-  pass
+def seleccion_jugadores_id(lista_jugadores):
+  """
+  Este codigo se ejecuta dentro de añadir jugadores, cuando hay varios con el mismo apellido se ejecuta y fuerza al jugador a seleccionar uno, devuelte una lista de longitud 1
+  """
+  print("Hay varios jugadores con el mismo apellido","\nPor favor indique el id del jugador a anadir:\n", end="")
+  for jugador in lista_jugadores:
+    print(f"{jugador} - {BBDD_JUGADORES[jugador]['nombre']} {BBDD_JUGADORES[jugador]['apellido']}")
 
+  while True:
+    respuesta = int(input("> "))
+    if respuesta in lista_jugadores:
+      print(f"Jugador {BBDD_JUGADORES[respuesta]['nombre']} {BBDD_JUGADORES[respuesta]['apellido']} anadido al equipo")
+      return [respuesta]
+    else:
+      print("Id incorrecto, intente nuevamente")
 
+def añadir_jugadores(usuario):
+  """
+  Codigo que permite la funcionalidad de añadir jugadores al equipo
+  """
+  while True:
+    lista_jugadores = []
+    print("Porfavor indique el apellido del jugador a anadir:")
+    apellido = input("> ").lower()
+    for i in range(1, len(BBDD_JUGADORES)):
+      if BBDD_JUGADORES.get(i)["apellido"].lower() == apellido:
+        lista_jugadores.append(i)
+      
+    if len(lista_jugadores) == 0:
+      print("Jugador no encontrado")
+
+    elif len(lista_jugadores) > 1:
+      lista_jugadores = seleccion_jugadores_id(lista_jugadores)
+      usuario[1].append(lista_jugadores[0])
+
+    else:
+      print(f"Jugador {BBDD_JUGADORES[lista_jugadores[0]]['nombre']} {BBDD_JUGADORES[lista_jugadores[0]]['apellido']} anadido al equipo")
+      usuario[1].append(lista_jugadores[0])
+
+    print("Desea anadir otro jugador? (S/N)")
+    respuesta = input("> ").lower()
+
+    while respuesta != "s" and respuesta != "n":
+      print("\nRespuesta no valida\n")
+      print("Desea anadir otro jugador? (S/N)")
+      respuesta = input("> ").lower()
+
+    if respuesta == "n":
+      return usuario
+    
+    elif respuesta == "s" and len(usuario[1]) == 11:
+      print("Limite de jugadores alcanzado")
+      return usuario
+    
+def eliminar_jugadores(usuario):
+  while True:
+    print("Por favor seleccione el jugador a eliminar usando el ID (primera parte):")
+    for jugador in usuario[1]:
+      print(f"{jugador} - {BBDD_JUGADORES[jugador]["nombre"]} {BBDD_JUGADORES[jugador]["apellido"]}")
+
+    respuesta = int(input("> "))
+    if respuesta in usuario[1]:
+      usuario[1].remove(respuesta)
+      print(f"Jugador {BBDD_JUGADORES[respuesta]['nombre']} {BBDD_JUGADORES[respuesta]['apellido']} eliminado del equipo")
+    else:
+      print("Id incorrecto")
+
+    print("Desea eliminar otro jugador? (S/N)")
+    respuesta = input("> ").lower()
+
+    while respuesta != "s" and respuesta != "n":
+      print("\nRespuesta no valida\n")
+      print("Desea eliminar otro jugador? (S/N)")
+      respuesta = input("> ").lower()
+
+    if respuesta == "n":
+      return usuario
+    
+    if respuesta == "s" and len(usuario[1]) == 0:
+      print("Equipo sin jugadores")
+      return usuario
+
+def logica_menu_torneo(usuario):
+  while True:
+    print_menu_torneo()
+    seleccion = input("> ").lower()
+    if seleccion == "a":
+      pass
+    elif seleccion == "b":
+      pass
+    elif seleccion == "c":
+      return usuario
+    else:
+      print("Opcion no valida")
 
 def logica_menu_equipo(usuario):
-  print_menu_equipo()
   while True:
+    print_menu_equipo()
     seleccion = input("> ").lower()
     if seleccion == "a":
       print_equipo(usuario[1])
     elif seleccion == "b":
-      logica_añadir_jugadores(usuario)
+      usuario = añadir_jugadores(usuario)
+    elif seleccion == "c":
+      eliminar_jugadores(usuario)
     elif seleccion == "e":
       return usuario
+    else:
+      print("Opcion no valida")
 
 def logica_menu_principal(usuario):
-  print_menu_principal(usuario[0])
   while True:
+    print_menu_principal(usuario[0])
     seleccion = input("> ").lower()
     if seleccion == "a":
       logica_menu_equipo(usuario)
     elif seleccion == "b":
-      print("Funcionalidad no añadida")
+      logica_menu_torneo(usuario)
     elif seleccion == "c":
       print("Funcionalidad no añadida")
     elif seleccion == "d":
       return
-
-
-def seleccionar_jugador_de_lista(nombre_jugador, lista_jugadores):
-  jugador_encontrado = False
-  for jugador in lista_jugadores:
-    if nombre_jugador in jugador:
-      jugador_encontrado = True
-      return jugador
-  if not jugador_encontrado:
-    print("Jugador no encontrado")
-    return None
-
-
-def ingreso_nombre():
-  return str(input("Por favor ingrese el nombre del jugador: "))
-
-
-def imprimir_equipo(lista_jugadores):
-  if len(lista_jugadores) != 0:
-    for jugador in lista_jugadores:
-      print(f"{jugador[0]}, \t {jugador[1]}, \t Dorsal: {jugador[2]}")
-  else:
-    print("Sin jugadores en lista!")
-  
-def validar_seleccion(mensaje):
-  while True:
-    validacion = str(input(mensaje + " [Y/N]: "))
-    if validacion == "Y" or validacion == "y":
-      return True
-    elif validacion == "N" or validacion == "n":
-      return False
     else:
-      print("Valor ingresado no correcto, por favor intente nuevamente")
-
-
-def verificar_si_coincide_string(valor_a_verificar, valor_verificante):
-  if valor_a_verificar == valor_verificante:
-    return True
-  else:
-    return False
-
-
-def seleccion_de_jugadores(lista_jugadores):
-  lista_de_jugadores = []
-  while True:
-    jugador_seleccionado = seleccionar_jugador_de_lista(ingreso_nombre(), lista_jugadores)
-    if not jugador_seleccionado == None:
-      if validar_seleccion(f"Desea añadir a {jugador_seleccionado[0]}?"):
-        lista_de_jugadores.append(jugador_seleccionado)
-      if not validar_seleccion("Desea seguir añadiendo jugadores?"):
-        imprimir_equipo(lista_de_jugadores)
-        return lista_de_jugadores
-
+      print("Opcion no valida")
 
 def registro_de_equipos(jugadores):
   equipos=[]
@@ -478,13 +530,13 @@ def simular_partido(fixture, jugadores):        # Falta que reciba y asigne los 
     print(f"Equipo local, {local}, {resultado_local}")
     print(f"Equipo visitante, {visitante}, {resultado_visitante}")
 
-    '''for jugador in jugadores:
+    """for jugador in jugadores:
         equipo = jugadores[1]
         if equipo not in local:
             titulares_local[equipo] = []
         titulares_local[equipo].append(jugador)
     
-    print(titulares_local)'''
+    print(titulares_local)"""
 
     '''for fecha in fixture:
         fecha_resultados = []
@@ -511,3 +563,5 @@ fixture = generar_fixture_ida_vuelta(lista_equipos)
 
 print(lista_jugadores)
 simular_partido(fixture[0][0], lista_jugadores)
+
+logica_menu_principal(equipo_jugador1)
