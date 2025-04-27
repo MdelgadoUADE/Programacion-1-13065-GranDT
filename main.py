@@ -311,10 +311,8 @@ def seleccionar_jugador_de_lista(nombre_jugador, lista_jugadores):
     return None
 
 
-
 def ingreso_nombre():
   return str(input("Por favor ingrese el nombre del jugador: "))
-
 
 
 def imprimir_equipo(lista_jugadores):
@@ -335,13 +333,11 @@ def validar_seleccion(mensaje):
       print("Valor ingresado no correcto, por favor intente nuevamente")
 
 
-
 def verificar_si_coincide_string(valor_a_verificar, valor_verificante):
   if valor_a_verificar == valor_verificante:
     return True
   else:
     return False
-
 
 
 def seleccion_de_jugadores(lista_jugadores):
@@ -355,22 +351,163 @@ def seleccion_de_jugadores(lista_jugadores):
         imprimir_equipo(lista_de_jugadores)
         return lista_de_jugadores
 
-def calcular_eventos_partido(eventos):
-  #eventos_x_partido = []
-  goles = random.randint(0, 4)
+
+def registro_de_equipos(jugadores):
+  equipos=[]
+  for jugador in jugadores:
+    equipo = jugadores[jugador]['id_equipo']
+    equipos.append(equipo)
+  return equipos
+
+def registro_de_jugadores(jugadores):       # Me devuelve los datos de los jugadores cargados en una tupla
+  players=[]
+  for clave,valor in jugadores.items():
+    id_jugador = clave
+    equipo = valor["id_equipo"]
+    nombre = valor["nombre"]
+    apellido = valor["apellido"]
+    posicion = valor["posicion"]
+
+    players.append((id_jugador, equipo, nombre, apellido, posicion))        # Datos de los jugadores
+  return players
+
+def generar_fixture_ida_vuelta(equipos):
+    cantidad_equipos = len(equipos)
+    mitad = cantidad_equipos // 2
+    fechas_ida = []
+    fechas_vuelta = []
+    for ronda in range(cantidad_equipos - 1):
+        fecha = []
+        for i in range(mitad):
+            local = equipos[i]
+            visitante = equipos[-i-1]
+            fecha.append((local, visitante))
+        fechas_ida.append(fecha)
+        # Vuelta: se invierten los roles de local y visitante
+        fechas_vuelta.append([(v, l) for (l, v) in fecha])
+        # Rotar los equipos (excepto el primero)
+        equipos = [equipos[0]] + [equipos[-1]] + equipos[1:-1]
+
+    fixture_completo = fechas_ida + fechas_vuelta
+    return fixture_completo
+
+
+def menu_torneo(fixture):
+    while True:
+        print("\n=== Menú de Torneo ===")
+        print("1. Jugar próxima fecha")
+        print("2. Ver fixture")
+        print("3. Atras")
+        opcion = input("Elegí una opción: ")
+
+        if opcion == "1":
+            menu_torneo()
+
+
+        elif opcion == "2":
+            ver_fixture(fixture)
+        elif opcion == "3":
+            print("Saliendo del torneo...")
+            break 
+        else:
+            print("Opción inválida.")
+            menu_torneo()
+
+
+def ver_fixture(fixture):
+    print("\n=== Menú del Fixture ===")
+    print("1. Ver Fecha en Especifico") 
+    print("2. Ver fixture completo")
+    print("3. Atras") 
+    opcion = input("Elegí una opción: ")
+    if opcion == "1":
+        fecha_especifica=int(input("Indique la fecha especifica: "))
+        print()
+        print(f"\nFecha {fecha_especifica}".upper())
+        for partido in fixture[fecha_especifica]:
+            print(f"{partido[0]} vs {partido[1]}")
+        print()
+    elif opcion=="2":
+        for numero_fecha, fecha in enumerate(fixture, start=1):
+            print(f"Fecha {numero_fecha}:".upper())
+            for local, visitante in fecha:
+                print(f"  {local} vs {visitante}")
+            print("-" * 20)
+    else:
+        menu_torneo(fixture)
+
+
+def calcular_eventos_partido():   # Calcula los eventos del partido y devuelve una lista con la cantidad de ocurrencias
+  eventos_x_partido = []
+
+  goles = random.randint(0, 4)    # [0
   penales = random.randint(0, 2)
   asistencias = goles
   t_amarillas = random.randint(0, 2)
   t_rojas = random.randint(0, 1)
-  goles_totales = goles + penales
+  goles_totales = goles + penales   # 5]
+  
+  eventos_x_partido.append(goles)
+  eventos_x_partido.append(penales)
+  eventos_x_partido.append(asistencias)
+  eventos_x_partido.append(t_amarillas)
+  eventos_x_partido.append(t_rojas)
+  eventos_x_partido.append(goles_totales)
 
-  print("Goles:",goles)
-  print("Penales:",penales)
-  print("Asistencias:",asistencias)
-  print("Tarjetas Amarillas:",t_amarillas)
-  print("Tarjetas Rojas:",t_rojas)
-  print("Goles en el encuentro:", goles_totales)
+  return eventos_x_partido
+
+
+def simular_partido(fixture, jugadores):        # Falta que reciba y asigne los eventos
+    resultados_partido = []
+    titulares_local = {}
+    titulares_visitante = {}
+
+    local, visitante = fixture
+
+    casos = ["gana", "pierde", "empata"]
+
+    resultado_local = random.choice(casos)
+
+    if resultado_local == "gana":
+        resultado_visitante = "pierde"
+    elif resultado_local == "pierde":
+        resultado_visitante = "gana"
+    else:
+        resultado_visitante = "empata"
+
+    print(f"Equipo local, {local}, {resultado_local}")
+    print(f"Equipo visitante, {visitante}, {resultado_visitante}")
+
+    '''for jugador in jugadores:
+        equipo = jugadores[1]
+        if equipo not in local:
+            titulares_local[equipo] = []
+        titulares_local[equipo].append(jugador)
+    
+    print(titulares_local)'''
+
+    '''for fecha in fixture:
+        fecha_resultados = []
+        for local, visitante in fecha:
+            goles_local = random.randint(0, 5)    # Goles aleatorios entre 0 y 5
+            goles_visitante = random.randint(0, 5)
+            partido = (local, visitante, goles_local, goles_visitante)
+            fecha_resultados.append(partido)
+        fixture_resultados.append(fecha_resultados)
+'''
+    return resultados_partido
+
+'''def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de la instancia del programa
+    fecha_actual = fecha
+    for partido in fixture[fecha_actual]:
+        simular_partido(partido)
+    fecha_actual= fecha_actual+1
+    return fecha_actual'''
 
 # PROGRAMA PRINCIPAL
+lista_equipos = registro_de_equipos(BBDD_JUGADORES)
+lista_jugadores = registro_de_jugadores(BBDD_JUGADORES)
+fixture = generar_fixture_ida_vuelta(lista_equipos)
 
-#calcular_eventos_partido(eventos)
+print(lista_jugadores)
+simular_partido(fixture[0][0], lista_jugadores)
