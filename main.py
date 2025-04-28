@@ -226,7 +226,7 @@ BBDD_JUGADORES = {
 }
 
 #equipo (nombre, equipo, puntos)
-equipo_jugador1 = ["Matias",[1,5,99],0,10000000]
+equipo_jugador1 = ["Matias",[],0,10000000]
 
 eventos = {
     0: {"titulo": "Partido Ganado", "puntaje_asociado": ""},
@@ -304,7 +304,7 @@ def añadir_jugadores(usuario):
     print("Porfavor indique el apellido del jugador a anadir:")
     apellido = input("> ").lower()
     for i in range(1, len(BBDD_JUGADORES)):
-      if BBDD_JUGADORES.get(i)["apellido"].lower() == apellido:
+      if BBDD_JUGADORES.get(i)["apellido"].lower() == apellido and i not in usuario[1]:
         lista_jugadores.append(i)
       
     if len(lista_jugadores) == 0:
@@ -335,6 +335,11 @@ def añadir_jugadores(usuario):
     
 def eliminar_jugadores(usuario):
   while True:
+    if len(usuario[1]) == 0:
+      print("\nEquipo sin jugadores")
+      input("Presione enter para continuar")
+      return usuario
+    
     print("Por favor seleccione el jugador a eliminar usando el ID (primera parte):")
     for jugador in usuario[1]:
       print(f"{jugador} - {BBDD_JUGADORES[jugador]["nombre"]} {BBDD_JUGADORES[jugador]["apellido"]}")
@@ -479,6 +484,9 @@ def ver_fixture(fixture):
     opcion = input("Elegí una opción: ")
     if opcion == "1":
         fecha_especifica=int(input("Indique la fecha especifica: "))
+        while fecha_especifica < 1 or fecha_especifica > 37:
+           print("Error, fecha inexistente, intente nuevamente")
+           fecha_especifica=int(input("Indique la fecha especifica: "))
         print()
         print(f"\nFecha {fecha_especifica}".upper())
         for partido in fixture[fecha_especifica]:
