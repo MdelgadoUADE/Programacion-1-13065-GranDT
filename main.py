@@ -488,66 +488,67 @@ def ver_fixture(fixture):
     else:
         menu_torneo(fixture)
 
+def simular_partido(fixture, jugadores):
+  titulares_local = []
+  titulares_visitante = []
+  partido_final = []
+  partido_local = []
+  partido_visitante = []
 
-def calcular_eventos_partido():   # Calcula los eventos del partido y devuelve una lista con la cantidad de ocurrencias
-  eventos_x_partido = []
+  local, visitante = fixture
 
-  goles = random.randint(0, 4)    # [0
-  penales = random.randint(0, 2)
-  asistencias = goles
+        # Simula resultado final
+  casos = ["gana", "pierde", "empata"]
+  resultado_local = random.choice(casos)
+  if resultado_local == "gana":
+      resultado_visitante = "pierde"
+  elif resultado_local == "pierde":
+      resultado_visitante = "gana"
+  else:
+      resultado_visitante = "empata"
+
+  print(f"Equipo local, {local}, {resultado_local}")
+  print(f"Equipo visitante, {visitante}, {resultado_visitante}")
+              
+        # Simula eventos de partido
+  if resultado_local == "gana" or resultado_local == "pierde":       
+      goles = random.randint(1, 4)
+      if goles % 2 == 0:      # La idea es que sea random
+          penales = 1     
+      else:
+          penales = 0
+      asistencias = goles
+  if resultado_local == "empata" or resultado_local == "empata":
+      goles = random.randint(0, 2) * 2
+      penales = random.randint(0, 1) * 2
+      asistencias = goles
   t_amarillas = random.randint(0, 2)
   t_rojas = random.randint(0, 1)
-  goles_totales = goles + penales   # 5]
+  goles_totales = goles + penales
   
-  eventos_x_partido.append(goles)
-  eventos_x_partido.append(penales)
-  eventos_x_partido.append(asistencias)
-  eventos_x_partido.append(t_amarillas)
-  eventos_x_partido.append(t_rojas)
-  eventos_x_partido.append(goles_totales)
+  print("Goles:",goles)
+  print("Penales:",penales)
+  print("Asistencias:",asistencias)
+  print("Tarjetas Amarillas:",t_amarillas)
+  print("Tarjetas Rojas:",t_rojas)
+  print("Goles en el encuentro:", goles_totales)
 
-  return eventos_x_partido
-
-
-def simular_partido(fixture, jugadores):        # Falta que reciba y asigne los eventos
-    resultados_partido = []
-    titulares_local = {}
-    titulares_visitante = {}
-
-    local, visitante = fixture
-
-    casos = ["gana", "pierde", "empata"]
-
-    resultado_local = random.choice(casos)
-
-    if resultado_local == "gana":
-        resultado_visitante = "pierde"
-    elif resultado_local == "pierde":
-        resultado_visitante = "gana"
-    else:
-        resultado_visitante = "empata"
-
-    print(f"Equipo local, {local}, {resultado_local}")
-    print(f"Equipo visitante, {visitante}, {resultado_visitante}")
-
-    """for jugador in jugadores:
-        equipo = jugadores[1]
-        if equipo not in local:
-            titulares_local[equipo] = []
-        titulares_local[equipo].append(jugador)
-    
-    print(titulares_local)"""
-
-    '''for fecha in fixture:
-        fecha_resultados = []
-        for local, visitante in fecha:
-            goles_local = random.randint(0, 5)    # Goles aleatorios entre 0 y 5
-            goles_visitante = random.randint(0, 5)
-            partido = (local, visitante, goles_local, goles_visitante)
-            fecha_resultados.append(partido)
-        fixture_resultados.append(fecha_resultados)
-'''
-    return resultados_partido
+              # De la base de jugadores me traigo los datos del equipo local y visitante
+  for jugador in jugadores:
+      id_jugador, equipo, nombre, apellido, posicion = jugador
+      if equipo == local:
+          titulares_local.append([id_jugador, equipo, nombre, apellido, posicion])
+  print(titulares_local)
+  for jugador in jugadores:
+      id_jugador, equipo, nombre, apellido, posicion = jugador
+      if equipo == visitante:
+          titulares_visitante.append([id_jugador, equipo, nombre, apellido, posicion])
+  print(titulares_visitante)
+        
+        # Asignacion random de eventos por posicion. Goles a Delanteros, Asistencias a Mediocampistas, etc...
+  '''for jugador in titulares_local:
+      if titulares_local[-1] == "Delantero": # Slice de listas?
+          partido_local.append([])'''
 
 '''def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de la instancia del programa
     fecha_actual = fecha
@@ -561,7 +562,6 @@ lista_equipos = registro_de_equipos(BBDD_JUGADORES)
 lista_jugadores = registro_de_jugadores(BBDD_JUGADORES)
 fixture = generar_fixture_ida_vuelta(lista_equipos)
 
-print(lista_jugadores)
 simular_partido(fixture[0][0], lista_jugadores)
 
-logica_menu_principal(equipo_jugador1)
+#logica_menu_principal(equipo_jugador1)
