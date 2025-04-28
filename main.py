@@ -264,7 +264,7 @@ def print_menu_equipo():
 def print_menu_torneo():
   print("---------------\nMENU TORNEO\n---------------")
   print("Por favor selecciona una opcion:\n",
-  "A. Jugar primera fecha\n",
+  "A. Jugar proxima fecha\n",
   "B. Ver fixture\n",
   "C. Salir",
   )
@@ -366,8 +366,11 @@ def logica_menu_torneo(usuario):
     print_menu_torneo()
     seleccion = input("> ").lower()
     if seleccion == "a":
-      print("\nFuncion todavia no anadida")
-      input("Presione enter para continuar")
+      resultado = simular_partido(fixture[0][0], lista_jugadores)
+      matriz_posiciones = crear_matriz_posiciones(lista_equipos)
+      matriz_posiciones = rellenar_equipos_matriz(lista_equipos,matriz_posiciones)
+      matriz_posiciones = actualizar_matriz_posiciones(matriz_posiciones,resultado)
+      imprimir_matriz_posiciones(matriz_posiciones)
     elif seleccion == "b":
       ver_fixture(fixture)
     elif seleccion == "c":
@@ -410,7 +413,7 @@ def registro_de_equipos(jugadores):
   for jugador in jugadores:
     equipo = jugadores[jugador]['id_equipo']
     if equipo not in equipos:
-       equipos.append(equipo)
+        equipos.append(equipo)
   return equipos
 
 def registro_de_jugadores(jugadores):       # Me devuelve los datos de los jugadores cargados en una tupla
@@ -446,6 +449,28 @@ def generar_fixture_ida_vuelta(equipos):
     return fixture_completo
 
 
+def menu_torneo(fixture):
+    while True:
+        print("\n=== Menú de Torneo ===")
+        print("1. Jugar próxima fecha")
+        print("2. Ver fixture")
+        print("3. Atras")
+        opcion = input("Elegí una opción: ")
+
+        if opcion == "1":
+            menu_torneo()
+
+
+        elif opcion == "2":
+            ver_fixture(fixture)
+        elif opcion == "3":
+            print("Saliendo del torneo...")
+            break 
+        else:
+            print("Opción inválida.")
+            menu_torneo()
+
+
 def ver_fixture(fixture):
     print("\n=== Menú del Fixture ===")
     print("1. Ver Fecha en Especifico") 
@@ -474,6 +499,7 @@ def simular_partido(fixture, jugadores):
   partido_final = []
   partido_local = []
   partido_visitante = []
+  resultados_partidos = {}
 
   local, visitante = fixture
 
@@ -486,6 +512,9 @@ def simular_partido(fixture, jugadores):
       resultado_visitante = "gana"
   else:
       resultado_visitante = "empata"
+
+  resultados_partidos["local"] = (local, resultado_local)
+  resultados_partidos["visitante"] = (visitante, resultado_visitante)
 
   print(f"Equipo local, {local}, {resultado_local}")
   print(f"Equipo visitante, {visitante}, {resultado_visitante}")
@@ -506,7 +535,7 @@ def simular_partido(fixture, jugadores):
   t_rojas = random.randint(0, 1)
   goles_totales = goles + penales
   
-  print("Goles:",goles)
+  print("\nGoles:",goles)
   print("Penales:",penales)
   print("Asistencias:",asistencias)
   print("Tarjetas Amarillas:",t_amarillas)
@@ -518,30 +547,68 @@ def simular_partido(fixture, jugadores):
       id_jugador, equipo, nombre, apellido, posicion = jugador
       if equipo == local:
           titulares_local.append([id_jugador, equipo, nombre, apellido, posicion])
-  print(titulares_local)
+  #print(titulares_local)
   for jugador in jugadores:
       id_jugador, equipo, nombre, apellido, posicion = jugador
       if equipo == visitante:
           titulares_visitante.append([id_jugador, equipo, nombre, apellido, posicion])
-  print(titulares_visitante)
+  #print(titulares_visitante)
         
         # Asignacion random de eventos por posicion. Goles a Delanteros, Asistencias a Mediocampistas, etc...
   '''for jugador in titulares_local:
       if titulares_local[-1] == "Delantero": # Slice de listas?
           partido_local.append([])'''
+  
 
-'''def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de la instancia del programa
+  return resultados_partidos
+
+
+def crear_matriz_posiciones(equipos):
+    filas=(len(equipos))
+    columnas = 4 #equipo ganados perdidos puntosTotales
+    matriz = [[0]*columnas for i in range(filas)]
+    return matriz
+
+def rellenar_equipos_matriz(lista_equipos,matriz_posiciones):
+    filas = len(matriz_posiciones)
+    columnas = len(matriz_posiciones[0])
+    for f in range(filas):
+        for c in range(columnas):
+            matriz_posiciones[f][0] = lista_equipos[f]
+    return matriz_posiciones
+
+def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido):
+    for equipo, resultado in resultados_partido.values():
+        for fila in matriz_posiciones:
+            if fila[0] == equipo:
+                if resultado == "gana":
+                    fila[1] += 1  # Ganados
+                    fila[3] += 3  # Puntos totales
+                elif resultado == "pierde":
+                    fila[2] += 1  # Perdidos
+                elif resultado == "empata":
+                    fila[3] += 1 # (1 punto por empate)
+                break
+    return matriz_posiciones
+
+def imprimir_matriz_posiciones(matriz_posiciones):
+    filas = len(matriz_posiciones)
+    columnas = len(matriz_posiciones[0])
+    for f in range(filas):
+        for c in range(columnas):
+            print(str(matriz_posiciones[f][c]),end='  ')
+        print()
+
+def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de la instancia del programa
     fecha_actual = fecha
     for partido in fixture[fecha_actual]:
         simular_partido(partido)
     fecha_actual= fecha_actual+1
-    return fecha_actual'''
+    return fecha_actual
 
 # PROGRAMA PRINCIPAL
 lista_equipos = registro_de_equipos(BBDD_JUGADORES)
 lista_jugadores = registro_de_jugadores(BBDD_JUGADORES)
 fixture = generar_fixture_ida_vuelta(lista_equipos)
-
-simular_partido(fixture[0][0], lista_jugadores)
 
 logica_menu_principal(equipo_jugador1)
