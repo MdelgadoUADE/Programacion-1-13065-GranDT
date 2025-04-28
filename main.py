@@ -264,7 +264,7 @@ def print_menu_equipo():
 def print_menu_torneo():
   print("---------------\nMENU TORNEO\n---------------")
   print("Por favor selecciona una opcion:\n",
-  "A. Jugar proxima fecha\n",
+  "A. Jugar primera fecha\n",
   "B. Ver fixture\n",
   "C. Salir",
   )
@@ -366,9 +366,10 @@ def logica_menu_torneo(usuario):
     print_menu_torneo()
     seleccion = input("> ").lower()
     if seleccion == "a":
-      pass
+      print("\nFuncion todavia no anadida")
+      input("Presione enter para continuar")
     elif seleccion == "b":
-      pass
+      ver_fixture(fixture)
     elif seleccion == "c":
       return usuario
     else:
@@ -408,7 +409,8 @@ def registro_de_equipos(jugadores):
   equipos=[]
   for jugador in jugadores:
     equipo = jugadores[jugador]['id_equipo']
-    equipos.append(equipo)
+    if equipo not in equipos:
+       equipos.append(equipo)
   return equipos
 
 def registro_de_jugadores(jugadores):       # Me devuelve los datos de los jugadores cargados en una tupla
@@ -442,28 +444,6 @@ def generar_fixture_ida_vuelta(equipos):
 
     fixture_completo = fechas_ida + fechas_vuelta
     return fixture_completo
-
-
-def menu_torneo(fixture):
-    while True:
-        print("\n=== Menú de Torneo ===")
-        print("1. Jugar próxima fecha")
-        print("2. Ver fixture")
-        print("3. Atras")
-        opcion = input("Elegí una opción: ")
-
-        if opcion == "1":
-            menu_torneo()
-
-
-        elif opcion == "2":
-            ver_fixture(fixture)
-        elif opcion == "3":
-            print("Saliendo del torneo...")
-            break 
-        else:
-            print("Opción inválida.")
-            menu_torneo()
 
 
 def ver_fixture(fixture):
@@ -564,4 +544,4 @@ fixture = generar_fixture_ida_vuelta(lista_equipos)
 
 simular_partido(fixture[0][0], lista_jugadores)
 
-#logica_menu_principal(equipo_jugador1)
+logica_menu_principal(equipo_jugador1)
