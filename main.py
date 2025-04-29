@@ -247,8 +247,8 @@ def print_menu_principal(nombre_usuario):
   print("Por favor seleccione una opcion:\n",
   "A. Menu de Equipo\n",
   "B. Menu de Torneo\n",
-  "C. Cambiar de Usuario\n",
-  "D. Salir",
+  #"C. Cambiar de Usuario\n",
+  "C. Salir",
   )
 
 def print_menu_equipo():
@@ -257,8 +257,8 @@ def print_menu_equipo():
   "A. Ver Equipo\n",
   "B. Añadir Jugadores\n",
   "C. Remover Jugadores\n",
-  "D. Asignar Capitan\n",
-  "E. Menu anterior"
+  #"D. Asignar Capitan\n",
+  "D. Menu anterior"
   )
 
 def print_menu_torneo():
@@ -393,7 +393,7 @@ def logica_menu_equipo(usuario):
       usuario = añadir_jugadores(usuario)
     elif seleccion == "c":
       eliminar_jugadores(usuario)
-    elif seleccion == "e":
+    elif seleccion == "d":
       return usuario
     else:
       print("Opcion no valida")
@@ -406,9 +406,9 @@ def logica_menu_principal(usuario):
       logica_menu_equipo(usuario)
     elif seleccion == "b":
       logica_menu_torneo(usuario)
+    #elif seleccion == "c":
+     # print("Funcionalidad no añadida")
     elif seleccion == "c":
-      print("Funcionalidad no añadida")
-    elif seleccion == "d":
       return
     else:
       print("Opcion no valida")
@@ -549,12 +549,14 @@ def simular_partido(fixture, jugadores):
   print("Tarjetas Amarillas:",t_amarillas)
   print("Tarjetas Rojas:",t_rojas)
   print("Goles en el encuentro:", goles_totales)
+  input("\nPresione enter para continuar\n")
 
               # De la base de jugadores me traigo los datos del equipo local y visitante
   for jugador in jugadores:
       id_jugador, equipo, nombre, apellido, posicion = jugador
       if equipo == local:
           titulares_local.append([id_jugador, equipo, nombre, apellido, posicion])
+  
   #print(titulares_local)
   for jugador in jugadores:
       id_jugador, equipo, nombre, apellido, posicion = jugador
@@ -600,12 +602,15 @@ def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido):
     return matriz_posiciones
 
 def imprimir_matriz_posiciones(matriz_posiciones):
+    print("----------TABLA DE POSICIONES----------")
+    print("Equipo\tPG\tPP\tPts")
     filas = len(matriz_posiciones)
     columnas = len(matriz_posiciones[0])
     for f in range(filas):
         for c in range(columnas):
-            print(str(matriz_posiciones[f][c]),end='  ')
+            print(str(matriz_posiciones[f][c]),end='   ')
         print()
+    input("\nPresione enter para continuar\n")
 
 def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de la instancia del programa
     fecha_actual = fecha
