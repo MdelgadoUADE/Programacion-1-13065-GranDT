@@ -1,5 +1,10 @@
+#SEGUNDA ENTREGA, EQUIPO GRANDT
+#SEBASTIAN PENZA, MATIAS DELGADO, NICOLAS LOVERA
+
 # IMPORTACIONES
 import random
+from utils import *
+
 
 # DEFINICIONES
 BBDD_JUGADORES = {
@@ -224,9 +229,20 @@ BBDD_JUGADORES = {
     219: {'id_equipo': "Instituto", 'nombre': 'Adrián', 'apellido': 'Martínez', 'posicion': 'delantero', 'costo': 1000000, 'flag_capitan': False}, 
     220: {'id_equipo': "Instituto", 'nombre': 'Santiago', 'apellido': 'Rodríguez', 'posicion': 'delantero', 'costo': 1000000, 'flag_capitan': False}
 }
+"""
+ARMADO DE JUGADORES
+Matriz [
+jugador [nombre, equipo, titulares, nro capitan, puntos, presupuesto]
+]
 
-#equipo (nombre, equipo, puntos)
-equipo_jugador1 = ["Matias",[],0,10000000]
+"""
+
+matriz_jugadores = [
+   ["Matias Delgado",set(),set(),0,0,10000000],
+   ["Nicolas Lovera",set(),set(),0,0,10000000],
+   ["Sebastian Penza",set(),set(),0,0,10000000],
+   ["Ronaldinho",set(),set(),0,0,10000000]
+]
 
 eventos = {
     0: {"titulo": "Partido Ganado", "puntaje_asociado": ""},
@@ -239,8 +255,9 @@ eventos = {
     7: {"titulo": "Tarjeta Roja", "puntaje_asociado": -4}   
 }
 
-
+#---------------------------------------------
 # FUNCIONES
+#   PRINTS
 def print_menu_principal(nombre_usuario):
   print("\nGRAN DT\n" ,f"Bienvenido {nombre_usuario}\n")
   print("---------------\nMENU PRINCIPAL\n---------------")
@@ -278,10 +295,17 @@ def print_equipo(equipo_usuario):
       datos_jugador = BBDD_JUGADORES.get(jugador)
       print(f"{datos_jugador['nombre']} {datos_jugador['apellido']} - Posicion: {datos_jugador['posicion']}")
     input("\nPresione enter para continuar")
+#---------------------------------------------
+#   LOGICA
 
 def seleccion_jugadores_id(lista_jugadores):
-  """
-  Este codigo se ejecuta dentro de añadir jugadores, cuando hay varios con el mismo apellido se ejecuta y fuerza al jugador a seleccionar uno, devuelte una lista de longitud 1
+  """Este codigo se ejecuta dentro de añadir jugadores, cuando hay varios con el mismo apellido se ejecuta y fuerza al jugador a seleccionar uno, devuelte una lista de longitud 1
+
+  Args:
+      lista_jugadores (list): [id_jugador]
+
+  Returns:
+      list: [id_jugador]
   """
   print("Hay varios jugadores con el mismo apellido","\nPor favor indique el id del jugador a anadir:\n", end="")
   for jugador in lista_jugadores:
@@ -296,43 +320,68 @@ def seleccion_jugadores_id(lista_jugadores):
       print("Id incorrecto, intente nuevamente")
 
 def añadir_jugadores(usuario):
+  """Codigo que permite la funcionalidad de añadir jugadores al equipo
+
+  Args:
+      usuario (list): [id_equipo, lista_jugadores, nro_capitan, puntos, presupuesto]
+
+  Returns:
+      usuario (list): [id_equipo, lista_jugadores, nro_capitan, puntos, presupuesto]
   """
-  Codigo que permite la funcionalidad de añadir jugadores al equipo
-  """
+  presupuesto_disponible = usuario[5] #variable auxiliar
+  jugadores_seleccionados = set()
+
+  # lambdas para obtener datos especificos de la BBDD
+  nom_jugador = lambda id_jugador : f"{BBDD_JUGADORES[id_jugador]['nombre']} {BBDD_JUGADORES[id_jugador]['apellido']}"
+  precio_jugador = lambda id_jugador : BBDD_JUGADORES[id_jugador]['costo']
+
   while True:
+    
     lista_jugadores = []
+    # anadir seleccion de jugadores por tipo especificado (apellido, nombre, posicion, equipo)
     print("Porfavor indique el apellido del jugador a anadir:")
     apellido = input("> ").lower()
-    for i in range(1, len(BBDD_JUGADORES)):
+    for i in range(1, len(BBDD_JUGADORES)): #Revisa todos los jugadores y anade todos los que tengan el apellido indicado
       if BBDD_JUGADORES.get(i)["apellido"].lower() == apellido and i not in usuario[1]:
         lista_jugadores.append(i)
       
     if len(lista_jugadores) == 0:
       print("Jugador no encontrado")
 
-    elif len(lista_jugadores) > 1:
+    elif len(lista_jugadores) > 1: #Si hay mas de un jugador con el mismo apellido activa la funcion selecion_jugadores_id
       lista_jugadores = seleccion_jugadores_id(lista_jugadores)
-      usuario[1].append(lista_jugadores[0])
+      usuario[1].add(lista_jugadores[0])
 
     else:
-      print(f"Jugador {BBDD_JUGADORES[lista_jugadores[0]]['nombre']} {BBDD_JUGADORES[lista_jugadores[0]]['apellido']} anadido al equipo")
-      usuario[1].append(lista_jugadores[0])
+      if presupuesto_disponible - precio_jugador(lista_jugadores[0]) < 0: #Si hay suficiente presupuesto pregunta si desea anadir el jugador
+        print(f"\nEl jugador {nom_jugador(lista_jugadores[0])} cuesta {precio_jugador(lista_jugadores[0])}")
+        print("Presupuesto actual:", presupuesto_disponible)
+        print("Presupuesto futuro:", presupuesto_disponible - precio_jugador(lista_jugadores[0]))
+        
+        if confirmar_seleccion(None):
+          print(f"Jugador {nom_jugador(lista_jugadores[0])} añadido al equipo")
+          jugadores_seleccionados.add(lista_jugadores[0])
+          presupuesto_disponible -= precio_jugador(lista_jugadores[0]) 
+      else:
+         print("\nNo hay suficiente presupuesto para anadir el jugador")
+         input("Presione enter para continuar")
 
-    print("Desea anadir otro jugador? (S/N)")
-    respuesta = input("> ").lower()
-
-    while respuesta != "s" and respuesta != "n":
-      print("\nRespuesta no valida\n")
-      print("Desea anadir otro jugador? (S/N)")
-      respuesta = input("> ").lower()
-
-    if respuesta == "n":
+    if confirmar_seleccion("\nDesea anadir otro jugador?"):
+      if len(jugadores_seleccionados) + len(usuario[1]) >= 15:
+        print("\nEquipo lleno")
+        input("Presione enter para continuar")
+        usuario[1] = jugadores_seleccionados | usuario[1]
+        usuario[5] = presupuesto_disponible
+        return usuario
+    else:
+      usuario[1] = jugadores_seleccionados | usuario[1]
+      usuario[5] = presupuesto_disponible
       return usuario
     
-    elif respuesta == "s" and len(usuario[1]) == 11:
-      print("Limite de jugadores alcanzado")
-      return usuario
-    
+    print("Jugadores actualmente seleccionados:")
+    for jugador in jugadores_seleccionados:
+       print(f"")
+
 def eliminar_jugadores(usuario):
   while True:
     if len(usuario[1]) == 0:
@@ -624,4 +673,5 @@ lista_equipos = registro_de_equipos(BBDD_JUGADORES)
 lista_jugadores = registro_de_jugadores(BBDD_JUGADORES)
 fixture = generar_fixture_ida_vuelta(lista_equipos)
 
-logica_menu_principal(equipo_jugador1)
+
+logica_menu_principal(matriz_jugadores[0])
