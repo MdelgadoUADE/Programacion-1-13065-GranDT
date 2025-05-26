@@ -18,3 +18,20 @@ def confirmar_seleccion(mensaje):
      return True
    elif seleccion == "n":
      return False
+   
+def registrar_excepciones(e):
+    """Generador de log de errores para depuracion de codigo, genera un archivo log bajo la carpeta log, nombre error_log.txt
+
+    Args: 
+        e (Exception): Excepcion a registrar
+    """
+    try:
+      archivo = open('log/error_log.txt', 'a')
+      try:
+         error = f"Tipo: {type(e)} - Mensaje: {str(e)}\n"
+         print(f"Ocurrio un error: {error}")
+         archivo.write(error)
+      finally:
+         archivo.close()
+    except Exception as logError:
+       print(f"Error al escribir el log: {logError}")

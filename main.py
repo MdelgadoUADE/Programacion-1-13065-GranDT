@@ -9,14 +9,15 @@ from utils import *
 try:
   contenido = open("data/jugadores_actualizados.json", "r", encoding="utf8") #Encoding añadido debido a error extraño con json
   jugadores = contenido.read()
-  contenido.close()
 
   BBDD_JUGADORES = json.loads(jugadores)
   BBDD_JUGADORES = {int(k): v for k, v in BBDD_JUGADORES.items()}
 
 except Exception as e:
-  print("Error: No se pudo leer el archivo")
-  print(e)
+  registrar_excepciones(e)
+
+else:
+  contenido.close()
 
 # DEFINICIONES
 """
@@ -26,6 +27,26 @@ jugador [nombre, equipo, titulares, nro capitan, puntos, presupuesto]
 ]
 
 """
+try:
+  with open('data/usuarios.txt', 'w') as archivo:
+     if len(archivo) == 0:
+        pass # anadir funcion para agregar usuarios
+     else:
+        pass # anadir funcion de menu de usuarios
+except Exception as e:
+   registrar_excepciones(e)
+
+
+diccionario_jugadores_test = {
+   "matias delgado":{
+      "equipo":set(),
+      "titulares":set(),
+      "nro_capitan":0,
+      "puntos":0,
+      "presupuesto":10000000
+   }
+}
+
 
 matriz_jugadores = [
    ["Matias Delgado",set(),set(),0,0,10000000],
@@ -88,6 +109,25 @@ def print_equipo(equipo_usuario):
 #---------------------------------------------
 #   LOGICA
 
+def main():
+  """Yo soy el alfa y el omega, el principio y el fin"""
+  try:
+    with open('data/usuarios.txt', 'w') as archivo:
+      if len(archivo) == 0:
+        pass # anadir funcion para agregar usuarios
+      else:
+        pass # anadir funcion de menu de usuarios
+  except Exception as e:
+    registrar_excepciones(e)
+   
+def registro_de_equipos(jugadores):
+  equipos=[]
+  for jugador in jugadores:
+    equipo = jugadores[jugador]['id_equipo']
+    if equipo not in equipos:
+        equipos.append(equipo)
+  return equipos
+
 def seleccion_jugadores_id(lista_jugadores):
   """Este codigo se ejecuta dentro de añadir jugadores, cuando hay varios con el mismo apellido se ejecuta y fuerza al jugador a seleccionar uno, devuelte una lista de longitud 1
 
@@ -118,7 +158,7 @@ def añadir_jugadores(usuario):
   Returns:
       usuario (list): [id_equipo, lista_jugadores, nro_capitan, puntos, presupuesto]
   """
-  presupuesto_disponible = usuario[5] #variable auxiliar
+  presupuesto_disponible = usuario["presupuesto"] #variable auxiliar
   jugadores_seleccionados = set()
 
   # lambdas para obtener datos especificos de la BBDD
@@ -132,7 +172,7 @@ def añadir_jugadores(usuario):
     print("Porfavor indique el apellido del jugador a anadir:")
     apellido = input("> ").lower()
     for i in range(1, len(BBDD_JUGADORES)): #Revisa todos los jugadores y anade todos los que tengan el apellido indicado
-      if BBDD_JUGADORES.get(i)['apellido'].lower() == apellido and i not in usuario[1]:
+      if BBDD_JUGADORES.get(i)['apellido'].lower() == apellido and i not in usuario["equipo"]:
         lista_jugadores.append(i)
       
     if len(lista_jugadores) == 0:
@@ -140,7 +180,7 @@ def añadir_jugadores(usuario):
 
     elif len(lista_jugadores) > 1: #Si hay mas de un jugador con el mismo apellido activa la funcion selecion_jugadores_id
       lista_jugadores = seleccion_jugadores_id(lista_jugadores)
-      usuario[1].add(lista_jugadores[0])
+      usuario["equipo"].add(lista_jugadores[0])
 
     else:
       if presupuesto_disponible - precio_jugador(lista_jugadores[0]) < 0: #Si hay suficiente presupuesto pregunta si desea anadir el jugador
@@ -160,8 +200,9 @@ def añadir_jugadores(usuario):
       if len(jugadores_seleccionados) + len(usuario[1]) >= 15:
         print("\nEquipo lleno")
         input("Presione enter para continuar")
-        usuario[1] = jugadores_seleccionados | usuario[1]
-        usuario[5] = presupuesto_disponible
+        usuario["equipo"] = jugadores_seleccionados | usuario[1]
+        usuario["presupuesto3" \
+        ""] = presupuesto_disponible
         return usuario
     else:
       usuario[1] = jugadores_seleccionados | usuario[1]
@@ -251,14 +292,6 @@ def logica_menu_principal(usuario):
       return
     else:
       print("Opcion no valida")
-
-def registro_de_equipos(jugadores):
-  equipos=[]
-  for jugador in jugadores:
-    equipo = jugadores[jugador]['id_equipo']
-    if equipo not in equipos:
-        equipos.append(equipo)
-  return equipos
 
 def registro_de_jugadores(jugadores):       # Me devuelve los datos de los jugadores cargados en una tupla
   players=[]
@@ -461,4 +494,9 @@ def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de
 # PROGRAMA PRINCIPAL
 
 
+lista_equipos = registro_de_equipos(BBDD_JUGADORES)
+fixture = generar_fixture_ida_vuelta(lista_equipos)
 logica_menu_principal(matriz_jugadores[0])
+
+if __name__ == "__main__":
+  main()
