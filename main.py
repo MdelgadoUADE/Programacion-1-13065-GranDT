@@ -13,11 +13,18 @@ try:
   BBDD_JUGADORES = json.loads(jugadores)
   BBDD_JUGADORES = {int(k): v for k, v in BBDD_JUGADORES.items()}
 
-except Exception as e:
-  registrar_excepciones(e)
+except FileNotFoundError as error:
+      print("No se pudo encontrar el archivo", error)
+    
+except Exception as error:
+        print("Error: ", error)
+    
+finally:
+    try: #bloque protegido por si se intenta cerrar un archivo que no se consiguio abrir.
+        contenido.close()
+    except NameError:
+            pass
 
-else:
-  contenido.close()
 
 # DEFINICIONES
 """
