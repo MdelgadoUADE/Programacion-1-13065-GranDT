@@ -1,4 +1,0 @@
-Tipo: <class 'TypeError'> - Mensaje: object of type '_io.TextIOWrapper' has no len()
-Tipo: <class 'TypeError'> - Mensaje: object of type '_io.TextIOWrapper' has no len()
-Tipo: <class 'TypeError'> - Mensaje: object of type '_io.TextIOWrapper' has no len()
-Tipo: <class 'TypeError'> - Mensaje: object of type '_io.TextIOWrapper' has no len()

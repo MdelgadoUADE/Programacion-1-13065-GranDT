@@ -4,6 +4,7 @@
 # IMPORTACIONES
 import random
 import json
+from json.decoder import JSONDecodeError
 from utils import *
 
 try:
@@ -16,7 +17,7 @@ try:
 except Exception as e:
   registrar_excepciones(e)
 
-else:
+finally:
   contenido.close()
 
 # DEFINICIONES
@@ -27,34 +28,6 @@ jugador [nombre, equipo, titulares, nro capitan, puntos, presupuesto]
 ]
 
 """
-try:
-  with open('data/usuarios.txt', 'w') as archivo:
-     if len(archivo) == 0:
-        pass # anadir funcion para agregar usuarios
-     else:
-        pass # anadir funcion de menu de usuarios
-except Exception as e:
-   registrar_excepciones(e)
-
-
-diccionario_jugadores_test = {
-   "matias delgado":{
-      "equipo":set(),
-      "titulares":set(),
-      "nro_capitan":0,
-      "puntos":0,
-      "presupuesto":10000000
-   }
-}
-
-
-matriz_jugadores = [
-   ["Matias Delgado",set(),set(),0,0,10000000],
-   ["Nicolas Lovera",set(),set(),0,0,10000000],
-   ["Sebastian Penza",set(),set(),0,0,10000000],
-   ["Ronaldinho",set(),set(),0,0,10000000]
-]
-
 eventos = {
     0: {"titulo": "Partido Ganado", "puntaje_asociado": ""},
     1: {"titulo": "Partido Empatado", "puntaje_asociado": ""},
@@ -69,8 +42,18 @@ eventos = {
 #---------------------------------------------
 # FUNCIONES
 #   PRINTS
+def print_menu_usuarios():
+  print("----------- Gran DT -----------")
+  print("---------------\nMENU USUARIOS\n---------------")
+  print("Por favor seleccione una opcion:\n",
+  "A. Seleccionar usuario\n",
+  "B. Agregar Usuario\n",
+  "C. Eliminar Usuario\n",
+  "D. Salir",
+  )
+
 def print_menu_principal(nombre_usuario):
-  print("\nGRAN DT\n" ,f"Bienvenido {nombre_usuario}\n")
+  print(f"Bienvenido {nombre_usuario}\n")
   print("---------------\nMENU PRINCIPAL\n---------------")
   print("Por favor seleccione una opcion:\n",
   "A. Menu de Equipo\n",
@@ -110,16 +93,44 @@ def print_equipo(equipo_usuario):
 #   LOGICA
 
 def main():
-  """Yo soy el alfa y el omega, el principio y el fin"""
+  """'Yo soy el alfa y el omega, el principio y el fin'
+  Esta funcion inicia el programa y """
   try:
-    with open('data/usuarios.txt', 'w') as archivo:
-      if len(archivo) == 0:
-        pass # anadir funcion para agregar usuarios
-      else:
-        pass # anadir funcion de menu de usuarios
+    
+    contenido = open("data/usuarios.json", "r")
+    lineas = contenido.read()
+    contenido.close()
+
+    usuarios = json.loads(lineas)
+
+    print_menu_usuarios()
+    logica_menu_usuarios(usuarios)
+      
+  except (FileNotFoundError, JSONDecodeError):
+    print("No hay usuarios registrados, por favor cree uno\n")
+    with open ("data/usuarios.json", "w") as contenido:
+      json.dump(registrar_usuario(), contenido, indent=4)
+
+    main()
+
   except Exception as e:
     registrar_excepciones(e)
+        
    
+def registrar_usuario():
+  print("Por favor ingrese su nombre de usuario:")
+  nombre = input("> ")
+  usuario = {
+     nombre:{
+        "equipo": [],
+        "titulares": [],
+        "nro_capitan": 0,
+        "presupuesto": 42000000,
+        "puntos": 0
+     }
+  }
+  return usuario
+
 def registro_de_equipos(jugadores):
   equipos=[]
   for jugador in jugadores:
@@ -245,6 +256,19 @@ def eliminar_jugadores(usuario):
     if respuesta == "s" and len(usuario[1]) == 0:
       print("Equipo sin jugadores")
       return usuario
+
+def logica_menu_usuarios(lista_usuarios):
+  while True:
+    #print_menu_usuarios()
+    seleccion = input("> ").lower()
+    if seleccion == "a":
+      pass
+    elif seleccion == "b":
+      ver_fixture(fixture)
+    elif seleccion == "c":
+      return usuario
+    else:
+      print("Opcion no valida")
 
 def logica_menu_torneo(usuario):
   while True:
@@ -494,9 +518,9 @@ def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de
 # PROGRAMA PRINCIPAL
 
 
-lista_equipos = registro_de_equipos(BBDD_JUGADORES)
-fixture = generar_fixture_ida_vuelta(lista_equipos)
-logica_menu_principal(matriz_jugadores[0])
+#lista_equipos = registro_de_equipos(BBDD_JUGADORES)
+#fixture = generar_fixture_ida_vuelta(lista_equipos)
+#logica_menu_principal(matriz_jugadores[0])
 
 if __name__ == "__main__":
   main()
