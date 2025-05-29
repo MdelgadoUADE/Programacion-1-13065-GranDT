@@ -437,17 +437,68 @@ def ver_fixture(fixture):
     else:
         menu_torneo(fixture)
 
-def simular_partido(fixture, jugadores):
-  titulares_local = []
-  titulares_visitante = []
-  partido_final = []
-  partido_local = []
-  partido_visitante = []
+        
+def simular_eventos(local, visitante, resultado_local):
+    # Simula eventos de partido. Devuelve una lista con valores para cada evento.
+  eventos = []
+
+  goles_local = 0
+  goles_visitante = 0
+  if resultado_local == "gana":
+      goles = random.randint(1, 4) 
+      if goles % 2 == 0:
+          penales = 1
+          goles_totales = goles + penales
+      else:
+          penales = 0
+      asistencias = goles
+      goles_local = goles_totales - 1
+      goles_visitante = 1
+      eventos.append(resultado_local)
+      eventos.append(goles)
+      eventos.append(penales)
+      eventos.append(goles_totales)
+      eventos.append(asistencias)
+
+  elif resultado_local == "empata":
+      goles = random.randint(0, 2) * 2
+      penales = random.randint(0, 1) * 2
+      asistencias = goles
+      goles_totales = goles + penales
+      goles_local = goles_totales // 2
+      goles_visitante = goles_totales // 2
+      eventos.append(resultado_local)
+      eventos.append(goles)
+      eventos.append(penales)
+      eventos.append(goles_totales)
+      eventos.append(asistencias)
+
+  else:
+      eventos.append(resultado_local)
+      eventos.append(goles)
+      eventos.append(penales)
+      eventos.append(goles_totales)
+      eventos.append(asistencias)
+
+  t_amarillas = random.randint(0, 2)
+  #t_rojas = random.randint(0, 1)
+  eventos.append(t_amarillas)
+  #eventos.append(t_rojas)
+
+  print(f"{local} {goles_local} - {visitante} {goles_visitante}")
+  print("Goles:",goles)
+  print("Penales:",penales)
+  print("Goles en el encuentro:", goles_totales)
+  print("Asistencias:",asistencias)
+  print("Tarjetas Amarillas:",t_amarillas)
+  #print("Tarjetas Rojas:",t_rojas)
+
+  return eventos      # [resultado_local, goles, penales, goles_totales, asistencias, t_amarillas]
+
+def simular_resultado_partido(local, visitante):
+                  # Simula resultado final
   resultados_partidos = {}
 
-  local, visitante = fixture
-
-        # Simula resultado final
   casos = ["gana", "pierde", "empata"]
   resultado_local = random.choice(casos)
   if resultado_local == "gana":
@@ -455,9 +506,89 @@ def simular_partido(fixture, jugadores):
   elif resultado_local == "pierde":
       resultado_visitante = "gana"
   else:
-    return False
+      resultado_visitante = "empata"
+  resultados_partidos["local"] = (local, resultado_local)
+  resultados_partidos["visitante"] = (visitante, resultado_visitante)
+  print(f"Equipo local, {local}, {resultado_local}")
+  print(f"Equipo visitante, {visitante}, {resultado_visitante}")
+  return resultados_partidos
 
+def asignar_eventos(equipo_local, plantel_local, equipo_visitante, plantel_visitante, eventos):
+# Probabilidad gol
+    prob_gol = {"Defensor": 0.1, "Mediocampista": 0.2, "Delantero": 0.7}
+# Probabilidad asistencia
+    prob_asis = {"Defensor": 0.1, "Mediocampista": 0.7, "Delantero": 0.2}
+# Probabilidad tarjeta amarilla
+    prob_ta = {"Defensor": 0.6, "Mediocampista": 0.3, "Delantero": 0.1}
+# Lesion es completamente random
+    goles_local = 0
+    goles_visitante = 0
+    if eventos[0] == 'gana':
+        goles_local = eventos[3] - 1
+        goles_visitante = 1
+    elif eventos[0] == 'pierde':
+        goles_visitante = eventos[3] - 1
+        goles_local = 1
+    else:
+        goles_visitante = eventos[3] // 2
+        goles_local = eventos[3] // 2
+    while goles_local != 0:
+        pesos_gol = list(prob_gol.values())
+        jugador = random.choices(equipo_local, weights=pesos_gol, k=1)[0]
 
+def procesar_equipos_eventos(fixture, jugadores, eventos):
+# Segmenta los equipos e invoca a la asignacion a los jugadores
+  titulares_local = []
+  titulares_visitante = []
+  #partido_final = []
+  delanteros_local = []
+  medios_local = []
+  defensores_local = []
+  delanteros_visitante = []
+  medios_visitante = []
+  defensores_visitante = []
+  local, visitante = fixture
+
+# De la base de jugadores me traigo los datos del equipo local y visitante
+  for jugador in jugadores:
+      id_jugador, equipo, nombre, apellido, posicion = jugador
+      if equipo == local:
+          titulares_local.append([id_jugador, equipo, nombre, apellido, posicion])
+  #print(titulares_local)
+  for jugador in jugadores:
+      id_jugador, equipo, nombre, apellido, posicion = jugador
+      if equipo == visitante:
+          titulares_visitante.append([id_jugador, equipo, nombre, apellido, posicion])
+  #print(titulares_visitante)
+  asignar_eventos(local, titulares_local, visitante, titulares_visitante, eventos)
+
+# equipo local por posicion
+  for jugador in titulares_local:
+      if jugador[-1] == "Delantero":
+          delanteros_local.append(jugador)
+  #print(delanteros_local)
+  for jugador in titulares_local:
+      if jugador[-1] == "Mediocampista":
+          medios_local.append(jugador)
+  #print(medios_local)
+  for jugador in titulares_local:
+      if jugador[-1] == "Defensor":
+          defensores_local.append(jugador)
+  #print(defensores_local)
+
+# equipo visitante por posicion
+  for jugador in titulares_visitante:
+      if jugador[-1] == "Delantero":
+          delanteros_visitante.append(jugador)
+  #print(delanteros_visitante)
+  for jugador in titulares_visitante:
+      if jugador[-1] == "Mediocampista":
+          medios_visitante.append(jugador)
+  #print(medios_visitante)
+  for jugador in titulares_visitante:
+      if jugador[-1] == "Defensor":
+          defensores_visitante.append(jugador)
+  #print(defensores_visitante)
 
 def seleccion_de_jugadores(lista_jugadores):
   lista_de_jugadores = []
@@ -469,45 +600,6 @@ def seleccion_de_jugadores(lista_jugadores):
       if not validar_seleccion("Desea seguir añadiendo jugadores?"):
         imprimir_equipo(lista_de_jugadores)
         return lista_de_jugadores
-
-def calcular_eventos_partido(eventos):
-  #eventos_x_partido = []
-  goles = random.randint(0, 4)
-  penales = random.randint(0, 2)
-  asistencias = goles
-  t_amarillas = random.randint(0, 2)
-  t_rojas = random.randint(0, 1)
-  goles_totales = goles + penales
-  
-  print("\nGoles:",goles)
-  print("Penales:",penales)
-  print("Asistencias:",asistencias)
-  print("Tarjetas Amarillas:",t_amarillas)
-  print("Tarjetas Rojas:",t_rojas)
-  print("Goles en el encuentro:", goles_totales)
-  input("\nPresione enter para continuar\n")
-
-              # De la base de jugadores me traigo los datos del equipo local y visitante
-  for jugador in jugadores:
-      id_jugador, equipo, nombre, apellido, posicion = jugador
-      if equipo == local:
-          titulares_local.append([id_jugador, equipo, nombre, apellido, posicion])
-  
-  #print(titulares_local)
-  for jugador in jugadores:
-      id_jugador, equipo, nombre, apellido, posicion = jugador
-      if equipo == visitante:
-          titulares_visitante.append([id_jugador, equipo, nombre, apellido, posicion])
-  #print(titulares_visitante)
-        
-        # Asignacion random de eventos por posicion. Goles a Delanteros, Asistencias a Mediocampistas, etc...
-  '''for jugador in titulares_local:
-      if titulares_local[-1] == "Delantero": # Slice de listas?
-          partido_local.append([])'''
-  
-
-  return resultados_partidos
-
 
 def crear_matriz_posiciones(equipos):
     """
