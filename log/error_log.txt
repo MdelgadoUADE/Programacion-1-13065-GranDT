@@ -1,0 +1,2 @@
+Tipo: <class 'TypeError'> - Mensaje: remover_usuario() takes 0 positional arguments but 1 was given
+Tipo: <class 'KeyError'> - Mensaje: '0'

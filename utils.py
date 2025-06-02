@@ -1,3 +1,5 @@
+import json
+
 def confirmar_seleccion(mensaje):
    """Codigo basico de validacion para confirmar una seleccion
 
@@ -35,3 +37,22 @@ def registrar_excepciones(e):
          archivo.close()
     except Exception as logError:
        print(f"Error al escribir el log: {logError}")
+
+def abrir_archivo_json(nombre_archivo, modo):
+  try:
+    archivo = open(nombre_archivo, modo)
+    lineas = archivo.read()
+    archivo.close()
+
+    contenido = json.loads(lineas)
+    return contenido
+
+  except FileNotFoundError:
+    print("No se pudo encontrar el archivo")
+
+  except json.decoder.JSONDecodeError:
+    print("No se pudo decodificar el archivo")
+
+  except Exception as e:
+    registrar_excepciones(e)
+    

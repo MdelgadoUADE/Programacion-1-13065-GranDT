@@ -12,7 +12,7 @@ try:
   jugadores = contenido.read()
 
   BBDD_JUGADORES = json.loads(jugadores)
-  BBDD_JUGADORES = {int(k): v for k, v in BBDD_JUGADORES.items()}
+  BBDD_JUGADORES = {int(k): v for k, v in BBDD_JUGADORES.items()} #conversion de numeros de string a enteros
 
 except FileNotFoundError as error:
       print("No se pudo encontrar el archivo", error)
@@ -50,7 +50,14 @@ eventos = {
 # FUNCIONES
 #   PRINTS
 def print_menu_usuarios():
-  print("----------- Gran DT -----------")
+  print("""
+  ____                        ____ _____ 
+ / ___| _   _ _ __   ___ _ __|  _ \_   _|
+ \___ \| | | | '_ \ / _ \ '__| | | || |  
+  ___) | |_| | |_) |  __/ |  | |_| || |  
+ |____/ \__,_| .__/ \___|_|  |____/ |_|  
+             |_|                         
+""")
   print("---------------\nMENU USUARIOS\n---------------")
   print("Por favor seleccione una opcion:\n",
   "A. Seleccionar usuario\n",
@@ -101,7 +108,7 @@ def print_equipo(equipo_usuario):
 
 def main():
   """'Yo soy el alfa y el omega, el principio y el fin'
-  Esta funcion inicia el programa y """
+  Esta funcion inicia el programa y se encarga de llamar a la primera funcion de menu usuarios"""
   try:
     
     contenido = open("data/usuarios.json", "r")
@@ -110,7 +117,6 @@ def main():
 
     usuarios = json.loads(lineas)
 
-    print_menu_usuarios()
     logica_menu_usuarios(usuarios)
       
   except (FileNotFoundError, JSONDecodeError):
@@ -125,10 +131,11 @@ def main():
         
    
 def registrar_usuario():
-  print("Por favor ingrese su nombre de usuario:")
+  print("Por favor ingrese el nombre de usuario a agregar:")
   nombre = input("> ")
   usuario = {
      nombre:{
+        "formacion": [],
         "equipo": [],
         "titulares": [],
         "nro_capitan": 0,
@@ -137,6 +144,31 @@ def registrar_usuario():
      }
   }
   return usuario
+
+def remover_usuario():
+  while True:
+    print("Por favor indique que usuario desea eliminar (con nombre):")
+    
+    contador = 0
+    usuarios = abrir_archivo_json("data/usuarios.json", "r")
+    for usuario in usuarios:
+      print(f"{contador} - {usuario}")
+      print(f"{contador + 1} Salir")
+      contador += 1
+    
+    usuario_seleccionado = input("> ")
+    if usuario_seleccionado.lower() == "salir":
+       return
+    try:
+      usuarios.pop(usuario_seleccionado)
+    except KeyError:
+      print("No se pudo encontrar el usuario")
+      if not confirmar_seleccion("Desea seguir intentando?"):
+        return
+    else:
+      with open ("data/usuarios.json", "w") as contenido:
+        json.dump(usuarios, contenido, indent=4)
+      print(f"Usuario {usuario_seleccionado} eliminado con exito")
 
 def registro_de_equipos(jugadores):
   """Registra los equipos de la base de jugadores en una lista.
@@ -274,16 +306,20 @@ def eliminar_jugadores(usuario):
       print("Equipo sin jugadores")
       return usuario
 
-def logica_menu_usuarios(lista_usuarios):
+def logica_menu_usuarios(dic_usuarios):
   while True:
-    #print_menu_usuarios()
+    print_menu_usuarios()
     seleccion = input("> ").lower()
     if seleccion == "a":
       pass
     elif seleccion == "b":
-      ver_fixture(fixture)
+      with open ("data/usuarios.json", "w") as contenido:
+        dic_usuarios.update(registrar_usuario())
+        json.dump(dic_usuarios, contenido, indent=4)
     elif seleccion == "c":
-      return usuario
+      remover_usuario()
+    elif seleccion == "d":
+      return
     else:
       print("Opcion no valida")
 
@@ -755,13 +791,6 @@ def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de
     return fecha_actual
 """
 # PROGRAMA PRINCIPAL
-
-
-lista_equipos = registro_de_equipos(BBDD_JUGADORES)
-fixture = generar_fixture_ida_vuelta(lista_equipos)
-logica_menu_principal(matriz_jugadores[0])
-matriz_posiciones = crear_matriz_posiciones(lista_equipos)
-matriz_posiciones = rellenar_equipos_matriz(lista_equipos,matriz_posiciones)
 
 if __name__ == "__main__":
   main()
