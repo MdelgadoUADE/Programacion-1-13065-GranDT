@@ -1,2 +1,5 @@
 Tipo: <class 'TypeError'> - Mensaje: remover_usuario() takes 0 positional arguments but 1 was given
 Tipo: <class 'KeyError'> - Mensaje: '0'
+Tipo: <class 'UnboundLocalError'> - Mensaje: cannot access local variable 'contador' where it is not associated with a value
+Tipo: <class 'KeyError'> - Mensaje: 0
+Tipo: <class 'KeyError'> - Mensaje: 'nom_usuario'

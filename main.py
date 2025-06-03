@@ -135,7 +135,13 @@ def registrar_usuario():
   nombre = input("> ")
   usuario = {
      nombre:{
-        "formacion": [],
+        "nom_usuario":nombre,
+        "formacion": {
+           "arquero": 1,
+           "defensor": 4,
+           "centrocampista": 4,
+           "delantero": 2
+        },
         "equipo": [],
         "titulares": [],
         "nro_capitan": 0,
@@ -144,6 +150,26 @@ def registrar_usuario():
      }
   }
   return usuario
+
+def seleccionar_usuario():
+  while True:
+    print("Indicar con que usuario acceder: ")
+    usuarios = abrir_archivo_json("data/usuarios.json", 'r')
+    contador = 0
+    for usuario in usuarios:
+      print(f"{contador} - {usuario}")
+      print(f"{contador + 1} Salir")
+      contador += 1
+
+    usuario_seleccionado = input("> ")
+    if usuario_seleccionado.lower() == "salir":
+      return
+    try:
+      return usuarios[usuario_seleccionado]
+    except KeyError:
+      print("No se pudo encontrar el usuario")
+      if not confirmar_seleccion("Desea seguir intentando?"):
+        return
 
 def remover_usuario():
   while True:
@@ -311,7 +337,7 @@ def logica_menu_usuarios(dic_usuarios):
     print_menu_usuarios()
     seleccion = input("> ").lower()
     if seleccion == "a":
-      pass
+      logica_menu_principal(seleccionar_usuario())
     elif seleccion == "b":
       with open ("data/usuarios.json", "w") as contenido:
         dic_usuarios.update(registrar_usuario())
@@ -342,7 +368,7 @@ def logica_menu_equipo(usuario):
     print_menu_equipo()
     seleccion = input("> ").lower()
     if seleccion == "a":
-      print_equipo(usuario[1])
+      print_equipo(usuario["equipo"])
     elif seleccion == "b":
       usuario = añadir_jugadores(usuario)
     elif seleccion == "c":
@@ -360,14 +386,14 @@ def logica_menu_principal(usuario):
   usuario (list): [id_usuario, lista_jugadores, nro_capitan, puntos, presupuesto]
   """
   while True:
-    print_menu_principal(usuario[0])
+    print_menu_principal(usuario["nom_usuario"])
     seleccion = input("> ").lower()
     if seleccion == "a":
       logica_menu_equipo(usuario)
     elif seleccion == "b":
       logica_menu_torneo(usuario)
     #elif seleccion == "c":
-     # print("Funcionalidad no añadida")
+      logica_menu_usuarios()
     elif seleccion == "c":
       return
     else:
