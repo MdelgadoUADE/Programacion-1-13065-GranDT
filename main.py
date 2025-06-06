@@ -70,7 +70,8 @@ def print_menu_usuarios():
   )
 
 def print_menu_principal(nombre_usuario):
-  print(f"Bienvenido {nombre_usuario}\n")
+  print()
+  print(f"Bienvenido {nombre_usuario}!!\n")
   print("---------------\nMENU PRINCIPAL\n---------------")
   print("Por favor seleccione una opcion:\n",
   "A. Menu de Equipo\n",
@@ -361,7 +362,7 @@ def logica_menu_usuarios(dic_usuarios):
     if seleccion == "a":
       usuario = seleccionar_usuario()
       if usuario != None:
-        logica_menu_principal()
+        logica_menu_principal(usuario)
     elif seleccion == "b":
       with open ("data/usuarios.json", "w") as contenido:
         dic_usuarios.update(registrar_usuario())
