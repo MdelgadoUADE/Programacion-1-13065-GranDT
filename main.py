@@ -2,6 +2,7 @@
 #SEBASTIAN PENZA, MATIAS DELGADO, NICOLAS LOVERA
 
 # IMPORTACIONES
+import re
 import random
 import json
 from json.decoder import JSONDecodeError
@@ -83,7 +84,7 @@ def print_menu_equipo():
   "B. Añadir Jugadores\n",
   "C. Remover Jugadores\n",
   #"D. Asignar Capitan\n",
-  "D. Menu anterior"
+  "D. Regresar al menu principal"
   )
 
 def print_menu_torneo():
@@ -91,7 +92,7 @@ def print_menu_torneo():
   print("Por favor selecciona una opcion:\n",
   "A. Jugar proxima fecha\n",
   "B. Ver fixture\n",
-  "C. Salir",
+  "C. Regresar al menu principal",
   )
 
 def print_equipo(equipo_usuario):
@@ -107,8 +108,8 @@ def print_equipo(equipo_usuario):
 #   LOGICA
 
 def main():
-  """'Yo soy el alfa y el omega, el principio y el fin'
-  Esta funcion inicia el programa y se encarga de llamar a la primera funcion de menu usuarios"""
+  """'Yo soy el alfa y el omega, el principio y el fin'.
+  Esta funcion inicia el programa y se encarga de llamar a la primera funcion de menu usuarios. No tiene parametros o retornos"""
   try:
     
     contenido = open("data/usuarios.json", "r")
@@ -152,24 +153,30 @@ def registrar_usuario():
   return usuario
 
 def seleccionar_usuario():
-  while True:
-    print("Indicar con que usuario acceder: ")
-    usuarios = abrir_archivo_json("data/usuarios.json", 'r')
-    contador = 0
-    for usuario in usuarios:
-      print(f"{contador} - {usuario}")
-      print(f"{contador + 1} Salir")
-      contador += 1
+  try:
+    while True:
+      usuarios = abrir_archivo_json("data/usuarios.json", 'r')
 
-    usuario_seleccionado = input("> ")
-    if usuario_seleccionado.lower() == "salir":
-      return
-    try:
-      return usuarios[usuario_seleccionado]
-    except KeyError:
-      print("No se pudo encontrar el usuario")
-      if not confirmar_seleccion("Desea seguir intentando?"):
+      if len(usuarios) < 1:
+        raise UserWarning()
+      
+      print("Indicar con que usuario acceder: ")
+      for usuario in usuarios:
+        print(f"- {usuario}")
+      print("- Salir")
+
+      usuario_seleccionado = input("> ")
+      if usuario_seleccionado.lower() == "salir":
         return
+      try:
+        return usuarios[usuario_seleccionado]
+      except KeyError:
+        print("No se pudo encontrar el usuario")
+        if not confirmar_seleccion("Desea seguir intentando?"):
+          return
+  except UserWarning:
+    print("No hay usuarios registrados!\nPor favor cree uno\n")
+    input("Presione enter para continuar")
 
 def remover_usuario():
   while True:
@@ -236,6 +243,19 @@ def seleccion_jugadores_id(lista_jugadores):
       print("Id incorrecto, intente nuevamente")
 
 def añadir_jugadores(usuario):
+  pass
+
+def seleccion_de_busqueda():
+  #nombre apellido
+  #posicion
+  #equipo
+  #costo
+
+#def busqueda_nom_apellido(nom_buscado):
+#  for jugador in BBDD_JUGADORES:
+#    pass
+
+# def añadir_jugadores(usuario):
   """Codigo que permite la funcionalidad de añadir jugadores al equipo
 
   Args:
@@ -244,7 +264,7 @@ def añadir_jugadores(usuario):
   Returns:
       usuario (list): [id_equipo, lista_jugadores, nro_capitan, puntos, presupuesto]
   """
-  presupuesto_disponible = usuario["presupuesto"] #variable auxiliar
+  """presupuesto_disponible = usuario["presupuesto"] #variable auxiliar
   jugadores_seleccionados = set()
 
   # lambdas para obtener datos especificos de la BBDD
@@ -297,9 +317,9 @@ def añadir_jugadores(usuario):
     
     print("Jugadores actualmente seleccionados:")
     for jugador in jugadores_seleccionados:
-       print(f"")
+       print(f"")"""
 
-def eliminar_jugadores(usuario):
+"""def eliminar_jugadores(usuario):
   while True:
     if len(usuario[1]) == 0:
       print("\nEquipo sin jugadores")
@@ -330,14 +350,16 @@ def eliminar_jugadores(usuario):
     
     if respuesta == "s" and len(usuario[1]) == 0:
       print("Equipo sin jugadores")
-      return usuario
+      return usuario"""
 
 def logica_menu_usuarios(dic_usuarios):
   while True:
     print_menu_usuarios()
     seleccion = input("> ").lower()
     if seleccion == "a":
-      logica_menu_principal(seleccionar_usuario())
+      usuario = seleccionar_usuario()
+      if usuario != None:
+        logica_menu_principal()
     elif seleccion == "b":
       with open ("data/usuarios.json", "w") as contenido:
         dic_usuarios.update(registrar_usuario())

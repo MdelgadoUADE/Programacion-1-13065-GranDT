@@ -3,3 +3,6 @@ Tipo: <class 'KeyError'> - Mensaje: '0'
 Tipo: <class 'UnboundLocalError'> - Mensaje: cannot access local variable 'contador' where it is not associated with a value
 Tipo: <class 'KeyError'> - Mensaje: 0
 Tipo: <class 'KeyError'> - Mensaje: 'nom_usuario'
+Tipo: <class 'TypeError'> - Mensaje: 'NoneType' object is not subscriptable
+Tipo: <class 'TypeError'> - Mensaje: 'NoneType' object is not subscriptable
+Tipo: <class 'Exception'> - Mensaje: No hay usuarios registrados

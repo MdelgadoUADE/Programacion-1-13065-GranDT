@@ -1,5 +1,8 @@
 import json
 
+ACENTUADAS = "áéíóúÁÉÍÓÚ"
+NO_ACENTUADAS = "aeiouAEIOU"
+
 def confirmar_seleccion(mensaje):
    """Codigo basico de validacion para confirmar una seleccion
 
