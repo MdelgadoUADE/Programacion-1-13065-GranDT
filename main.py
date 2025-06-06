@@ -451,7 +451,7 @@ def ver_fixture(fixture,usuario):
     opcion = input("Elegí una opción: ")
     if opcion == "A":
         fecha_especifica=int(input("Indique la fecha especifica: "))
-        while fecha_especifica < 1 or fecha_especifica > 37:
+        while fecha_especifica < 1 or fecha_especifica > 35:
            print("Error, fecha inexistente, intente nuevamente")
            fecha_especifica=int(input("Indique la fecha especifica: "))
         print()
