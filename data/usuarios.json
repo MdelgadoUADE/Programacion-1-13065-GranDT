@@ -12,5 +12,19 @@
         "nro_capitan": 0,
         "presupuesto": 42000000,
         "puntos": 0
+    },
+    "Nicolas": {
+        "nom_usuario": "Nicolas",
+        "formacion": {
+            "arquero": 1,
+            "defensor": 4,
+            "centrocampista": 4,
+            "delantero": 2
+        },
+        "equipo": [],
+        "titulares": [],
+        "nro_capitan": 0,
+        "presupuesto": 42000000,
+        "puntos": 0
     }
 }

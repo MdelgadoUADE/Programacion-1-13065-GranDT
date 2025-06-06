@@ -3,3 +3,14 @@ Tipo: <class 'KeyError'> - Mensaje: '0'
 Tipo: <class 'UnboundLocalError'> - Mensaje: cannot access local variable 'contador' where it is not associated with a value
 Tipo: <class 'KeyError'> - Mensaje: 0
 Tipo: <class 'KeyError'> - Mensaje: 'nom_usuario'
+Tipo: <class 'TypeError'> - Mensaje: 'NoneType' object is not subscriptable
+Tipo: <class 'NameError'> - Mensaje: name 'fixture' is not defined
+Tipo: <class 'NameError'> - Mensaje: name 'fixture' is not defined
+Tipo: <class 'TypeError'> - Mensaje: 'NoneType' object is not subscriptable
+Tipo: <class 'TypeError'> - Mensaje: logica_menu_torneo() takes 1 positional argument but 2 were given
+Tipo: <class 'NameError'> - Mensaje: name 'simular_partido' is not defined
+Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
+Tipo: <class 'NameError'> - Mensaje: name 'simular_partido' is not defined
+Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
+Tipo: <class 'NameError'> - Mensaje: name 'simular_partido' is not defined
+Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
