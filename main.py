@@ -267,114 +267,16 @@ def añadir_jugadores(usuario):
     pass
 
 
-def seleccion_de_busqueda():
-    # nombre apellido
-    # posicion
-    # equipo
-    # costo
 
-    # def busqueda_nom_apellido(nom_buscado):
-    #  for jugador in BBDD_JUGADORES:
-    #    pass
+def solicitar_dato_jugador(dato):
+  print(f"Porfavor indique el {dato} del jugador a buscar:")
+  return input("> ")
 
-    # def añadir_jugadores(usuario):
-    """Codigo que permite la funcionalidad de añadir jugadores al equipo
-
-    Args:
-        usuario (list): [id_equipo, lista_jugadores, nro_capitan, puntos, presupuesto]
-
-    Returns:
-        usuario (list): [id_equipo, lista_jugadores, nro_capitan, puntos, presupuesto]
-    """
-    """presupuesto_disponible = usuario["presupuesto"] #variable auxiliar
-  jugadores_seleccionados = set()
-
-  # lambdas para obtener datos especificos de la BBDD
-  nom_jugador = lambda id_jugador : f"{BBDD_JUGADORES[id_jugador]['nombre']} {BBDD_JUGADORES[id_jugador]['apellido']}"
-  precio_jugador = lambda id_jugador : BBDD_JUGADORES[id_jugador]['costo']
-
-  while True:
-    
-    lista_jugadores = []
-    # anadir seleccion de jugadores por tipo especificado (apellido, nombre, posicion, equipo)
-    print("Porfavor indique el apellido del jugador a anadir:")
-    apellido = input("> ").lower()
-    for i in range(1, len(BBDD_JUGADORES)): #Revisa todos los jugadores y anade todos los que tengan el apellido indicado
-      if BBDD_JUGADORES.get(i)['apellido'].lower() == apellido and i not in usuario["equipo"]:
-        lista_jugadores.append(i)
-      
-    if len(lista_jugadores) == 0:
-      print("Jugador no encontrado")
-
-    elif len(lista_jugadores) > 1: #Si hay mas de un jugador con el mismo apellido activa la funcion selecion_jugadores_id
-      lista_jugadores = seleccion_jugadores_id(lista_jugadores)
-      usuario["equipo"].add(lista_jugadores[0])
-
+def buscar_jugador(dato):
+    if dato == "nombre, apellido":
+        pass
     else:
-      if presupuesto_disponible - precio_jugador(lista_jugadores[0]) < 0: #Si hay suficiente presupuesto pregunta si desea anadir el jugador
-        print(f"\nEl jugador {nom_jugador(lista_jugadores[0])} cuesta {precio_jugador(lista_jugadores[0])}")
-        print("Presupuesto actual:", presupuesto_disponible)
-        print("Presupuesto futuro:", presupuesto_disponible - precio_jugador(lista_jugadores[0]))
-        
-        if confirmar_seleccion(None):
-          print(f"Jugador {nom_jugador(lista_jugadores[0])} añadido al equipo")
-          jugadores_seleccionados.add(lista_jugadores[0])
-          presupuesto_disponible -= precio_jugador(lista_jugadores[0]) 
-      else:
-         print("\nNo hay suficiente presupuesto para anadir el jugador")
-         input("Presione enter para continuar")
-
-    if confirmar_seleccion("\nDesea anadir otro jugador?"):
-      if len(jugadores_seleccionados) + len(usuario[1]) >= 15:
-        print("\nEquipo lleno")
-        input("Presione enter para continuar")
-        usuario["equipo"] = jugadores_seleccionados | usuario[1]
-        usuario["presupuesto3" \
-        ""] = presupuesto_disponible
-        return usuario
-    else:
-      usuario[1] = jugadores_seleccionados | usuario[1]
-      usuario[5] = presupuesto_disponible
-      return usuario
-    
-    print("Jugadores actualmente seleccionados:")
-    for jugador in jugadores_seleccionados:
-       print(f"")"""
-
-
-"""def eliminar_jugadores(usuario):
-  while True:
-    if len(usuario[1]) == 0:
-      print("\nEquipo sin jugadores")
-      input("Presione enter para continuar")
-      return usuario
-    
-    print("Por favor seleccione el jugador a eliminar usando el ID (primera parte):")
-    for jugador in usuario[1]:
-      print(f"{jugador} - {BBDD_JUGADORES[jugador]['nombre']} {BBDD_JUGADORES[jugador]['apellido']}")
-
-    respuesta = int(input("> "))
-    if respuesta in usuario[1]:
-      usuario[1].remove(respuesta)
-      print(f"Jugador {BBDD_JUGADORES[respuesta]['nombre']} {BBDD_JUGADORES[respuesta]['apellido']} eliminado del equipo")
-    else:
-      print("Id incorrecto")
-
-    print("Desea eliminar otro jugador? (S/N)")
-    respuesta = input("> ").lower()
-
-    while respuesta != "s" and respuesta != "n":
-      print("\nRespuesta no valida\n")
-      print("Desea eliminar otro jugador? (S/N)")
-      respuesta = input("> ").lower()
-
-    if respuesta == "n":
-      return usuario
-    
-    if respuesta == "s" and len(usuario[1]) == 0:
-      print("Equipo sin jugadores")
-      return usuario"""
-
+        pass
 
 def logica_menu_usuarios(dic_usuarios):
     while True:
