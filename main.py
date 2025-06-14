@@ -40,15 +40,14 @@ jugador [nombre, equipo, titulares, nro capitan, puntos, presupuesto]
 ]
 
 """
-eventos = {
+id_eventos = {
     0: {"titulo": "Partido Ganado", "puntaje_asociado": ""},
     1: {"titulo": "Partido Empatado", "puntaje_asociado": ""},
     2: {"titulo": "Partido Perdido", "puntaje_asociado": ""},
     3: {"titulo": "Gol", "puntaje_asociado": 6},
-    4: {"titulo": "Penal", "puntaje_asociado": 6},
-    5: {"titulo": "Asistencia", "puntaje_asociado": 3},
-    6: {"titulo": "Tarjeta Amarilla", "puntaje_asociado": -2},
-    7: {"titulo": "Tarjeta Roja", "puntaje_asociado": -4}
+    4: {"titulo": "Asistencia", "puntaje_asociado": 3},
+    5: {"titulo": "Tarjeta Amarilla", "puntaje_asociado": -2},
+    6: {"titulo": "Tarjeta Roja", "puntaje_asociado": -4}
 }
 
 # ---------------------------------------------
@@ -267,16 +266,17 @@ def añadir_jugadores(usuario):
     pass
 
 
-
 def solicitar_dato_jugador(dato):
-  print(f"Porfavor indique el {dato} del jugador a buscar:")
-  return input("> ")
+    print(f"Porfavor indique el {dato} del jugador a buscar:")
+    return input("> ")
+
 
 def buscar_jugador(dato):
     if dato == "nombre, apellido":
         pass
     else:
         pass
+
 
 def logica_menu_usuarios(dic_usuarios):
     while True:
@@ -427,6 +427,7 @@ def procesar_equipos(fixture, jugadores):
                             data["nombre"], data["apellido"], data["posicion"]]
             titulares_visitante.append(info_jugador)
 
+    # [id_jugador, equipo, nombre, apellido, posicion]
     return titulares_local, titulares_visitante
 
 
@@ -459,12 +460,16 @@ def simular_eventos(fixture, resultado_local):
         while (goles_local <= goles_visitante):
             goles_local = random.randint(1, 5)
             goles_visitante = random.randint(0, 4)
+            asis_local = goles_local
+            asis_visitante = goles_visitante
     elif resultado_local == "pierde":
         resultado_visitante = "gana"
         eventos.append(resultado_visitante)
         while (goles_visitante <= goles_local):
             goles_visitante = random.randint(1, 5)
             goles_local = random.randint(0, 4)
+            asis_local = goles_local
+            asis_visitante = goles_visitante
     else:
         resultado_visitante = "empata"
         eventos.append(resultado_visitante)
@@ -472,21 +477,27 @@ def simular_eventos(fixture, resultado_local):
         goles_local = goles_visitante
 
     goles_totales = goles_local + goles_visitante
-    asistencias = goles_totales
+    asis_local = goles_local
+    asis_visitante = goles_visitante
     eventos.append(goles_totales)
     eventos.append(goles_local)
     eventos.append(goles_visitante)
-    eventos.append(asistencias)
+    eventos.append(asis_local)
+    eventos.append(asis_visitante)
 
-    t_amarillas = random.randint(0, 2)
-    eventos.append(t_amarillas)
+    t_amarilla_local = random.randint(0, 2)
+    t_amarilla_visita = random.randint(0, 2)
+    eventos.append(t_amarilla_local)
+    eventos.append(t_amarilla_visita)
 
     print(f"{local} {goles_local} - {visitante} {goles_visitante}")
     print("Goles en el encuentro:", goles_totales)
-    print("Asistencias:", asistencias)
-    print("Tarjetas Amarillas:", t_amarillas)
+    print("Asistencias equipo local:", asis_local)
+    print("Asistencias equipo visitante:", asis_visitante)
+    print("Tarjetas Amarillas Local:", t_amarilla_local)
+    print("Tarjetas Amarillas Visita:", t_amarilla_visita)
 
-    # [local, res_local, visi, res_visi, gol_total, gol_local, gol_visi, asistencias, t_amarillas]
+    # [local, res_local, visi, res_visi, gol_total, gol_local, gol_visi, asis_local, asis_visitante, t_amarilla_local, t_amarilla_visita]
     return eventos
 
 
@@ -522,62 +533,207 @@ def simular_resultado_partido(fixture):
     return resultados_partidos
 
 
+def simular_eventos(fixture, resultado_local):
+    """
+    Genera aleatoriamente los valores de los eventos de un partido.
+
+    Args:
+        fixture (tuple): Local vs. Visitante.
+        resultado_local (str): Resultado del equipo local.
+
+    Returns:
+        Eventos (list): Una lista con todos los eventos del partido.
+    """
+
+    eventos = []
+    local, visitante = fixture
+
+    goles_local = 0
+    goles_visitante = 0
+    resultado_visitante = 0
+
+    eventos.append(local)
+    eventos.append(resultado_local)
+    eventos.append(visitante)
+
+    if resultado_local == "gana":
+        resultado_visitante = "pierde"
+        eventos.append(resultado_visitante)
+        while (goles_local <= goles_visitante):
+            goles_local = random.randint(1, 5)
+            goles_visitante = random.randint(0, 4)
+            asis_local = goles_local
+            asis_visitante = goles_visitante
+    elif resultado_local == "pierde":
+        resultado_visitante = "gana"
+        eventos.append(resultado_visitante)
+        while (goles_visitante <= goles_local):
+            goles_visitante = random.randint(1, 5)
+            goles_local = random.randint(0, 4)
+            asis_local = goles_local
+            asis_visitante = goles_visitante
+    else:
+        resultado_visitante = "empata"
+        eventos.append(resultado_visitante)
+        goles_local = random.randint(0, 5)
+        goles_local = goles_visitante
+
+    goles_totales = goles_local + goles_visitante
+    asis_local = goles_local
+    asis_visitante = goles_visitante
+    eventos.append(goles_totales)
+    eventos.append(goles_local)
+    eventos.append(goles_visitante)
+    eventos.append(asis_local)
+    eventos.append(asis_visitante)
+
+    t_amarilla_local = random.randint(0, 2)
+    t_amarilla_visita = random.randint(0, 2)
+    eventos.append(t_amarilla_local)
+    eventos.append(t_amarilla_visita)
+
+    print(f"{local} {goles_local} - {visitante} {goles_visitante}")
+    print("Goles en el encuentro:", goles_totales)
+    print("Asistencias equipo local:", asis_local)
+    print("Asistencias equipo visitante:", asis_visitante)
+    print("Tarjetas Amarillas Local:", t_amarilla_local)
+    print("Tarjetas Amarillas Visita:", t_amarilla_visita)
+
+    # [local, res_local, visi, res_visi, gol_total, gol_local, gol_visi, asis_local, asis_visitante, t_amarilla_local, t_amarilla_visita]
+    return eventos
+
+
 def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
+    """
+    Asigna aleatoriamente eventos a jugadores titulares de dos equipos. Pondera cada asignacion segun tipo de evento y posicion del jugador.
+
+    Args:
+        equipo_local (list): Titulares local.
+        equipo_visitante (list): Titulares visitante.
+        eventos (list): Eventos aleatorios del partido.
+        id_eventos (dict): Datos asociados a cada evento.
+
+    Returns:
+        eventos_asignados (list): Eventos asignados a jugadores de ambos equipos.
+    """
+
     # Probabilidad gol
     prob_gol = {"Arquero": 0.0, "Defensor": 0.1,
                 "Mediocampista": 0.2, "Delantero": 0.7}
 # Probabilidad asistencia
-    prob_asis = {"Arquero": 0.0, "Defensor": 0.1,
-                 "Mediocampista": 0.7, "Delantero": 0.2}
+    prob_asis = {"Arquero": 0.1, "Defensor": 0.1,
+                 "Mediocampista": 0.6, "Delantero": 0.2}
 # Probabilidad tarjeta amarilla
-    # prob_ta = {"Defensor": 0.6, "Mediocampista": 0.3, "Delantero": 0.1}
-# Lesion es completamente random
+    prob_ta = {"Arquero": 0.1, "Defensor": 0.3,
+               "Mediocampista": 0.3, "Delantero": 0.3}
 
-    # eventos_asignados = {}
+    id_eventos = {
+        0: {"titulo": "Partido Ganado", "puntaje_asociado": ""},
+        1: {"titulo": "Partido Empatado", "puntaje_asociado": ""},
+        2: {"titulo": "Partido Perdido", "puntaje_asociado": ""},
+        3: {"titulo": "Gol", "puntaje_asociado": 6},
+        4: {"titulo": "Asistencia", "puntaje_asociado": 3},
+        5: {"titulo": "Tarjeta Amarilla", "puntaje_asociado": -2},
+        6: {"titulo": "Tarjeta Roja", "puntaje_asociado": -4}
+    }
+
+    eventos_asignados = []
     goles_local = []
-    goles_visitante = []
+    asistencias_local = []
+    amarillas_local = []
+    goles_visita = []
+    asistencias_visita = []
+    amarillas_visita = []
     aux = []
 
+    # LOCAL
+    # gol
     pesos_local = [prob_gol.get(jugador[4], 0.1)
                    for jugador in equipo_local]
     while (eventos[5] != 0):
         goleador = random.choices(
             equipo_local, weights=pesos_local, k=1)[0]
+        aux.extend(goleador)
         aux.append(id_eventos[3]["titulo"])
         aux.append(id_eventos[3]["puntaje_asociado"])
-        aux.append(eventos[0])
-        aux.extend(goleador[2:])
         goles_local.append(aux)
         aux = []
         eventos[5] -= 1
-    # return goles_local
 
-    pesos_visitante = [prob_gol.get(jugador[4], 0.1)
-                       for jugador in equipo_visitante]
+    # asist
+    pesos_local = [prob_asis.get(jugador[4], 0.1)
+                   for jugador in equipo_local]
+    while (eventos[-4] != 0):
+        asistidor = random.choices(
+            equipo_local, weights=pesos_local, k=1)[0]
+        aux.extend(asistidor)
+        aux.append(id_eventos[4]["titulo"])
+        aux.append(id_eventos[4]["puntaje_asociado"])
+        asistencias_local.append(aux)
+        aux = []
+        eventos[-4] -= 1
+
+    # tarjetas
+    pesos_local = [prob_ta.get(jugador[4], 0.1)
+                   for jugador in equipo_local]
+    while (eventos[-2] != 0):
+        amonestado = random.choices(
+            equipo_local, weights=pesos_local, k=1)[0]
+        aux.extend(amonestado)
+        aux.append(id_eventos[5]["titulo"])
+        aux.append(id_eventos[5]["puntaje_asociado"])
+        amarillas_local.append(aux)
+        aux = []
+        eventos[-2] -= 1
+
+    # VISITA
+    # gol
+    pesos_visita = [prob_gol.get(jugador[4], 0.1)
+                    for jugador in equipo_visitante]
     while (eventos[6] != 0):
         goleador = random.choices(
-            equipo_visitante, weights=pesos_visitante, k=1)[0]
+            equipo_visitante, weights=pesos_visita, k=1)[0]
+        aux.extend(goleador)
         aux.append(id_eventos[3]["titulo"])
         aux.append(id_eventos[3]["puntaje_asociado"])
-        aux.append(eventos[2])
-        aux.extend(goleador[2:])
-        goles_visitante.append(aux)
+        goles_visita.append(aux)
         aux = []
         eventos[6] -= 1
-    # return goles_visitante
 
+    # asist
+    pesos_visita = [prob_asis.get(jugador[4], 0.1)
+                    for jugador in equipo_visitante]
+    while (eventos[-3] != 0):
+        asistidor = random.choices(
+            equipo_visitante, weights=pesos_visita, k=1)[0]
+        aux.extend(asistidor)
+        aux.append(id_eventos[4]["titulo"])
+        aux.append(id_eventos[4]["puntaje_asociado"])
+        asistencias_visita.append(aux)
+        aux = []
+        eventos[-3] -= 1
 
-def seleccion_de_jugadores(lista_jugadores):
-    lista_de_jugadores = []
-    while True:
-        jugador_seleccionado = seleccionar_jugador_de_lista(
-            ingreso_nombre(), lista_jugadores)
-        if not jugador_seleccionado == None:
-            if validar_seleccion(f"Desea añadir a {jugador_seleccionado[0]}?"):
-                lista_de_jugadores.append(jugador_seleccionado)
-            if not validar_seleccion("Desea seguir añadiendo jugadores?"):
-                imprimir_equipo(lista_de_jugadores)
-                return lista_de_jugadores
+    # tarjetas
+    pesos_visita = [prob_ta.get(jugador[4], 0.1)
+                    for jugador in equipo_visitante]
+    while (eventos[-1] != 0):
+        amonestado = random.choices(
+            equipo_visitante, weights=pesos_visita, k=1)[0]
+        aux.extend(amonestado)
+        aux.append(id_eventos[5]["titulo"])
+        aux.append(id_eventos[5]["puntaje_asociado"])
+        amarillas_visita.append(aux)
+        aux = []
+        eventos[-1] -= 1
+
+    # [evento, equipo, id_jugador, nombre, apellido, posicion, puntaje_asociado]
+    eventos_asignados.append(goles_local)
+    eventos_asignados.append(asistencias_local)
+    eventos_asignados.append(amarillas_local)
+    eventos_asignados.append(goles_visita)
+    eventos_asignados.append(asistencias_visita)
+    eventos_asignados.append(amarillas_visita)
+    return eventos_asignados
 
 
 """ LA DEJAMOS POR LAS DUDAS PERO NO ES LLAMADA
