@@ -1,7 +1,11 @@
 import json
 
-ACENTUADAS = "áéíóúÁÉÍÓÚ"
-NO_ACENTUADAS = "aeiouAEIOU"
+ACENTOS = {
+"á":"a","é":"e","í":"i","ó":"o","ú":"u"}
+
+def normalizar_acentos(string):
+	string = string.lower()
+	return ''.join([ACENTOS.get(c, c) for c in string])
 
 def confirmar_seleccion(mensaje):
    """Codigo basico de validacion para confirmar una seleccion
