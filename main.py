@@ -5,6 +5,7 @@
 import re
 import random
 import json
+import os
 from json.decoder import JSONDecodeError
 from utils import *
 from tablaPosiciones import *
@@ -298,13 +299,18 @@ def logica_menu_usuarios(dic_usuarios):
             print("Opcion no valida")
 
 
-def logica_menu_torneo(usuario, fixture):
+def logica_menu_torneo(usuario, fixture, matriz_posiciones):
+
+    fecha_actual = 0
     while True:
         print_menu_torneo()
         seleccion = input("> ").lower()
         if seleccion == "a":
-            resultado = simular_partido(fixture[0][0], lista_jugadores)
-            actualizar_y_guardar_tabla_posiciones(matriz_posiciones, resultado)
+            if fecha_actual < len(fixture):
+                matriz_posiciones = simular_fecha(fecha_actual, fixture, matriz_posiciones)
+                fecha_actual += 1
+            else:
+                print("¡El torneo ha terminado!")
         elif seleccion == "b":
             ver_fixture(fixture, usuario)
         elif seleccion == "c":
@@ -342,8 +348,8 @@ def logica_menu_principal(usuario):
         if seleccion == "a":
             logica_menu_equipo(usuario)
         elif seleccion == "b":
-            logica_menu_torneo(usuario, fixture)
-        # elif seleccion == "c":
+            logica_menu_torneo(usuario, fixture, matriz_posiciones)
+        elif seleccion == "c":
             logica_menu_usuarios()
         elif seleccion == "c":
             return
@@ -381,12 +387,12 @@ def ver_fixture(fixture, usuario):
     opcion = input("Elegí una opción: ")
     if opcion == "A":
         fecha_especifica = int(input("Indique la fecha especifica: "))
-        while fecha_especifica < 1 or fecha_especifica > 35:
-            print("Error, fecha inexistente, intente nuevamente")
-            fecha_especifica = int(input("Indique la fecha especifica: "))
+        while fecha_especifica > len(fixture) or fecha_especifica < 1:
+            print("Fecha no válida")
+            fecha_especifica=int(input("Indique la fecha especifica: "))
         print()
         print(f"\nFecha {fecha_especifica}".upper())
-        for partido in fixture[fecha_especifica]:
+        for partido in fixture[fecha_especifica-1]:
             print(f"{partido[0]} vs {partido[1]}")
         print()
     elif opcion == "B":
@@ -396,7 +402,7 @@ def ver_fixture(fixture, usuario):
                 print(f"  {local} vs {visitante}")
             print("-" * 20)
     else:
-        logica_menu_torneo(usuario, fixture)
+        logica_menu_torneo(usuario, fixture, matriz_posiciones)
 
 
 def procesar_equipos(fixture, jugadores):
@@ -519,6 +525,7 @@ def simular_resultado_partido(fixture):
 
     print(f"Equipo local, {local}, {resultado_local}")
     print(f"Equipo visitante, {visitante}, {resultado_visitante}")
+    print()
     return resultados_partidos
 
 
@@ -579,6 +586,20 @@ def seleccion_de_jugadores(lista_jugadores):
                 imprimir_equipo(lista_de_jugadores)
                 return lista_de_jugadores
 
+def simular_fecha(fecha_actual, fixture, matriz_posiciones):
+    print(f"\n=== FECHA {fecha_actual+1} ===")
+    
+    for partido in fixture[fecha_actual]:
+        resultados_partido = simular_resultado_partido(partido)
+        actualizar_matriz_posiciones(matriz_posiciones, resultados_partido)
+    
+    # 2. Ordenar la matriz
+    matriz_posiciones = ordenar_matriz(matriz_posiciones)
+    
+    # 3. Actualizar la tabla HTML
+    actualizar_tabla_posiciones_html(matriz_posiciones)
+    
+    return matriz_posiciones
 
 """ LA DEJAMOS POR LAS DUDAS PERO NO ES LLAMADA
 def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de la instancia del programa
@@ -591,7 +612,7 @@ def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de
 lista_equipos = registro_de_equipos(BBDD_JUGADORES)
 fixture = generar_fixture_ida_vuelta(lista_equipos)
 matriz_posiciones = crear_matriz_posiciones(lista_equipos)
-matriz_posiciones = rellenar_equipos_matriz(lista_equipos, matriz_posiciones)
+
 
 
 # PROGRAMA PRINCIPAL

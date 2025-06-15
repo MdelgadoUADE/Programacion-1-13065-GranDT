@@ -1,37 +1,10 @@
+import os
 def crear_matriz_posiciones(equipos):
-    """
-    Crea una matriz para almacenar las posiciones de los equipos en una tabla de liga.
-
-    Parametros:
-    equipos (list): Lista de nombres de equipos.
-
-    Retorna:
-    list: Matriz de dimensiones n x 5, donde n es el número de equipos. 
-          Las columnas representan: equipo, ganados, empatados, perdidos, puntos totales.
-    """
-
-    filas=(len(equipos))
-    columnas = 5 #equipo ganados empatados perdidos puntosTotales
-    matriz = [[0]*columnas for i in range(filas)]
+    
+    matriz = []
+    for equipo in equipos:
+        matriz.append([equipo, 0, 0, 0, 0])  # [equipo, ganados, empatados, perdidos, puntos]
     return matriz
-
-def rellenar_equipos_matriz(lista_equipos,matriz_posiciones):
-    """
-    Rellena la primera columna de la matriz con los nombres de los equipos en la lista_equipos
-    
-    Parametros:
-    lista_equipos (list): lista de nombres de equipos
-    matriz_posiciones (list): matriz de posiciones
-    
-    Retorna:
-    list: matriz de posiciones con la primera columna rellenada con los nombres de los equipos
-    """
-    filas = len(matriz_posiciones)
-    columnas = len(matriz_posiciones[0])
-    for f in range(filas):
-        for c in range(columnas):
-            matriz_posiciones[f][0] = lista_equipos[f]
-    return matriz_posiciones
 
 def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido):
     """
@@ -57,91 +30,45 @@ def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido):
                     fila[2] += 1 
                 break
     return matriz_posiciones
-def generar_html_tabla_posiciones(matriz_posiciones):
-    """
-    Genera una representación HTML de la tabla de posiciones.
 
-    Parámetros:
-    matriz_posiciones (list): Una matriz donde cada fila representa un equipo y las columnas
-                              contienen el nombre del equipo, la cantidad de partidos ganados,
-                              empatados, perdidos, y los puntos totales.
+def ordenar_matriz(matriz):
+    return sorted(matriz, key=lambda x: (-x[4], -x[1], -x[2], x[3]))
 
-    Retorna:
-    str: Una cadena que contiene el código HTML para la tabla de posiciones.
-    """
-
-    html = """
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <title>Tabla de Posiciones</title>
-        <link rel="stylesheet" href="stylesheet.css">
-    </head>
-    <body>
-        <h2>Tabla de Posiciones</h2>
-        <table>
-            <tr>
-                <th>Equipo</th>
-                <th>Ganados</th>
-                <th>Empatados</th>
-                <th>Perdidos</th>
-                <th>Puntos Totales</th>
-            </tr>
-    """
-    for fila in matriz_posiciones:
-        html += "<tr>"
-        for celda in fila:
-            html += f"<td>{celda}</td>"
-        html += "</tr>"
-    
-    html += """
-        </table>
-    </body>
-    </html>
-    """
-    return html
-
-def guardar_tabla_posiciones_html(matriz_posiciones, nombre_archivo="tabla_posiciones.html"):
-    """
-    Guarda la tabla de posiciones en un archivo HTML.
-
-    Parámetros:
-    matriz_posiciones (list): Una matriz donde cada fila representa un equipo y las columnas
-                              contienen el nombre del equipo, la cantidad de partidos ganados,
-                              empatados, perdidos, y los puntos totales.
-    nombre_archivo (str, opcional): El nombre del archivo que se creará. Por defecto es
-                                    "tabla_posiciones.html".
-
-    Retorna:
-    None
-    """
-    
-    html = generar_html_tabla_posiciones(matriz_posiciones)
+def actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo="tabla_posiciones.html"):
     try:
-        with open(nombre_archivo, "w", encoding="utf-8") as archivo:
-            archivo.write(html)
-        print(f"Tabla guardada como '{nombre_archivo}'. Podés abrirlo en tu navegador.")
+        directorio_actual = os.path.dirname(os.path.abspath(__file__))
+        ruta_archivo = os.path.join(directorio_actual, nombre_archivo)
+        
+        if not os.path.exists(ruta_archivo):
+            print(f"Error: No se encontró el archivo {nombre_archivo} en {directorio_actual}")
+            return
+        
+        with open(ruta_archivo, "r", encoding="utf-8") as archivo:
+            contenido = archivo.read()
+        
+        inicio_tabla = contenido.find("<tr><td>")
+        fin_tabla = contenido.find("</table>")
+        
+        if inicio_tabla == -1 or fin_tabla == -1:
+            raise Exception("No se pudo encontrar la estructura de la tabla en el archivo HTML")
+        
+        nueva_tabla = ""
+        for posicion, equipo in enumerate(matriz_posiciones, 1):
+            nueva_tabla += f"<tr><td>{posicion}. {equipo[0]}</td><td>{equipo[1]}</td><td>{equipo[2]}</td><td>{equipo[3]}</td><td>{equipo[4]}</td></tr>"
+        
+        # Reemplazar el contenido antiguo con el nuevo
+        nuevo_contenido = contenido[:inicio_tabla] + nueva_tabla + contenido[fin_tabla:]
+        
+        # Guardar el archivo actualizado
+        with open(ruta_archivo, "w", encoding="utf-8") as archivo:
+            archivo.write(nuevo_contenido)
+            
+        print()   
+        print(f"Tabla actualizada en: {ruta_archivo}")
+        print("Puedes abrir el archivo manualmente en tu navegador para ver la tabla de posiciones.")
+        
     except Exception as e:
-        print("Error al guardar el archivo:", e)
-
-def actualizar_y_guardar_tabla_posiciones(matriz_posiciones, resultados, nombre_archivo="tabla_posiciones.html"):
-    """
-    Actualiza la matriz de posiciones según los resultados proporcionados y guarda la tabla de posiciones actualizada en un archivo HTML.
-
-    Parámetros:
-    matriz_posiciones (list): Matriz actual de posiciones, donde cada fila representa un equipo y las columnas contienen el nombre del equipo, la cantidad de partidos ganados, empatados, perdidos y los puntos totales.
-    resultados (dict): Diccionario con los resultados del partido. Las claves son los nombres de los equipos y los valores son "gana", "pierde" o "empata".
-    nombre_archivo (str, opcional): El nombre del archivo HTML a crear. Por defecto es "tabla_posiciones.html".
-
-    Retorna:
-    None
-    """
-    # 1. Actualizar la matriz
-    matriz_actualizada = actualizar_matriz_posiciones(matriz_posiciones,resultados)
-    
-    # 2. Generar y guardar HTML
-    guardar_tabla_posiciones_html(matriz_actualizada, nombre_archivo)
+        print(f"Error al actualizar la tabla: {e}")
 
 def generar_fixture_ida_vuelta(equipos):
     """
