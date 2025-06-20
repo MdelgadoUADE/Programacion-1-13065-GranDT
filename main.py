@@ -197,12 +197,10 @@ def remover_usuario():
     while True:
         print("Por favor indique que usuario desea eliminar (con nombre):")
 
-        contador = 0
         usuarios = abrir_archivo_json("data/usuarios.json", "r")
         for usuario in usuarios:
-            print(f"{contador} - {usuario}")
-            print(f"{contador + 1} Salir")
-            contador += 1
+            print(f"{usuario}")
+        print("Salir")
 
         usuario_seleccionado = input("> ")
         if usuario_seleccionado.lower() == "salir":

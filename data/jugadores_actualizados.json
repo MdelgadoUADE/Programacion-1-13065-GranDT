@@ -1670,5 +1670,93 @@
     "posicion": "delantero",
     "costo": 1000000,
     "flag_capitan": false
+  },
+  "221": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Elías",
+    "apellido": "Torres",
+    "posicion": "delantero",
+    "costo": 1500000,
+    "flag_capitan": false
+  },
+  "222": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Matías",
+    "apellido": "Garcia",
+    "posicion": "delantero",
+    "costo": 2000000,
+    "flag_capitan": false
+  },
+  "223": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Roberto",
+    "apellido": "Bochi",
+    "posicion": "mediocampista",
+    "costo": 1750000,
+    "flag_capitan": false
+  },
+  "224": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Giuliano",
+    "apellido": "Cerato",
+    "posicion": "mediocampista",
+    "costo": 2000000,
+    "flag_capitan": false
+  },
+  "225": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Natanael",
+    "apellido": "Guzmán",
+    "posicion": "mediocampista",
+    "costo": 1600000,
+    "flag_capitan": false
+  },
+  "226": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Tiago",
+    "apellido": "Serrago",
+    "posicion": "mediocampista",
+    "costo": 2000000,
+    "flag_capitan": false
+  },
+  "227": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Tomás",
+    "apellido": "Kummer",
+    "posicion": "defensor",
+    "costo": 980000,
+    "flag_capitan": false
+  },
+  "228": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Ignacio",
+    "apellido": "Guerrico",
+    "posicion": "defensor",
+    "costo": 780000,
+    "flag_capitan": false
+  },
+  "229": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Rodrigo",
+    "apellido": "González",
+    "posicion": "defensor",
+    "costo": 1800000,
+    "flag_capitan": false
+  },
+  "230": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Gonzalo",
+    "apellido": "Mottes",
+    "posicion": "defensor",
+    "costo": 1450000,
+    "flag_capitan": false
+  },
+  "231": {
+    "id_equipo": "Aldosivi",
+    "nombre": "Jorge",
+    "apellido": "Carranza",
+    "posicion": "arquero",
+    "costo": 15000000,
+    "flag_capitan": false
   }
 }

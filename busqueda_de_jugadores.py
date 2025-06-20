@@ -12,13 +12,22 @@ def ayuda(valores_adyacentes):
         elif func_shortcut:
             pass
 
+def ver_jugadores(set_jugadores):
+    if type(set_jugadores) == set:
+        pass
+    else:
+        return ver_jugadores
+
+
 def filtrar_por(filtro, valor_pasado):
 
-    if filtro == "costo":
+    if filtro == "costo": # Validacion a parte por costo para convertir datos a int y poder filtrar entre rangos de valores
         costos = valor_pasado.split()
         costos = [int(valor) for valor in costos]
         if len(costos) > 1:
-            return set(filter(lambda jugador: BBDD_JUGADORES[jugador]["costo"] > costos[0], BBDD_JUGADORES.keys())) & set(filter(lambda jugador: BBDD_JUGADORES[jugador]["costo"] < costos[1], BBDD_JUGADORES.keys()))
+            jugadores_menor_valor = set(filter(lambda jugador: BBDD_JUGADORES[jugador]["costo"] >= costos[0], BBDD_JUGADORES.keys()))
+            jugadores_mayor_valor = set(filter(lambda jugador: BBDD_JUGADORES[jugador]["costo"] <= costos[1], BBDD_JUGADORES.keys()))
+            return jugadores_menor_valor.intersection(jugadores_mayor_valor)
         else:
             return set(filter(lambda jugador: BBDD_JUGADORES[jugador][filtro] == costos[0], BBDD_JUGADORES.keys()))
     return set(filter(lambda jugador: normalizar_acentos(BBDD_JUGADORES[jugador][filtro].lower()) == valor_pasado, BBDD_JUGADORES.keys()))
@@ -34,6 +43,8 @@ LISTA_DE_COMANDOS = {
     "--NOMBRE":lambda valor: filtrar_por("nombre", valor),
     "-a":lambda valor: filtrar_por("apellido", valor),
     "--APELLIDO":lambda valor: filtrar_por("apellido", valor),
+    "-v": ver_jugadores,
+    "--VER": ver_jugadores,
     "salir":None,
     "exit":None,
     "clear": True,
@@ -43,7 +54,6 @@ print("Consola de busqueda\ningresar '-h' para ayuda")
 print("Comandos basicos:\n-a, --ANADIR\n-r, --REMOVER\n, --NOMBRE\n-a, --APELLIDO")
 
 comandos_compilados = '|'.join(LISTA_DE_COMANDOS.keys())
-#regex_inicio = re.compile(f("^[a-zA-Z0-9]+ ?[a-zA-Z0-9]*"))
 regex_comandos_comunes = re.compile(f"({comandos_compilados}) +([a-zA-Z0-9]+ ?[a-zA-Z0-9]*)+")
 regex_comandos_combinados = re.compile(f"({comandos_compilados}) ({comandos_compilados})")
 
@@ -67,7 +77,8 @@ def procesar_comandos(input):
                     jugadores_seleccionados = jugadores_seleccionados & devolucion
             if devolucion == True:
                 jugadores_seleccionados = set()
-            print(jugadores_seleccionados)
+            if devolucion == ver_jugadores:  
+                print(jugadores_seleccionados)
 
 def iniciar_busqueda():
     while True:
