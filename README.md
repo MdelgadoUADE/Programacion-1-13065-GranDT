@@ -4,7 +4,6 @@
 - Delgado Matias
 - Penza Sebastian
 - Lovera Nicolas
-- Cantero Raul Ariel
 
 ### 💬 Introducción al proyecto
 - Este proyecto es parte del trabajo integrador para la materia Programación 1, clase 13065 de la UADE Q1 2025.
