@@ -751,7 +751,7 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
     matriz_posiciones = ordenar_matriz(matriz_posiciones)
     
     # 3. Actualizar la tabla HTML
-    nombre_archivo="htmlYCss/tabla_posiciones.html"
+    nombre_archivo="html_y_css/tabla_posiciones.html"
     actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo)
     
     return matriz_posiciones
