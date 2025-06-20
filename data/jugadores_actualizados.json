@@ -827,7 +827,7 @@
     "id_equipo": "Banfield",
     "nombre": "Emanuel",
     "apellido": "Insúa",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -835,7 +835,7 @@
     "id_equipo": "Banfield",
     "nombre": "Alejandro",
     "apellido": "Cabrera",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -851,7 +851,7 @@
     "id_equipo": "Banfield",
     "nombre": "Nicolás",
     "apellido": "Sosa Sánchez",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -891,7 +891,7 @@
     "id_equipo": "Argentinos Juniors",
     "nombre": "Kevin",
     "apellido": "Mac Allister",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -907,7 +907,7 @@
     "id_equipo": "Argentinos Juniors",
     "nombre": "Lucas",
     "apellido": "Villalba",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -915,7 +915,7 @@
     "id_equipo": "Argentinos Juniors",
     "nombre": "Román",
     "apellido": "Vega",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -931,7 +931,7 @@
     "id_equipo": "Argentinos Juniors",
     "nombre": "Fausto",
     "apellido": "Vera",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -963,7 +963,7 @@
     "id_equipo": "Argentinos Juniors",
     "nombre": "Francisco",
     "apellido": "González Metilli",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -995,7 +995,7 @@
     "id_equipo": "Defensa y Justicia",
     "nombre": "Tomás",
     "apellido": "Cardona",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1011,7 +1011,7 @@
     "id_equipo": "Defensa y Justicia",
     "nombre": "Kevin",
     "apellido": "Gutiérrez",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1027,7 +1027,7 @@
     "id_equipo": "Defensa y Justicia",
     "nombre": "David",
     "apellido": "Barbona",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1091,7 +1091,7 @@
     "id_equipo": "Tigre",
     "nombre": "Sebastián",
     "apellido": "Prieto",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1099,7 +1099,7 @@
     "id_equipo": "Tigre",
     "nombre": "Sebastián",
     "apellido": "Prediger",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1107,7 +1107,7 @@
     "id_equipo": "Tigre",
     "nombre": "Lucas",
     "apellido": "Menossi",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1179,7 +1179,7 @@
     "id_equipo": "Rosario Central",
     "nombre": "Alan",
     "apellido": "Rodríguez",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1187,7 +1187,7 @@
     "id_equipo": "Rosario Central",
     "nombre": "Kevin",
     "apellido": "Ortiz",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1195,7 +1195,7 @@
     "id_equipo": "Rosario Central",
     "nombre": "Ignacio",
     "apellido": "Malcorra",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1267,7 +1267,7 @@
     "id_equipo": "Newell's Old Boys",
     "nombre": "Ángelo",
     "apellido": "Martino",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1275,7 +1275,7 @@
     "id_equipo": "Newell's Old Boys",
     "nombre": "Juan",
     "apellido": "Sforza",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1283,7 +1283,7 @@
     "id_equipo": "Newell's Old Boys",
     "nombre": "Iván",
     "apellido": "Gómez",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
@@ -1291,7 +1291,7 @@
     "id_equipo": "Newell's Old Boys",
     "nombre": "Éver",
     "apellido": "Banega",
-    "posicion": "Centrocampista",
+    "posicion": "mediocampista",
     "costo": 1000000,
     "flag_capitan": false
   },
