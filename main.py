@@ -156,8 +156,8 @@ def registrar_usuario():
                 "centrocampista": 4,
                 "delantero": 2
             },
-            "equipo": [],
             "titulares": [],
+            "suplenteses": [],
             "nro_capitan": 0,
             "presupuesto": 42000000,
             "puntos": 0
@@ -751,7 +751,8 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
     matriz_posiciones = ordenar_matriz(matriz_posiciones)
     
     # 3. Actualizar la tabla HTML
-    actualizar_tabla_posiciones_html(matriz_posiciones)
+    nombre_archivo="htmlYCss/tabla_posiciones.html"
+    actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo)
     
     return matriz_posiciones
 

@@ -34,7 +34,7 @@ def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido):
 def ordenar_matriz(matriz):
     return sorted(matriz, key=lambda x: (-x[4], -x[1], -x[2], x[3]))
 
-def actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo="tabla_posiciones.html"):
+def actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo):
     try:
         directorio_actual = os.path.dirname(os.path.abspath(__file__))
         ruta_archivo = os.path.join(directorio_actual, nombre_archivo)
