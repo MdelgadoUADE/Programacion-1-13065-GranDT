@@ -4,12 +4,12 @@
         "formacion": {
             "arquero": 1,
             "defensor": 4,
-            "centrocampista": 4,
+            "mediocampista": 4,
             "delantero": 2
         },
-        "titulares": [],
-        "suplentes": [],
-        "nro_capitan": 0,
+        "titulares": [20, 2, 4, 8, 7, 24, 25, 40, 41, 231, 9],
+        "suplentes": [107, 1, 106, 37],
+        "nro_capitan": 231,
         "presupuesto": 42000000,
         "puntos": 0
     }

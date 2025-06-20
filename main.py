@@ -153,7 +153,7 @@ def registrar_usuario():
             "formacion": {
                 "arquero": 1,
                 "defensor": 4,
-                "centrocampista": 4,
+                "mediocampista": 4,
                 "delantero": 2
             },
             "titulares": [],
