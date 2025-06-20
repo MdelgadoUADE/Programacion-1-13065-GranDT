@@ -15,3 +15,6 @@ Tipo: <class 'IndexError'> - Mensaje: list index out of range
 Tipo: <class 'IndexError'> - Mensaje: list index out of range
 Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
 Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
+Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
+Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
+Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'

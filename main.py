@@ -9,6 +9,8 @@ import os
 from json.decoder import JSONDecodeError
 from utils import *
 from tablaPosiciones import *
+from impresionJugadores import *
+
 
 
 try:
@@ -32,6 +34,24 @@ finally:
     except NameError:
         pass
 
+try:
+    # Encoding añadido debido a error extraño con json
+    contenido = open("data/usuarios.json", "r", encoding="utf8")
+    usuario = contenido.read()
+
+    USUARIOS = json.loads(usuario)
+
+except FileNotFoundError as error:
+    print("No se pudo encontrar el archivo", error)
+
+except Exception as error:
+    print("Error: ", error)
+
+finally:
+    try:  # bloque protegido por si se intenta cerrar un archivo que no se consiguio abrir.
+        contenido.close()
+    except NameError:
+        pass
 
 # DEFINICIONES
 """
@@ -105,17 +125,6 @@ def print_menu_torneo():
           "C. Regresar al menu principal",
           )
 
-
-def print_equipo(equipo_usuario):
-    if len(equipo_usuario) == 0:
-        print("Sin jugadores en equipo")
-    else:
-        print()
-        for jugador in equipo_usuario:
-            datos_jugador = BBDD_JUGADORES.get(jugador)
-            print(
-                f"{datos_jugador['nombre']} {datos_jugador['apellido']} - Posicion: {datos_jugador['posicion']}")
-        input("\nPresione enter para continuar")
 # ---------------------------------------------
 #   LOGICA
 
@@ -153,11 +162,11 @@ def registrar_usuario():
             "formacion": {
                 "arquero": 1,
                 "defensor": 4,
-                "centrocampista": 4,
+                "mediocampista": 4,
                 "delantero": 2
             },
             "titulares": [],
-            "suplenteses": [],
+            "suplentes": [],
             "nro_capitan": 0,
             "presupuesto": 42000000,
             "puntos": 0
@@ -322,7 +331,7 @@ def logica_menu_equipo(usuario):
         print_menu_equipo()
         seleccion = input("> ").lower()
         if seleccion == "a":
-            print_equipo(usuario["equipo"])
+            imprimir_equipo_platilla(usuario)
         elif seleccion == "b":
             usuario = añadir_jugadores(usuario)
         elif seleccion == "c":
@@ -348,7 +357,7 @@ def logica_menu_principal(usuario):
         elif seleccion == "b":
             logica_menu_torneo(usuario, fixture, matriz_posiciones)
         elif seleccion == "c":
-            logica_menu_usuarios()
+            logica_menu_usuarios(USUARIOS)
         elif seleccion == "c":
             return
         else:
@@ -755,6 +764,14 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
     actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo)
     
     return matriz_posiciones
+
+def imprimir_equipo_platilla(usuario): 
+    html_render = formacion_html("htmlYCss/formacion.html", usuario["nom_usuario"], USUARIOS, BBDD_JUGADORES)
+
+    with open("equipo/formacion.html", "w", encoding="utf-8") as f:
+        f.write(html_render)
+
+
 
 """ LA DEJAMOS POR LAS DUDAS PERO NO ES LLAMADA
 def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de la instancia del programa
