@@ -7,8 +7,8 @@
             "centrocampista": 4,
             "delantero": 2
         },
-        "equipo": [],
         "titulares": [],
+        "suplentes": [],
         "nro_capitan": 0,
         "presupuesto": 42000000,
         "puntos": 0

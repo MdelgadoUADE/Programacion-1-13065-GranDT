@@ -156,8 +156,8 @@ def registrar_usuario():
                 "centrocampista": 4,
                 "delantero": 2
             },
-            "equipo": [],
             "titulares": [],
+            "suplenteses": [],
             "nro_capitan": 0,
             "presupuesto": 42000000,
             "puntos": 0
