@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f4f7;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+h3 {
+    margin-top: 20px;
+    color: #34495e;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+li:hover {
+    background-color: #e0f7fa;
+}
+
+/* Estilos por posición */
+#arquero ul li {
+    background-color: #dff0d8;
+}
+
+#defensor ul li {
+    background-color: #d9edf7;
+}
+
+#mediocampista ul li {
+    background-color: #fcf8e3;
+}
+
+#delantero ul li {
+    background-color: #f2dede;
+}
+
+#arquero h3, #defensor h3, #mediocampista h3, #delantero h3 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.cancha {
+    background: url('https://i.pinimg.com/736x/2f/ff/e1/2fffe1a3fe4dd1328ac981c78c644f68.jpg') center center / cover no-repeat, #228B22;
+    border-radius: 20px;
+    margin: 30px auto;
+    padding: 60px 0;
+    width: 900px;
+    box-shadow: 0 0 20px #aaa;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.linea {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 25px 0;
+}
+
+.linea > li, .linea > ul > li {
+    list-style: none;
+    background: #fff;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 2px 6px #0002;
+    border: 2px solid #2c3e50;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.suplentes {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 30px;
+    background: url('https://www.shutterstock.com/image-illustration/soccer-player-bench-600nw-157570721.jpg') center center / cover no-repeat;
+    border-radius: 15px;
+    padding: 40px 0;
+    width: 600px;         /* Más ancho */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.suplentes li {
+    list-style: none;
+    background: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95em;
+    border: 2px solid #888;
+    box-shadow: 0 2px 6px #0001;
+    text-align: center;
+}
+
+@media (max-width: 700px) {
+    .cancha {
+        width: 98vw;
+        padding: 10px 0;
+    }
+    .linea > li, .linea > ul > li {
+        width: 60px;
+        height: 60px;
+        font-size: 0.9em;
+    }
+    .suplentes li {
+        width: 40px;
+        height: 40px;
+        font-size: 0.8em;
+    }
+}
