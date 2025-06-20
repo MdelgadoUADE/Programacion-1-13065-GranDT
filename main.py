@@ -305,7 +305,8 @@ def logica_menu_torneo(usuario, fixture, matriz_posiciones):
         seleccion = input("> ").lower()
         if seleccion == "a":
             if fecha_actual < len(fixture):
-                matriz_posiciones = simular_fecha(fecha_actual, fixture, matriz_posiciones)
+                matriz_posiciones = simular_fecha(
+                    fecha_actual, fixture, matriz_posiciones)
                 fecha_actual += 1
             else:
                 print("¡El torneo ha terminado!")
@@ -387,7 +388,7 @@ def ver_fixture(fixture, usuario):
         fecha_especifica = int(input("Indique la fecha especifica: "))
         while fecha_especifica > len(fixture) or fecha_especifica < 1:
             print("Fecha no válida")
-            fecha_especifica=int(input("Indique la fecha especifica: "))
+            fecha_especifica = int(input("Indique la fecha especifica: "))
         print()
         print(f"\nFecha {fecha_especifica}".upper())
         for partido in fixture[fecha_especifica-1]:
@@ -608,7 +609,7 @@ def simular_eventos(fixture, resultado_local):
     return eventos
 
 
-def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
+def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFechaPartido):
     """
     Asigna aleatoriamente eventos a jugadores titulares de dos equipos. Pondera cada asignacion segun tipo de evento y posicion del jugador.
 
@@ -617,9 +618,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
         equipo_visitante (list): Titulares visitante.
         eventos (list): Eventos aleatorios del partido.
         id_eventos (dict): Datos asociados a cada evento.
-
-    Returns:
-        eventos_asignados (list): Eventos asignados a jugadores de ambos equipos.
+        nroFecha (list): Fecha y Partido a simular.
     """
 
     # Probabilidad gol
@@ -632,17 +631,6 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
     prob_ta = {"Arquero": 0.1, "Defensor": 0.3,
                "Mediocampista": 0.3, "Delantero": 0.3}
 
-    id_eventos = {
-        0: {"titulo": "Partido Ganado", "puntaje_asociado": ""},
-        1: {"titulo": "Partido Empatado", "puntaje_asociado": ""},
-        2: {"titulo": "Partido Perdido", "puntaje_asociado": ""},
-        3: {"titulo": "Gol", "puntaje_asociado": 6},
-        4: {"titulo": "Asistencia", "puntaje_asociado": 3},
-        5: {"titulo": "Tarjeta Amarilla", "puntaje_asociado": -2},
-        6: {"titulo": "Tarjeta Roja", "puntaje_asociado": -4}
-    }
-
-    eventos_asignados = []
     goles_local = []
     asistencias_local = []
     amarillas_local = []
@@ -664,6 +652,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
         goles_local.append(aux)
         aux = []
         eventos[5] -= 1
+    cargar_evento(goles_local, nroFechaPartido)
 
     # asist
     pesos_local = [prob_asis.get(jugador[4], 0.1)
@@ -677,6 +666,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
         asistencias_local.append(aux)
         aux = []
         eventos[-4] -= 1
+    cargar_evento(asistencias_local, nroFechaPartido)
 
     # tarjetas
     pesos_local = [prob_ta.get(jugador[4], 0.1)
@@ -690,6 +680,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
         amarillas_local.append(aux)
         aux = []
         eventos[-2] -= 1
+    cargar_evento(amarillas_local, nroFechaPartido)
 
     # VISITA
     # gol
@@ -704,6 +695,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
         goles_visita.append(aux)
         aux = []
         eventos[6] -= 1
+    cargar_evento(goles_visita, nroFechaPartido)
 
     # asist
     pesos_visita = [prob_asis.get(jugador[4], 0.1)
@@ -717,6 +709,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
         asistencias_visita.append(aux)
         aux = []
         eventos[-3] -= 1
+    cargar_evento(asistencias_visita, nroFechaPartido)
 
     # tarjetas
     pesos_visita = [prob_ta.get(jugador[4], 0.1)
@@ -730,31 +723,25 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos):
         amarillas_visita.append(aux)
         aux = []
         eventos[-1] -= 1
+    cargar_evento(amarillas_visita, nroFechaPartido)
 
-    # [evento, equipo, id_jugador, nombre, apellido, posicion, puntaje_asociado]
-    eventos_asignados.append(goles_local)
-    eventos_asignados.append(asistencias_local)
-    eventos_asignados.append(amarillas_local)
-    eventos_asignados.append(goles_visita)
-    eventos_asignados.append(asistencias_visita)
-    eventos_asignados.append(amarillas_visita)
-    return eventos_asignados
 
 def simular_fecha(fecha_actual, fixture, matriz_posiciones):
     print(f"\n=== FECHA {fecha_actual+1} ===")
-    
+
     for partido in fixture[fecha_actual]:
         resultados_partido = simular_resultado_partido(partido)
         actualizar_matriz_posiciones(matriz_posiciones, resultados_partido)
-    
+
     # 2. Ordenar la matriz
     matriz_posiciones = ordenar_matriz(matriz_posiciones)
-    
+
     # 3. Actualizar la tabla HTML
-    nombre_archivo="htmlYCss/tabla_posiciones.html"
+    nombre_archivo = "htmlYCss/tabla_posiciones.html"
     actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo)
-    
+
     return matriz_posiciones
+
 
 """ LA DEJAMOS POR LAS DUDAS PERO NO ES LLAMADA
 def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de la instancia del programa
@@ -767,7 +754,6 @@ def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de
 lista_equipos = registro_de_equipos(BBDD_JUGADORES)
 fixture = generar_fixture_ida_vuelta(lista_equipos)
 matriz_posiciones = crear_matriz_posiciones(lista_equipos)
-
 
 
 # PROGRAMA PRINCIPAL
