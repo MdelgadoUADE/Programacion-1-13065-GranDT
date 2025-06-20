@@ -754,7 +754,7 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
 
 def imprimir_equipo_platilla(usuario):
     html_render = formacion_html(
-        "htmlYCss/formacion.html", usuario["nom_usuario"], USUARIOS, BBDD_JUGADORES)
+        "html_y_css/formacion.html", usuario["nom_usuario"], USUARIOS, BBDD_JUGADORES)
 
     with open("equipo/formacion.html", "w", encoding="utf-8") as f:
         f.write(html_render)
