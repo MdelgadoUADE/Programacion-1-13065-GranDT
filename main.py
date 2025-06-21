@@ -165,8 +165,8 @@ def registrar_usuario():
                 "mediocampista": 4,
                 "delantero": 2
             },
-            "titulares": [],
-            "suplentes": [],
+            "titulares": {},
+            "suplentes": {},
             "nro_capitan": 0,
             "presupuesto": 42000000,
             "puntos": 0
@@ -689,7 +689,6 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
 
 
 def simular_fecha(fecha_actual, fixture, matriz_posiciones):
-    global USUARIOS
     print(f"\n=== FECHA {fecha_actual+1} ===")
 
     eventos = []
@@ -708,18 +707,18 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
         i += 1
 
     #De aca
+    usuarios_core = USUARIOS
     eventos_json = formato_json("data/eventos.txt")
-    USUARIOS = actualizar_puntos_usuarios(USUARIOS, eventos_json, fecha_actual+1)
-    
-    '''
+    usuarios_core = actualizar_puntos_usuarios(usuarios_core, eventos_json, fecha_actual+1)
+
+    """
     if USUARIOS:
         with open("data/usuarios.json", "w", encoding="utf-8") as f:
             json.dump(USUARIOS, f, indent=4)
     else:
         print("Error: USUARIOS está vacío, no se guardará el archivo.")
 #a aca es contabilizar los puntos a los jugadores del usuario
-    '''
-
+    """
 
     # 2. Ordenar la matriz
     matriz_posiciones = ordenar_matriz(matriz_posiciones)
