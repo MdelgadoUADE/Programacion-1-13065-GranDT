@@ -577,10 +577,10 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
 
     goles_local = []
     asistencias_local = []
-    amarillas_local = []
+    tarjetas_local = []
     goles_visita = []
     asistencias_visita = []
-    amarillas_visita = []
+    tarjetas_visita = []
     aux = []
 
     # LOCAL
@@ -613,18 +613,27 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
     cargar_evento(asistencias_local, nroFechaPartido)
 
     # tarjetas
+    amonestadosLocal = {}
     pesos_local = [prob_ta.get(jugador[4], 0.1)
                    for jugador in equipo_local]
     while (eventos[-2] != 0):
         amonestado = random.choices(
             equipo_local, weights=pesos_local, k=1)[0]
-        aux.extend(amonestado)
-        aux.append(id_eventos[5]["titulo"])
-        aux.append(id_eventos[5]["puntaje_asociado"])
-        amarillas_local.append(aux)
+        id_jugador = amonestado[0]
+        if id_jugador in amonestadosLocal:
+            aux.extend(amonestado)
+            aux.append(id_eventos[6]["titulo"])
+            aux.append(id_eventos[6]["puntaje_asociado"])
+            tarjetas_local.append(aux)
+        else:
+            aux.extend(amonestado)
+            aux.append(id_eventos[5]["titulo"])
+            aux.append(id_eventos[5]["puntaje_asociado"])
+            tarjetas_local.append(aux)
+        amonestadosLocal = amonestado
         aux = []
         eventos[-2] -= 1
-    cargar_evento(amarillas_local, nroFechaPartido)
+    cargar_evento(tarjetas_local, nroFechaPartido)
 
     # VISITA
     # gol
@@ -656,18 +665,27 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
     cargar_evento(asistencias_visita, nroFechaPartido)
 
     # tarjetas
+    amonestadosVisita = {}
     pesos_visita = [prob_ta.get(jugador[4], 0.1)
                     for jugador in equipo_visitante]
     while (eventos[-1] != 0):
         amonestado = random.choices(
             equipo_visitante, weights=pesos_visita, k=1)[0]
-        aux.extend(amonestado)
-        aux.append(id_eventos[5]["titulo"])
-        aux.append(id_eventos[5]["puntaje_asociado"])
-        amarillas_visita.append(aux)
+        id_jugador = amonestado[0]
+        if id_jugador in amonestadosVisita:
+            aux.extend(amonestado)
+            aux.append(id_eventos[6]["titulo"])
+            aux.append(id_eventos[6]["puntaje_asociado"])
+            tarjetas_visita.append(aux)
+        else:
+            aux.extend(amonestado)
+            aux.append(id_eventos[5]["titulo"])
+            aux.append(id_eventos[5]["puntaje_asociado"])
+            tarjetas_visita.append(aux)
+        amonestadosVisita = amonestado
         aux = []
         eventos[-1] -= 1
-    cargar_evento(amarillas_visita, nroFechaPartido)
+    cargar_evento(tarjetas_visita, nroFechaPartido)
 
 
 def simular_fecha(fecha_actual, fixture, matriz_posiciones):
@@ -717,14 +735,6 @@ def imprimir_equipo_platilla(usuario):
         f.write(html_render)
 
 
-""" LA DEJAMOS POR LAS DUDAS PERO NO ES LLAMADA
-def fecha_actual_partidos(fecha,fixture): # fecha deberia ser la fecha actual de la instancia del programa
-    fecha_actual = fecha
-    for partido in fixture[fecha_actual]:
-        simular_partido(partido)
-    fecha_actual= fecha_actual+1
-    return fecha_actual
-"""
 lista_equipos = registro_de_equipos(BBDD_JUGADORES)
 fixture = generar_fixture_ida_vuelta(lista_equipos)
 matriz_posiciones = crear_matriz_posiciones(lista_equipos)
