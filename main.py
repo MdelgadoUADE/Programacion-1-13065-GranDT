@@ -532,8 +532,8 @@ def simular_eventos(fixture, fecha, resultado_local):
     eventos.append(asis_local)
     eventos.append(asis_visitante)
 
-    t_amarilla_local = random.randint(2, 2)
-    t_amarilla_visita = random.randint(2, 2)
+    t_amarilla_local = random.randint(0, 2)
+    t_amarilla_visita = random.randint(0, 2)
     eventos.append(t_amarilla_local)
     eventos.append(t_amarilla_visita)
 
