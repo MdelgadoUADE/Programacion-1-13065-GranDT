@@ -444,78 +444,6 @@ def procesar_equipos(fixture, jugadores):
     return titulares_local, titulares_visitante
 
 
-'''
-def simular_eventos(fixture, resultado_local):
-    """
-    Genera aleatoriamente los valores de los eventos de un partido.
-
-    Args:
-        fixture (tuple): Local vs. Visitante.
-        resultado_local (str): Resultado del equipo local.
-
-    Returns:
-        Eventos (list): Una lista con todos los eventos del partido.
-    """
-
-    eventos = []
-    local, visitante = fixture
-
-    goles_local = 0
-    goles_visitante = 0
-    resultado_visitante = 0
-
-    eventos.append(local)
-    eventos.append(resultado_local)
-    eventos.append(visitante)
-
-    if resultado_local == "gana":
-        resultado_visitante = "pierde"
-        eventos.append(resultado_visitante)
-        while (goles_local <= goles_visitante):
-            goles_local = random.randint(1, 5)
-            goles_visitante = random.randint(0, 4)
-            asis_local = goles_local
-            asis_visitante = goles_visitante
-    elif resultado_local == "pierde":
-        resultado_visitante = "gana"
-        eventos.append(resultado_visitante)
-        while (goles_visitante <= goles_local):
-            goles_visitante = random.randint(1, 5)
-            goles_local = random.randint(0, 4)
-            asis_local = goles_local
-            asis_visitante = goles_visitante
-    else:
-        resultado_visitante = "empata"
-        eventos.append(resultado_visitante)
-        goles_local = random.randint(0, 5)
-        goles_local = goles_visitante
-
-    goles_totales = goles_local + goles_visitante
-    asis_local = goles_local
-    asis_visitante = goles_visitante
-    eventos.append(goles_totales)
-    eventos.append(goles_local)
-    eventos.append(goles_visitante)
-    eventos.append(asis_local)
-    eventos.append(asis_visitante)
-
-    t_amarilla_local = random.randint(0, 2)
-    t_amarilla_visita = random.randint(0, 2)
-    eventos.append(t_amarilla_local)
-    eventos.append(t_amarilla_visita)
-
-    print(f"{local} {goles_local} - {visitante} {goles_visitante}")
-    # print("Goles en el encuentro:", goles_totales)
-    # print("Asistencias equipo local:", asis_local)
-    # print("Asistencias equipo visitante:", asis_visitante)
-    # print("Tarjetas Amarillas Local:", t_amarilla_local)
-    # print("Tarjetas Amarillas Visita:", t_amarilla_visita)
-
-    # [local, res_local, visi, res_visi, gol_total, gol_local, gol_visi, asis_local, asis_visitante, t_amarilla_local, t_amarilla_visita]
-    return eventos
-'''
-
-
 def simular_resultado_partido(fixture):
     """
     Randomiza el resultado de un partido.
@@ -610,7 +538,6 @@ def simular_eventos(fixture, fecha, resultado_local):
     eventos.append(t_amarilla_visita)
 
     print(f"{local} {goles_local} - {visitante} {goles_visitante}")
-    print(eventos)
     # print("Goles en el encuentro:", goles_totales)
     # print("Asistencias equipo local:", asis_local)
     # print("Asistencias equipo visitante:", asis_visitante)
@@ -634,14 +561,14 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
     """
 
     # Probabilidad gol
-    prob_gol = {"Arquero": 0.0, "Defensor": 0.1,
-                "Mediocampista": 0.2, "Delantero": 0.7}
+    prob_gol = {"arquero": 0.0, "defensor": 0.1,
+                "mediocampista": 0.2, "delantero": 0.7}
 # Probabilidad asistencia
-    prob_asis = {"Arquero": 0.1, "Defensor": 0.1,
-                 "Mediocampista": 0.6, "Delantero": 0.2}
+    prob_asis = {"arquero": 0.1, "defensor": 0.1,
+                 "mediocampista": 0.6, "delantero": 0.2}
 # Probabilidad tarjeta amarilla
-    prob_ta = {"Arquero": 0.1, "Defensor": 0.3,
-               "Mediocampista": 0.3, "Delantero": 0.3}
+    prob_ta = {"arquero": 0.1, "defensor": 0.3,
+               "mediocampista": 0.3, "delantero": 0.3}
 
     goles_local = []
     asistencias_local = []
