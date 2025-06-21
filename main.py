@@ -10,6 +10,7 @@ from json.decoder import JSONDecodeError
 from utils import *
 from tablaPosiciones import *
 from impresionJugadores import *
+from calculo_puntos import *
 
 
 try:
@@ -300,7 +301,7 @@ def logica_menu_usuarios(dic_usuarios):
         elif seleccion == "c":
             remover_usuario()
         elif seleccion == "d":
-            return
+            return #aca deberia cortar ejecucion
         else:
             print("Opcion no valida")
 
@@ -332,6 +333,8 @@ def logica_menu_equipo(usuario):
         seleccion = input("> ").lower()
         if seleccion == "a":
             imprimir_equipo_platilla(usuario)
+            print()
+
         elif seleccion == "b":
             usuario = añadir_jugadores(usuario)
         elif seleccion == "c":
@@ -392,7 +395,7 @@ def ver_fixture(fixture, usuario):
     print("B. Ver fixture completo")
     print("C. Atras")
     opcion = input("Elegí una opción: ")
-    if opcion == "A":
+    if opcion.lower() == "a":
         fecha_especifica = int(input("Indique la fecha especifica: "))
         while fecha_especifica > len(fixture) or fecha_especifica < 1:
             print("Fecha no válida")
@@ -402,14 +405,16 @@ def ver_fixture(fixture, usuario):
         for partido in fixture[fecha_especifica-1]:
             print(f"{partido[0]} vs {partido[1]}")
         print()
-    elif opcion == "B":
+    elif opcion.lower() == "b":
         for numero_fecha, fecha in enumerate(fixture, start=1):
             print(f"Fecha {numero_fecha}:".upper())
             for local, visitante in fecha:
                 print(f"  {local} vs {visitante}")
             print("-" * 20)
-    else:
+    elif opcion.lower() == "c":
         logica_menu_torneo(usuario, fixture, matriz_posiciones)
+    else:
+        print("Opcion no valida")
 
 
 def procesar_equipos(fixture, jugadores):
@@ -666,6 +671,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
 
 
 def simular_fecha(fecha_actual, fixture, matriz_posiciones):
+    global USUARIOS
     print(f"\n=== FECHA {fecha_actual+1} ===")
 
     eventos = []
@@ -679,16 +685,25 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
             fixture[fecha_actual][i], fecha_actual+1, resultados_partido["local"][1])
         titulares_local, titulares_visitante = procesar_equipos(
             fixture[fecha_actual][i], BBDD_JUGADORES)
-        asignar_eventos(titulares_local, titulares_visitante,
-                        eventos, id_eventos, fecha_actual+1)
+        asignar_eventos(titulares_local, titulares_visitante,eventos, id_eventos, fecha_actual+1)
         actualizar_matriz_posiciones(matriz_posiciones, resultados_partido)
         i += 1
+
+    #De aca
+    eventos_txt = cargar_eventos("data/eventos.txt")
+    USUARIOS = actualizar_puntos_usuarios(USUARIOS, eventos_txt, fecha_actual+1)
+    if USUARIOS:
+        with open("data/usuarios.json", "w", encoding="utf-8") as f:
+            json.dump(USUARIOS, f, indent=4)
+    else:
+        print("Error: USUARIOS está vacío, no se guardará el archivo.")
+#a aca es contabilizar los puntos a los jugadores del usuario
+
 
     # 2. Ordenar la matriz
     matriz_posiciones = ordenar_matriz(matriz_posiciones)
 
     # 3. Actualizar la tabla HTML
-    nombre_archivo = "htmlYCss/tabla_posiciones.html"
     nombre_archivo = "html_y_css/tabla_posiciones.html"
     actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo)
 
@@ -696,8 +711,7 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
 
 
 def imprimir_equipo_platilla(usuario):
-    html_render = formacion_html(
-        "html_y_css/formacion.html", usuario["nom_usuario"], USUARIOS, BBDD_JUGADORES)
+    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], USUARIOS, BBDD_JUGADORES)
 
     with open("equipo/formacion.html", "w", encoding="utf-8") as f:
         f.write(html_render)
