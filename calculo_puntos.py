@@ -1,13 +1,11 @@
 import json
 
-def cargar_eventos(path_eventos):
+def formato_json(path_eventos):
     with open(path_eventos, "r", encoding="utf-8") as f:
         eventos = json.loads(f.read().replace("'", '"'))
     return eventos
 
-def calcular_puntos_usuario(usuario, eventos, fecha_actual):
-    puntos = 0
-    titulares = usuario["titulares"]  # Es un dict: {id_jugador: puntaje_actual}
+def calcular_puntos_usuario(titulares,dic_titulares, eventos, fecha_actual):
     for evento in eventos:
         # Solo eventos de la fecha actual y con id_jugador válido
         id_jugador = str(evento.get("id_jugador"))
@@ -15,11 +13,15 @@ def calcular_puntos_usuario(usuario, eventos, fecha_actual):
             puntaje = evento.get("puntaje_asociado", 0)
             puntos += puntaje
             # Sumar el puntaje al jugador titular
-            titulares[id_jugador] += puntaje
-    return puntos
+            dic_titulares[id_jugador] += puntaje
+    return puntos, dic_titulares
 
 def actualizar_puntos_usuarios(usuarios, eventos, fecha_actual):
     for usuario in usuarios.values():
-        usuario["puntos"] = calcular_puntos_usuario(usuario, eventos, fecha_actual)
+        titulares = list(usuario["titulares"].keys())
+        dic_titulares = usuario["titulares"]
+        usuario[titulares], dic_titulares = calcular_puntos_usuario(titulares,dic_titulares, eventos, fecha_actual)
+        print(usuario ["nom_usuario"],usuario["puntos"])
+        print(dic_titulares)
         
     return usuarios

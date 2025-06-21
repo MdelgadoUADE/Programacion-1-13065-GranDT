@@ -708,14 +708,17 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
         i += 1
 
     #De aca
-    eventos_txt = cargar_eventos("data/eventos.txt")
-    USUARIOS = actualizar_puntos_usuarios(USUARIOS, eventos_txt, fecha_actual+1)
+    eventos_json = formato_json("data/eventos.txt")
+    USUARIOS = actualizar_puntos_usuarios(USUARIOS, eventos_json, fecha_actual+1)
+    
+    '''
     if USUARIOS:
         with open("data/usuarios.json", "w", encoding="utf-8") as f:
             json.dump(USUARIOS, f, indent=4)
     else:
         print("Error: USUARIOS está vacío, no se guardará el archivo.")
 #a aca es contabilizar los puntos a los jugadores del usuario
+    '''
 
 
     # 2. Ordenar la matriz
