@@ -20,6 +20,85 @@ filtro_por_costo = lambda valor: filtrar_por("costo", valor)
 filtro_por_nombre = lambda valor: filtrar_por("nombre", valor)
 filtro_por_apellido = lambda valor: filtrar_por("apellido", valor)
 
+def añadir_jugadores(usuario, listado_jugadores):
+    try:
+        if type(usuario) == dict and type(listado_jugadores) == set:
+            if not verificacion_de_formacion(usuario, listado_jugadores):
+                print("La formacion no permite añadir los jugadores seleccionados")
+                return
+    
+            costo = 0
+            for jugadores in listado_jugadores:
+                costo += BBDD_JUGADORES[jugadores]["costo"]
+            print(f"""El costo total de los jugadores es de: {costo}\nEl presupuesto disponible es de: {usuario['presupuesto']}\nEl presupuesto restante despues de la transacción es de: {usuario['presupuesto'] - costo}""")
+            
+            if costo <= usuario["presupuesto"]:
+                if confirmar_seleccion("¿Desea realizar la transacción?"):
+                    usuario["titulares"] = usuario["titulares"] + list(listado_jugadores)
+                    usuario["presupuesto"] -= costo
+                    print("Transacción realizada con exito")
+                    return usuario
+            else:
+                print("\nPresupuesto insuficiente para realizar la transacción")
+                return
+
+        else:
+            raise TypeError
+
+    except TypeError:
+        registrar_excepciones(TypeError("El usuario debe ser un diccionario y la lista de jugadores debe ser un conjunto"))
+    except Exception as e:
+        registrar_excepciones(e)
+
+def verificacion_de_formacion(usuario, jugadores_a_agregar):
+    try:
+        if type(usuario) == dict and (type(jugadores_a_agregar) == set or type(jugadores_a_agregar) == list):
+            formacion = usuario["formacion"].copy()
+            contador_suplentes = len(usuario["suplentes"])
+
+            for jugador in usuario["titulares"]:
+                formacion[BBDD_JUGADORES[jugador]["posicion"]] -= 1
+
+            for jugador in jugadores_a_agregar:
+                if not formacion[BBDD_JUGADORES[jugador]["posicion"]] <= 0:
+                    formacion[BBDD_JUGADORES[jugador]["posicion"]] -= 1
+                elif contador_suplentes <= 4:
+                    contador_suplentes += 1
+                else:
+                    raise AssertionError(f"No hay suficiente espacio en la formación para el jugador {BBDD_JUGADORES[jugador]['nombre']} {BBDD_JUGADORES[jugador]['apellido']}")
+            return True
+    except AssertionError as e:
+        return False
+    except Exception as e:
+        registrar_excepciones(e)
+
+def eliminar_jugadores(usuario, jugadores_a_eliminar):
+    jugadores_no_encontrados = []
+    try:
+        if jugadores_a_eliminar <= 0:
+            print("No hay jugadores para eliminar")
+            return
+        if type(usuario) == dict and (type(jugadores_a_eliminar) == set or type(jugadores_a_eliminar) == list):
+            for jugador in jugadores_a_eliminar:
+                if jugador in usuario["titulares"]:
+                    usuario["titulares"].remove(jugador)
+                    usuario["presupuesto"] += BBDD_JUGADORES[jugador]["costo"]
+                elif jugador in usuario["suplentes"]:
+                    usuario["suplentes"].remove(jugador)
+                    usuario["presupuesto"] += BBDD_JUGADORES[jugador]["costo"]
+                else:
+                    jugadores_no_encontrados.append(jugador)
+            if len(jugadores_no_encontrados) > 0:
+                print(f"Los siguientes jugadores no fueron encontrados:")
+                for jugador in jugadores_no_encontrados:
+                    print(f"{BBDD_JUGADORES[jugador]['nombre']} {BBDD_JUGADORES[jugador]['apellido']}")
+            return
+
+    except TypeError:
+        registrar_excepciones(TypeError("El usuario debe ser un diccionario y la lista de jugadores debe ser un conjunto"))
+    except Exception as e:
+        registrar_excepciones(e)
+
 LISTA_DE_COMANDOS = {
     "-e":filtro_por_equipo,
     "--EQUIPO":filtro_por_equipo,
@@ -31,10 +110,10 @@ LISTA_DE_COMANDOS = {
     "--APELLIDO":filtro_por_apellido,
     "-v": lambda valor: ver_jugadores("", valor),
     "--VER": lambda valor: ver_jugadores("", valor),
-    "-an":"",
-    "--ANADIR":"",
-    "-r":"",
-    "--REMOVER":"",
+    "-an":lambda valor: añadir_jugadores("", valor),
+    "--ANADIR":lambda valor: añadir_jugadores("", valor),
+    "-r":lambda valor: eliminar_jugadores("", valor),
+    "--REMOVER":lambda valor: eliminar_jugadores("", valor),
     "salir":"salir",
     "exit":"salir",
     "clear": "borrar",
@@ -102,13 +181,14 @@ def procesar_comandos(input, listado_jugadores, usuario):
     #aqui se otorga una prioridad de ejecucion a los comandos
     comando_help, comandos = regex_help.findall(input), regex_comandos.findall(input)
     #esta lista por compresion remueve todos los espacios blancos adelante y atras de los comandos 
-    comandos = limpiar_comandos_duplicados(comandos)
-    comandos = [(comando, valor.strip()) for comando, valor in comandos]
+    print(comandos)
+    if len(comandos) > 0:
+        comandos = limpiar_comandos_duplicados(comandos)
+        comandos = [(comando, valor.strip()) for comando, valor in comandos]
 
-    if len(comando_help) > 0:
-        ayuda(comando_help[0][1])
+        if len(comando_help) > 0:
+            ayuda(comando_help[0][1])
 
-    if comandos != None:
         for comando in comandos:
 
             devolucion = ""
