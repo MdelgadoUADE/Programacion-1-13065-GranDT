@@ -1,4 +1,5 @@
 import json
+import os
 
 ACENTOS = {
     "á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u"}
@@ -70,7 +71,7 @@ def abrir_archivo_json(nombre_archivo, modo):
 
 def cargar_evento(listaEvento, nroFecha):
     """
-    Recibe cada lista de eventos, ya asignados, por categoria y los escribe en un archivo de salida.
+    Recibe cada lista de eventos individuales, ya asignados, por categoria y los escribe en un archivo de salida.
 
     Args:
         listaEvento (list): Lista del tipo de evento para agregar al archivo.
@@ -81,6 +82,7 @@ def cargar_evento(listaEvento, nroFecha):
 
     for evento in listaEvento:
         eventos2json.append({
+            "fecha": nroFecha,
             "evento": evento[-2],
             "equipo": evento[1],
             "id_jugador": evento[0],
@@ -90,20 +92,21 @@ def cargar_evento(listaEvento, nroFecha):
             "puntaje_asociado": evento[-1]
         })
 
+    '''
     if nroFecha != 0:
         data_path = f"data/eventos{nroFecha}.txt"
+    '''
 
-    data_path = "data/eventos.txt"
     data = []
 
-    if os.path.exists(data_path):
+    if os.path.exists("data/eventos.txt"):
         try:
-            with open(data_path, mode="r", encoding="UTF-8") as archivo:
+            with open("data/eventos.txt", mode="r", encoding="UTF-8") as archivo:
                 data = json.load(archivo)
         except FileNotFoundError:
             print("No se encontró el archivo.")
 
     data.extend(eventos2json)
 
-    with open(data_path, mode='w', encoding='utf-8') as archivo:
+    with open("data/eventos.txt", mode='w', encoding='utf-8') as archivo:
         json.dump(data, archivo, indent=4, ensure_ascii=False)

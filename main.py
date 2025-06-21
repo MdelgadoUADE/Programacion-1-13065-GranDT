@@ -148,8 +148,8 @@ def main():
 
         main()
 
-    except Exception as e:
-        registrar_excepciones(e)
+    # except Exception as e:
+        # registrar_excepciones(e)
 
 
 def registrar_usuario():
@@ -444,6 +444,7 @@ def procesar_equipos(fixture, jugadores):
     return titulares_local, titulares_visitante
 
 
+'''
 def simular_eventos(fixture, resultado_local):
     """
     Genera aleatoriamente los valores de los eventos de un partido.
@@ -504,14 +505,15 @@ def simular_eventos(fixture, resultado_local):
     eventos.append(t_amarilla_visita)
 
     print(f"{local} {goles_local} - {visitante} {goles_visitante}")
-    print("Goles en el encuentro:", goles_totales)
-    print("Asistencias equipo local:", asis_local)
-    print("Asistencias equipo visitante:", asis_visitante)
-    print("Tarjetas Amarillas Local:", t_amarilla_local)
-    print("Tarjetas Amarillas Visita:", t_amarilla_visita)
+    # print("Goles en el encuentro:", goles_totales)
+    # print("Asistencias equipo local:", asis_local)
+    # print("Asistencias equipo visitante:", asis_visitante)
+    # print("Tarjetas Amarillas Local:", t_amarilla_local)
+    # print("Tarjetas Amarillas Visita:", t_amarilla_visita)
 
     # [local, res_local, visi, res_visi, gol_total, gol_local, gol_visi, asis_local, asis_visitante, t_amarilla_local, t_amarilla_visita]
     return eventos
+'''
 
 
 def simular_resultado_partido(fixture):
@@ -541,13 +543,13 @@ def simular_resultado_partido(fixture):
     resultados_partidos["local"] = (local, resultado_local)
     resultados_partidos["visitante"] = (visitante, resultado_visitante)
 
-    print(f"Equipo local, {local}, {resultado_local}")
-    print(f"Equipo visitante, {visitante}, {resultado_visitante}")
-    print()
+    # print(f"Equipo local, {local}, {resultado_local}")
+    # print(f"Equipo visitante, {visitante}, {resultado_visitante}")
+    # print()
     return resultados_partidos
 
 
-def simular_eventos(fixture, resultado_local):
+def simular_eventos(fixture, fecha, resultado_local):
     """
     Genera aleatoriamente los valores de los eventos de un partido.
 
@@ -566,6 +568,7 @@ def simular_eventos(fixture, resultado_local):
     goles_visitante = 0
     resultado_visitante = 0
 
+    eventos.append(fecha)
     eventos.append(local)
     eventos.append(resultado_local)
     eventos.append(visitante)
@@ -607,13 +610,14 @@ def simular_eventos(fixture, resultado_local):
     eventos.append(t_amarilla_visita)
 
     print(f"{local} {goles_local} - {visitante} {goles_visitante}")
-    print("Goles en el encuentro:", goles_totales)
-    print("Asistencias equipo local:", asis_local)
-    print("Asistencias equipo visitante:", asis_visitante)
-    print("Tarjetas Amarillas Local:", t_amarilla_local)
-    print("Tarjetas Amarillas Visita:", t_amarilla_visita)
+    print(eventos)
+    # print("Goles en el encuentro:", goles_totales)
+    # print("Asistencias equipo local:", asis_local)
+    # print("Asistencias equipo visitante:", asis_visitante)
+    # print("Tarjetas Amarillas Local:", t_amarilla_local)
+    # print("Tarjetas Amarillas Visita:", t_amarilla_visita)
 
-    # [local, res_local, visi, res_visi, gol_total, gol_local, gol_visi, asis_local, asis_visitante, t_amarilla_local, t_amarilla_visita]
+    # [fecha, local, res_local, visi, res_visi, gol_total, gol_local, gol_visi, asis_local, asis_visitante, t_amarilla_local, t_amarilla_visita]
     return eventos
 
 
@@ -651,7 +655,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
     # gol
     pesos_local = [prob_gol.get(jugador[4], 0.1)
                    for jugador in equipo_local]
-    while (eventos[5] != 0):
+    while (eventos[6] != 0):
         goleador = random.choices(
             equipo_local, weights=pesos_local, k=1)[0]
         aux.extend(goleador)
@@ -659,7 +663,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
         aux.append(id_eventos[3]["puntaje_asociado"])
         goles_local.append(aux)
         aux = []
-        eventos[5] -= 1
+        eventos[6] -= 1
     cargar_evento(goles_local, nroFechaPartido)
 
     # asist
@@ -694,7 +698,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
     # gol
     pesos_visita = [prob_gol.get(jugador[4], 0.1)
                     for jugador in equipo_visitante]
-    while (eventos[6] != 0):
+    while (eventos[7] != 0):
         goleador = random.choices(
             equipo_visitante, weights=pesos_visita, k=1)[0]
         aux.extend(goleador)
@@ -702,7 +706,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
         aux.append(id_eventos[3]["puntaje_asociado"])
         goles_visita.append(aux)
         aux = []
-        eventos[6] -= 1
+        eventos[7] -= 1
     cargar_evento(goles_visita, nroFechaPartido)
 
     # asist
@@ -737,9 +741,21 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
 def simular_fecha(fecha_actual, fixture, matriz_posiciones):
     print(f"\n=== FECHA {fecha_actual+1} ===")
 
+    eventos = []
+    titulares_local = []
+    titulares_visitante = []
+
+    i = 0
     for partido in fixture[fecha_actual]:
         resultados_partido = simular_resultado_partido(partido)
+        eventos = simular_eventos(
+            fixture[fecha_actual][i], fecha_actual+1, resultados_partido["local"][1])
+        titulares_local, titulares_visitante = procesar_equipos(
+            fixture[fecha_actual][i], BBDD_JUGADORES)
+        asignar_eventos(titulares_local, titulares_visitante,
+                        eventos, id_eventos, fecha_actual+1)
         actualizar_matriz_posiciones(matriz_posiciones, resultados_partido)
+        i += 1
 
     # 2. Ordenar la matriz
     matriz_posiciones = ordenar_matriz(matriz_posiciones)
