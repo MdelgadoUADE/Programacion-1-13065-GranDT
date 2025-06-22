@@ -2,6 +2,7 @@
 # SEBASTIAN PENZA, MATIAS DELGADO, NICOLAS LOVERA
 
 # IMPORTACIONES
+from busqueda_de_jugadores import *
 import re
 import random
 import json
@@ -13,6 +14,11 @@ from impresionJugadores import *
 from calculo_puntos import *
 from finalizacion_torneo import *
 from logica import *
+from config_manager import *
+
+configuraciones = cargar_configuracion()
+
+flag_end_state = configuraciones["flag_end_state"]
 
 try:
     contenido = open("data/jugadores_actualizados.json", "r", encoding="utf8")
@@ -34,8 +40,6 @@ finally:
     except NameError:
         pass
 
-
-from busqueda_de_jugadores import *
 
 # DEFINICIONES
 
@@ -122,23 +126,11 @@ def main():
 def registrar_usuario():
     print("Por favor ingrese el nombre de usuario a agregar:")
     nombre = input("> ")
-    usuario = {
-        nombre: {
-            "nom_usuario": nombre,
-            "formacion": {
-                "arquero": 1,
-                "defensor": 4,
-                "mediocampista": 4,
-                "delantero": 2
-            },
-            "titulares": {},
-            "suplentes": {},
-            "nro_capitan": 0,
-            "presupuesto": 42000000,
-            "puntos": 0
-        }
-    }
-    return usuario
+    if len(nombre) <= 0:
+        print("El nombre no puede estar vacio, por favor vuelva a intentarlo")
+        while len(nombre) <= 0:
+            nombre = input("> ")
+    return definicion_usuario(nombre)
 
 
 def seleccionar_usuario():
@@ -148,16 +140,25 @@ def seleccionar_usuario():
 
             if len(usuarios) < 1:
                 raise UserWarning()
+            contador_letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+                               "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
             print("Indicar con que usuario acceder: ")
+            i = 0
             for usuario in usuarios:
-                print(f"- {usuario}")
-            print("- Salir")
+                print(f"{contador_letras[i].upper()} - {usuario}")
+                i += 1
+            print(f"{contador_letras[i].upper()} - Salir")
 
             usuario_seleccionado = input("> ")
             if usuario_seleccionado.lower() == "salir":
                 return
             try:
+                if usuario_seleccionado in contador_letras:
+                    usuario_seleccionado = contador_letras.index(
+                        usuario_seleccionado)
+                    usuario_seleccionado = list(usuarios.keys())[
+                        usuario_seleccionado]
                 return usuarios[usuario_seleccionado]
             except KeyError:
                 print("No se pudo encontrar el usuario")
@@ -193,6 +194,8 @@ def remover_usuario():
 
 
 def logica_menu_usuarios(dic_usuarios):
+    flag_comienzo_torneo = configuraciones["flag_comienzo_torneo"]
+
     while True:
         print_menu_usuarios()
         seleccion = input("> ").lower()
@@ -201,12 +204,17 @@ def logica_menu_usuarios(dic_usuarios):
             if usuario != None:
                 logica_menu_principal(usuario)
         elif seleccion == "b":
-            with open("data/usuarios.json", "w") as contenido:
-                dic_usuarios.update(registrar_usuario())
-                json.dump(dic_usuarios, contenido, indent=4)
+            if flag_comienzo_torneo == False:
+                with open("data/usuarios.json", "w") as contenido:
+                    dic_usuarios.update(registrar_usuario())
+                    json.dump(dic_usuarios, contenido, indent=4)
+            else:
+                "El torneo ya ha comenzado, no sera posible registrar un nuevo usuario"
+                input("Presione enter para continuar")
         elif seleccion == "c":
             remover_usuario()
         elif seleccion == "d":
+            guardar_configuraciones(configuraciones)
             return  # aca deberia cortar ejecucion
         else:
             print("Opcion no valida")
@@ -214,8 +222,13 @@ def logica_menu_usuarios(dic_usuarios):
 
 def logica_menu_torneo(usuario, fixture, matriz_posiciones):
 
-    fecha_actual = 0
+    fecha_actual = int(configuraciones["fecha_actual"])
+
     while True:
+
+        if fecha_actual >= len(fixture):
+            configuraciones["flag_end_state"] = True
+
         print_menu_torneo()
         seleccion = input("> ").lower()
         if seleccion == "a":
@@ -230,6 +243,8 @@ def logica_menu_torneo(usuario, fixture, matriz_posiciones):
         elif seleccion == "b":
             ver_fixture(fixture, usuario)
         elif seleccion == "c":
+            configuraciones["fecha_actual"] = fecha_actual
+            configuraciones["matriz_posiciones"] = matriz_posiciones
             return usuario
         else:
             print("Opcion no valida")
@@ -256,6 +271,7 @@ def logica_menu_principal(usuario):
             dic_usuarios = abrir_archivo_json("data/usuarios.json", "r")
             logica_menu_usuarios(dic_usuarios)
         elif seleccion == "e":
+            guardar_configuraciones(configuraciones)
             exit()
         else:
             print("Opcion no valida")
@@ -305,7 +321,7 @@ def ver_fixture(fixture, usuario):
                 print(f"  {local} vs {visitante}")
             print("-" * 20)
     elif opcion.lower() == "c":
-        logica_menu_torneo(usuario, fixture, matriz_posiciones)
+        return
     else:
         print("Opcion no valida")
 
@@ -353,8 +369,14 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones, usuario):
 
 lista_equipos = registro_de_equipos(BBDD_JUGADORES)
 fixture = generar_fixture_ida_vuelta(lista_equipos)
-matriz_posiciones = crear_matriz_posiciones(lista_equipos)
 
+matriz_posiciones = configuraciones.get("matriz_posiciones")
+if matriz_posiciones is None or len(matriz_posiciones) == 0:
+    matriz_posiciones = crear_matriz_posiciones(lista_equipos)
+    configuraciones["matriz_posiciones"] = matriz_posiciones
+else:
+    matriz_posiciones = convertir_str_a_matriz(
+        configuraciones["matriz_posiciones"], True)
 
 # PROGRAMA PRINCIPAL
 

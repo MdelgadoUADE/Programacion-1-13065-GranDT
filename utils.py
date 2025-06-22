@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 ACENTOS = {
     "á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u", "Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U"}
@@ -26,6 +27,34 @@ def registro_de_equipos(jugadores):
         if equipo not in equipos:
             equipos.append(equipo)
     return equipos
+
+def convertir_str_a_matriz(matriz,convertir_casos_a_int):
+    """Convierte una cadena de texto a una matriz, da la opcion si la matriz tiene integers de poder convertirlos (para uso de archivo config)
+
+    Args: 
+        matriz (str): Cadena de texto a convertir
+        convertir_casos_a_int (bool): Si se desea convertir los casos a enteros"""
+    subgrupos = re.findall(r'\[([^\[\]]+)\]', matriz)
+
+    lista_final = []
+
+    for grupo in subgrupos:
+        elementos = grupo.split(',')
+        sublista = []
+        for item in elementos:
+            item = item.strip()
+            item = item.strip("''")
+            # Si deseamos intentamos convertirlo a entero
+            if convertir_casos_a_int:
+                try:
+                    sublista.append(int(item))
+                except ValueError:
+                    sublista.append(item)
+            else:
+                sublista.append(item)
+        lista_final.append(sublista)
+
+    return lista_final
 
 
 def confirmar_seleccion(mensaje):
