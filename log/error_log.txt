@@ -19,3 +19,11 @@ Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required p
 Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
 Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
 Tipo: <class 'TypeError'> - Mensaje: list indices must be integers or slices, not tuple
+Tipo: <class 'TypeError'> - Mensaje: '>=' not supported between instances of 'str' and 'int'
+Tipo: <class 'TypeError'> - Mensaje: TextIOWrapper.write() takes exactly one argument (3 given)
+Tipo: <class 'io.UnsupportedOperation'> - Mensaje: not readable
+Tipo: <class 'json.decoder.JSONDecodeError'> - Mensaje: Expecting value: line 1 column 1 (char 0)
+Tipo: <class 'io.UnsupportedOperation'> - Mensaje: not readable
+Tipo: <class 'json.decoder.JSONDecodeError'> - Mensaje: Expecting value: line 1 column 1 (char 0)
+Tipo: <class 'io.UnsupportedOperation'> - Mensaje: not readable
+Tipo: <class 'json.decoder.JSONDecodeError'> - Mensaje: Expecting value: line 1 column 1 (char 0)
