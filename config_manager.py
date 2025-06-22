@@ -81,5 +81,3 @@ def restaurar_juego():
 
     except Exception as e:
         registrar_excepciones(e)
-
-restaurar_juego()
