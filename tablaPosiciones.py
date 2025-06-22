@@ -6,6 +6,14 @@ def crear_matriz_posiciones(equipos):
         matriz.append([equipo, 0, 0, 0, 0])  # [equipo, ganados, empatados, perdidos, puntos]
     return matriz
 
+def actualizar_posiciones(matriz_posiciones):
+    # 2. Ordenar la matriz
+    matriz_posiciones = ordenar_matriz(matriz_posiciones)
+
+    # 3. Actualizar la tabla HTML
+    nombre_archivo = "html_y_css/tabla_posiciones.html"
+    actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo)
+
 def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido):
     """
     Actualiza la matriz de posiciones segun los resultados de un partido

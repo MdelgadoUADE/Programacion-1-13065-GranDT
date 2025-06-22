@@ -21,3 +21,6 @@ Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required p
 Tipo: <class 'TypeError'> - Mensaje: list indices must be integers or slices, not tuple
 Tipo: <class 'NameError'> - Mensaje: name 'reporte_estadisticas_jugadores' is not defined
 Tipo: <class 'KeyError'> - Mensaje: 'nombre'
+Tipo: <class 'TypeError'> - Mensaje: center expected at least 1 argument, got 0
+Tipo: <class 'TypeError'> - Mensaje: 'NoneType' object is not subscriptable
+Tipo: <class 'TypeError'> - Mensaje: 'NoneType' object is not subscriptable

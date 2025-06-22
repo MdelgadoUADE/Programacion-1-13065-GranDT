@@ -127,3 +127,9 @@ def cargar_evento(listaEvento, nroFecha):
 
     with open("data/eventos.txt", mode='w', encoding='utf-8') as archivo:
         json.dump(data, archivo, indent=4, ensure_ascii=False)
+
+def buscar_maximo_evento(posicion,evento,stats):
+    maximo = max(
+        (data for data in stats.values() if data["posicion"] == posicion),
+        key=lambda d: d[evento], default={"nombre": "", "apellido": "", evento: 0})
+    return maximo

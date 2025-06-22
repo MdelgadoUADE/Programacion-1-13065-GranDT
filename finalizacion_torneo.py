@@ -1,5 +1,6 @@
 import json
 from functools import reduce
+from utils import buscar_maximo_evento
 
 def reporte_final_usuarios(path_usuarios="data/usuarios.json"):
     with open(path_usuarios, "r", encoding="utf-8") as f:
@@ -12,6 +13,22 @@ def reporte_final_usuarios(path_usuarios="data/usuarios.json"):
     print("Posiciones finales:")
     for i, (nombre, datos) in enumerate(ranking, 1):
         print(f"{i}. {nombre}: {datos['puntos']} puntos")
+
+
+def buscar_maximo_asistidor(stats):
+    posicion = "mediocampista"
+    evento = "asis"
+    return buscar_maximo_evento(posicion,evento,stats)
+def buscar_maximo_tarjetas_amarillas(stats):
+    posicion = "defensor"
+    evento = "amarillas"
+    return buscar_maximo_evento(posicion,evento,stats)
+
+def buscar_maximo_tarjetas_rojas(stats):
+    posicion = "defensor"
+    evento = "rojas"
+    return buscar_maximo_evento(posicion,evento,stats)
+
 
 def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data/usuarios.json"):
     # 1. Cargar los titulares de todos los usuarios (solo los IDs)
@@ -69,20 +86,13 @@ def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data
         {"nombre": "", "apellido": "", "goles": -1}
     )
     # Máximo asistidor (mediocampista)
-    max_asistidor = max(
-        (data for data in stats.values() if data["posicion"] == "mediocampista"),
-        key=lambda d: d["asis"], default={"nombre": "", "apellido": "", "asis": 0}
-    )
+    max_asistidor = buscar_maximo_asistidor(stats)
+
     # Más amarillas (defensor)
-    max_amarillas = max(
-        (data for data in stats.values() if data["posicion"] == "defensor"),
-        key=lambda d: d["amarillas"], default={"nombre": "", "apellido": "", "amarillas": 0}
-    )
+    max_amarillas = buscar_maximo_tarjetas_amarillas(stats)
+
     # Más rojas (defensor)
-    max_rojas = max(
-        (data for data in stats.values() if data["posicion"] == "defensor"),
-        key=lambda d: d["rojas"], default={"nombre": "", "apellido": "", "rojas": 0}
-    )
+    max_rojas = buscar_maximo_tarjetas_rojas(stats)
 
     print("\n--- Estadísticas individuales (solo titulares de usuarios) ---")
     print(f"Rompe redes (Maximo Goleador): {max_goleador['nombre']} {max_goleador['apellido']} con {max_goleador['goles']} goles")

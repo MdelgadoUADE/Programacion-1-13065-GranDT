@@ -1,4 +1,12 @@
 import os
+from main import abrir_archivo_json
+
+def imprimir_equipo_platilla(usuario, BBDD_JUGADORES):
+    usuarios_core = abrir_archivo_json("data/usuarios.json", "r")
+    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], usuarios_core, BBDD_JUGADORES)
+
+    with open("equipo/formacion.html", "w", encoding="utf-8") as f:
+        f.write(html_render)
 
 def llenar_titulares(titulares, BBDD_JUGADORES, index=0):
     # Caso base: si procesó todos los titulares, retorna el diccionario vacío
