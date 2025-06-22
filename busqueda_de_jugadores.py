@@ -1,6 +1,5 @@
 import re
 from main import BBDD_JUGADORES
-from main import USUARIOS
 from utils import *
 from impresionJugadores import *
 
@@ -21,12 +20,6 @@ filtro_por_equipo = lambda valor: filtrar_por("id_equipo", valor)
 filtro_por_costo = lambda valor: filtrar_por("costo", valor)
 filtro_por_nombre = lambda valor: filtrar_por("nombre", valor)
 filtro_por_apellido = lambda valor: filtrar_por("apellido", valor)
-
-def imprimir_equipo_platilla(usuario):
-    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], USUARIOS, BBDD_JUGADORES)
-
-    with open("equipo/formacion.html", "w", encoding="utf-8") as f:
-        f.write(html_render)
 
 def añadir_jugadores(usuario, listado_jugadores):
     """Comando que añade jugadores en base a un usuario dado y un listado de jugadores a agregar
@@ -214,7 +207,7 @@ def reordenar_comandos(comandos):
         comandos (list): lista de comandos
     """
     #1. si el primer comando es "-v" se mueve al final
-    if "-v" in comandos[0][0]:
+    if "-v" in comandos[0][0] or "-a" in comandos[0][0] or "-r" in comandos[0][0]:
        comandos.append(comandos.pop(0))
     return comandos
 
@@ -277,7 +270,7 @@ def iniciar_busqueda(usuario):
         usuario (dict): Diccionario con la informacion del usuario
     """
     print("Consola de busqueda\n\ningresar '-h' para ayuda\n")
-    print("Comandos basicos:\n-a  (Añadir jugadores)\t-r  (Remover jugadores)\n-n  (Nombre de jugador [valor])\t-a  (Apellido de jugador [valor])")
+    print("Comandos basicos:\n-a  (Añadir jugadores)\t-r  (Remover jugadores)\n-n  (Nombre de jugador [valor])\t-A  (Apellido de jugador [valor])")
     listado_jugadores = set()
     while True:
         valor_buscado = input("> ")
