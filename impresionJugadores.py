@@ -47,11 +47,27 @@ def formacion_html(nombre_archivo, usuario, usuarios_core, BBDD_JUGADORES):
             if jugador:
                 suplentes_html += f"<li>{jugador['nombre']} {jugador['apellido']}</li>\n"
 
+        # Generar tabla de puntajes de titulares ORDENADA
+        titulares_info = []
+        for id_jugador in titulares:
+            jugador = BBDD_JUGADORES.get(int(id_jugador))
+            puntaje = datos_usuario["titulares"].get(id_jugador, 0)
+            if jugador:
+                titulares_info.append((jugador['nombre'], jugador['apellido'], puntaje))
+
+        # Ordenar por puntaje descendente
+        titulares_info.sort(key=lambda x: x[2], reverse=True)
+        tabla_puntajes = "<table border='1'><tr><th>Nombre</th><th>Apellido</th><th>Puntaje</th></tr>"
+        for nombre, apellido, puntaje in titulares_info:
+            tabla_puntajes += f"<tr><td>{nombre}</td><td>{apellido}</td><td>{puntaje}</td></tr>"
+        tabla_puntajes += "</table>"
+
         # Reemplazos en el HTML
         html = html.replace("{{usuario}}", usuario)
         for pos in jugadores_por_posicion:
             html = html.replace(f"{{{{{pos}}}}}", "\n".join(jugadores_por_posicion[pos]))
         html = html.replace("{{suplentes}}", suplentes_html)
+        html = html.replace("{{tabla_puntajes}}", tabla_puntajes)
 
         print(f"La visualizacion del equipo esta lista, se puede ver en: {ruta_archivo}")
 
