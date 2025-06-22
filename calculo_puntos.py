@@ -19,13 +19,18 @@ def calcular_puntos_usuario(titulares, dic_titulares, eventos, fecha_actual):
             dic_titulares[id_jugador] += puntaje
     return puntos, dic_titulares
 
+def imprimir_puntos_usuario(puntos, nombre):
+    print(f"Usuario: {nombre}, Puntos: {puntos}")
+
+
 
 def actualizar_puntos_usuarios(usuarios_core, eventos, fecha_actual):
-    for usuario in usuarios_core.values():
+    for nombre, usuario in usuarios_core.items():
         titulares = list(usuario["titulares"].keys())
         dic_titulares = usuario["titulares"]
-        puntos, dic_titulares = calcular_puntos_usuario(titulares,dic_titulares, eventos, fecha_actual)
+        puntos, dic_titulares = calcular_puntos_usuario(titulares, dic_titulares, eventos, fecha_actual)
         usuario["puntos"] += puntos
+        imprimir_puntos_usuario(usuario["puntos"], nombre)
         print(usuario["puntos"])
         print(dic_titulares)
     return usuarios_core

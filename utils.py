@@ -8,6 +8,24 @@ ACENTOS = {
 def normalizar_acentos(string):
     return ''.join([ACENTOS.get(c, c) for c in string])
 
+def registro_de_equipos(jugadores):
+    """Registra los equipos de la base de jugadores en una lista.
+
+    Dado un diccionario de jugadores, recorre cada jugador y agrega su equipo a una lista si no existe ya.
+
+    Argumentos:
+    jugadores (dict): Diccionario con los jugadores como claves y sus datos como valores.
+
+    Return:
+    list: Una lista de los equipos de los jugadores.
+    """
+    equipos = []
+    for jugador in jugadores:
+        equipo = jugadores[jugador]['id_equipo']
+        if equipo not in equipos:
+            equipos.append(equipo)
+    return equipos
+
 
 def confirmar_seleccion(mensaje):
     """Codigo basico de validacion para confirmar una seleccion

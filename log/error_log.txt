@@ -19,3 +19,5 @@ Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required p
 Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
 Tipo: <class 'TypeError'> - Mensaje: logica_menu_usuarios() missing 1 required positional argument: 'dic_usuarios'
 Tipo: <class 'TypeError'> - Mensaje: list indices must be integers or slices, not tuple
+Tipo: <class 'NameError'> - Mensaje: name 'reporte_estadisticas_jugadores' is not defined
+Tipo: <class 'KeyError'> - Mensaje: 'nombre'
