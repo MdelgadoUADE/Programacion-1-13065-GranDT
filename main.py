@@ -154,8 +154,8 @@ def registrar_usuario():
                 "mediocampista": 4,
                 "delantero": 2
             },
-            "titulares": [],
-            "suplentes": [],
+            "titulares": {},
+            "suplentes": {},
             "nro_capitan": 0,
             "presupuesto": 42000000,
             "puntos": 0
@@ -249,7 +249,7 @@ def logica_menu_usuarios(dic_usuarios):
         elif seleccion == "c":
             remover_usuario()
         elif seleccion == "d":
-            return #aca deberia cortar ejecucion
+            return  # aca deberia cortar ejecucion
         else:
             print("Opcion no valida")
 
@@ -465,8 +465,8 @@ def simular_eventos(fixture, fecha, resultado_local):
     eventos.append(asis_local)
     eventos.append(asis_visitante)
 
-    t_amarilla_local = random.randint(0, 2)
-    t_amarilla_visita = random.randint(0, 2)
+    t_amarilla_local = 2  # random.randint(0, 2)
+    t_amarilla_visita = 2  # random.randint(0, 2)
     eventos.append(t_amarilla_local)
     eventos.append(t_amarilla_visita)
 
@@ -549,6 +549,11 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
             equipo_local, weights=pesos_local, k=1)[0]
         id_jugador = amonestado[0]
         if id_jugador in amonestadosLocal:
+            aux2.extend(amonestado)
+            aux2.append(id_eventos[5]["titulo"])
+            aux2.append(id_eventos[5]["puntaje_asociado"])
+            tarjetas_local.append(aux2)
+
             aux.extend(amonestado)
             aux.append(id_eventos[6]["titulo"])
             aux.append(id_eventos[6]["puntaje_asociado"])
@@ -560,6 +565,7 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
             tarjetas_local.append(aux)
         amonestadosLocal = amonestado
         aux = []
+        aux2 = []
         eventos[-2] -= 1
     cargar_evento(tarjetas_local, nroFechaPartido)
 
@@ -601,6 +607,11 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
             equipo_visitante, weights=pesos_visita, k=1)[0]
         id_jugador = amonestado[0]
         if id_jugador in amonestadosVisita:
+            aux2.extend(amonestado)
+            aux2.append(id_eventos[5]["titulo"])
+            aux2.append(id_eventos[5]["puntaje_asociado"])
+            tarjetas_visita.append(aux2)
+
             aux.extend(amonestado)
             aux.append(id_eventos[6]["titulo"])
             aux.append(id_eventos[6]["puntaje_asociado"])
@@ -612,12 +623,12 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
             tarjetas_visita.append(aux)
         amonestadosVisita = amonestado
         aux = []
+        aux2 = []
         eventos[-1] -= 1
     cargar_evento(tarjetas_visita, nroFechaPartido)
 
 
 def simular_fecha(fecha_actual, fixture, matriz_posiciones):
-    global USUARIOS
     print(f"\n=== FECHA {fecha_actual+1} ===")
 
     eventos = []
@@ -631,23 +642,23 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
             fixture[fecha_actual][i], fecha_actual+1, resultados_partido["local"][1])
         titulares_local, titulares_visitante = procesar_equipos(
             fixture[fecha_actual][i], BBDD_JUGADORES)
-        asignar_eventos(titulares_local, titulares_visitante,eventos, id_eventos, fecha_actual+1)
+        asignar_eventos(titulares_local, titulares_visitante,
+                        eventos, id_eventos, fecha_actual+1)
         actualizar_matriz_posiciones(matriz_posiciones, resultados_partido)
         i += 1
 
-    #De aca
+    # De aca
+    usuarios_core = USUARIOS
     eventos_json = formato_json("data/eventos.txt")
-    USUARIOS = actualizar_puntos_usuarios(USUARIOS, eventos_json, fecha_actual+1)
-    
-    '''
-    if USUARIOS:
+    usuarios_core = actualizar_puntos_usuarios(
+        usuarios_core, eventos_json, fecha_actual+1)
+
+    if usuarios_core:
         with open("data/usuarios.json", "w", encoding="utf-8") as f:
-            json.dump(USUARIOS, f, indent=4)
+            json.dump(usuarios_core, f, indent=4)
     else:
         print("Error: USUARIOS está vacío, no se guardará el archivo.")
-#a aca es contabilizar los puntos a los jugadores del usuario
-    '''
-
+# a aca es contabilizar los puntos a los jugadores del usuario
 
     # 2. Ordenar la matriz
     matriz_posiciones = ordenar_matriz(matriz_posiciones)
