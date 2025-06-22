@@ -52,6 +52,11 @@ def guardar_configuraciones(configuraciones):
         registrar_excepciones(e)
 
 def restaurar_juego():
+    """
+    Restaura el juego a su estado inicial
+    
+    Incluye el archivo de configuraciones, del archivo de usuarios y el archivo de eventos
+    """
     try:
         with open("data/config.txt", "w") as contenido:
             contenido.write("\n".join(["flag_end_state: False\n","flag_comienzo_torneo: False\n","fecha_actual: 0\n"]))

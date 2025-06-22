@@ -132,7 +132,7 @@ def eliminar_jugadores(usuario, jugadores_a_eliminar):
 
 LISTA_DE_COMANDOS = {
     "-e":filtro_por_equipo,
-    "-p":filtro_por_costo,
+    "-c":filtro_por_costo,
     "-n":filtro_por_nombre,
     "-A":filtro_por_apellido,
     "-v": lambda valor: ver_jugadores("", valor, ""),

@@ -4,6 +4,15 @@ from utils import buscar_maximo_evento
 
 
 def reporte_final_usuarios(path_usuarios="data/usuarios.json"):
+    """
+    Genera el reporte final del torneo, mostrando el ranking de los usuarios
+    por puntos y el usuario ganador.
+
+    args:
+        path_usuarios : str
+            Path archivo JSON de usuarios.
+
+    """
     with open(path_usuarios, "r", encoding="utf-8") as f:
         usuarios = json.load(f)
 
@@ -19,24 +28,77 @@ def reporte_final_usuarios(path_usuarios="data/usuarios.json"):
 
 
 def buscar_maximo_asistidor(stats):
+    """
+    Busca el jugador con el máximo valor en asistencias en el torneo, entre los
+    mediocampistas.
+
+    Args:
+        stats (dict): Un diccionario que contiene las estadísticas de los jugadores.
+
+    Returns:
+        dict: Un diccionario con los datos del jugador que tiene el máximo valor en
+        asistencias. Incluye el nombre, apellido y el valor del evento. Si no se
+        encuentra ningún jugador, retorna un diccionario con valores vacíos y el
+        valor del evento como 0.
+    """
     posicion = "mediocampista"
     evento = "asis"
     return buscar_maximo_evento(posicion, evento, stats)
 
 
 def buscar_maximo_tarjetas_amarillas(stats):
+    """
+    Busca el jugador con el máximo valor en tarjetas amarillas en el torneo, entre los
+    defensores.
+
+    Args:
+        stats (dict): Un diccionario que contiene las estadísticas de los jugadores.
+
+    Returns:
+        dict: Un diccionario con los datos del jugador que tiene el máximo valor en
+        tarjetas amarillas. Incluye el nombre, apellido y el valor del evento. Si no se
+        encuentra ningún jugador, retorna un diccionario con valores vacíos y el
+        valor del evento como 0.
+    """
+
     posicion = "defensor"
     evento = "amarillas"
     return buscar_maximo_evento(posicion, evento, stats)
 
 
 def buscar_maximo_tarjetas_rojas(stats):
+    """
+    Busca el jugador con el máximo valor en tarjetas rojas en el torneo, entre los
+    defensores.
+
+    Args:
+        stats (dict): Un diccionario que contiene las estadísticas de los jugadores.
+
+    Returns:
+        dict: Un diccionario con los datos del jugador que tiene el máximo valor en
+        tarjetas rojas. Incluye el nombre, apellido y el valor del evento. Si no se
+        encuentra ningún jugador, retorna un diccionario con valores vacíos y el
+        valor del evento como 0.
+    """
     posicion = "defensor"
     evento = "rojas"
     return buscar_maximo_evento(posicion, evento, stats)
 
 
 def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data/usuarios.json"):
+    """
+    Genera el reporte de los máximos eventos individuales en el torneo, entre los
+    titulares de los usuarios. Los eventos son: Máximo Goleador (delantero),
+    Máximo Asistidor (mediocampista), Más tarjetas amarillas (defensor) y Más tarjetas
+    rojas (defensor).
+
+    args:
+        eventos_path : str
+            Path archivo JSON de eventos.
+        usuarios_path : str
+            Path archivo JSON de usuarios.
+
+    """
     # 1. Cargar los titulares de todos los usuarios (solo los IDs)
     with open(usuarios_path, "r", encoding="utf-8") as f:
         usuarios = json.load(f)
@@ -91,13 +153,16 @@ def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data
         (data for data in stats.values() if data["posicion"] == "delantero"),
         {"nombre": "", "apellido": "", "goles": -1}
     )
+    # 5. Busca el jugador que mas asistencias hizo
     # Máximo asistidor (mediocampista)
     max_asistidor = buscar_maximo_asistidor(stats)
 
+    # 5. Busca el jugador que mas tarjetas amarillas tiene
     # Más amarillas (defensor)
     max_amarillas = buscar_maximo_tarjetas_amarillas(stats)
 
-    # Más rojas (defensor)
+    # 6. Busca el jugador que mas tarjetas rojas tiene
+    # Mas rojas (defensor)
     max_rojas = buscar_maximo_tarjetas_rojas(stats)
 
     print("\n--- Estadísticas individuales (solo titulares de usuarios) ---")
