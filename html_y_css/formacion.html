@@ -7,18 +7,23 @@
 </head>
 <body>
     <h1>Equipo de {{usuario}}</h1>
-    <div class="cancha">
-        <div class="linea arquero">
-            {{arquero}}
+    <div class="contenedor-equipo-flex">
+        <div class="cancha">
+            <div class="linea arquero">
+                {{arquero}}
+            </div>
+            <div class="linea defensores">
+                {{defensor}}
+            </div>
+            <div class="linea mediocampistas">
+                {{mediocampista}}
+            </div>
+            <div class="linea delanteros">
+                {{delantero}}
+            </div>
         </div>
-        <div class="linea defensores">
-            {{defensor}}
-        </div>
-        <div class="linea mediocampistas">
-            {{mediocampista}}
-        </div>
-        <div class="linea delanteros">
-            {{delantero}}
+        <div class="tabla-puntajes-contenedor">
+            {{tabla_puntajes}}
         </div>
     </div>
     <h2>Suplentes</h2>
