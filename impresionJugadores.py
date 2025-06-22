@@ -19,7 +19,7 @@ def llenar_titulares(titulares, BBDD_JUGADORES, index=0):
             jugadores_por_posicion[posicion].insert(0, f"<li>{jugador['nombre']} {jugador['apellido']}</li>")
     return jugadores_por_posicion
 
-def formacion_html(nombre_archivo, usuario, USUARIOS, BBDD_JUGADORES):
+def formacion_html(nombre_archivo, usuario, usuarios_core, BBDD_JUGADORES):
     try:
         directorio_actual = os.path.dirname(os.path.abspath(__file__))
         ruta_archivo = os.path.join(directorio_actual, nombre_archivo)
@@ -31,7 +31,7 @@ def formacion_html(nombre_archivo, usuario, USUARIOS, BBDD_JUGADORES):
         with open(ruta_archivo, "r", encoding="utf-8") as archivo:
             html = archivo.read()
         
-        datos_usuario = USUARIOS.get(usuario)
+        datos_usuario = usuarios_core.get(usuario)
         if not datos_usuario:
             return "<p>Usuario no encontrado</p>"
 

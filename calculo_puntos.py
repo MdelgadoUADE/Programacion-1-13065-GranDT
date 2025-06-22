@@ -24,8 +24,8 @@ def actualizar_puntos_usuarios(usuarios_core, eventos, fecha_actual):
     for usuario in usuarios_core.values():
         titulares = list(usuario["titulares"].keys())
         dic_titulares = usuario["titulares"]
-        puntos, dic_titulares = calcular_puntos_usuario(
-            titulares, dic_titulares, eventos, fecha_actual)
-        usuario["puntos"] = puntos
-        # print(usuario["puntos"])
+        puntos, dic_titulares = calcular_puntos_usuario(titulares,dic_titulares, eventos, fecha_actual)
+        usuario["puntos"] += puntos
+        print(usuario["puntos"])
+        print(dic_titulares)
     return usuarios_core
