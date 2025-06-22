@@ -1,0 +1,4 @@
+exports/*
+__pycache__
+log/*
+html_y_css/tabla_posiciones.html
