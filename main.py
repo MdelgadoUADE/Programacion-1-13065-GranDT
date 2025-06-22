@@ -660,7 +660,6 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
             json.dump(usuarios_core, f, indent=4)
     else:
         print("Error: USUARIOS está vacío, no se guardará el archivo.")
-#a aca es contabilizar los puntos a los jugadores del usuario
 
     # 2. Ordenar la matriz
     matriz_posiciones = ordenar_matriz(matriz_posiciones)
@@ -673,7 +672,8 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
 
 
 def imprimir_equipo_platilla(usuario):
-    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], USUARIOS, BBDD_JUGADORES)
+    usuarios_core = abrir_archivo_json("data/usuarios.json", "r")
+    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], usuarios_core, BBDD_JUGADORES)
 
     with open("equipo/formacion.html", "w", encoding="utf-8") as f:
         f.write(html_render)
