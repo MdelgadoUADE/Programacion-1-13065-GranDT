@@ -2,11 +2,10 @@ import json
 import os
 
 ACENTOS = {
-    "á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u"}
+    "á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u", "Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U"}
 
 
 def normalizar_acentos(string):
-    string = string.lower()
     return ''.join([ACENTOS.get(c, c) for c in string])
 
 

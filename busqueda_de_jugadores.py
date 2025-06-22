@@ -1,6 +1,8 @@
 import re
 from main import BBDD_JUGADORES
+from main import USUARIOS
 from utils import *
+from impresionJugadores import *
 
 def filtrar_por(filtro, valor_pasado):
 
@@ -20,7 +22,23 @@ filtro_por_costo = lambda valor: filtrar_por("costo", valor)
 filtro_por_nombre = lambda valor: filtrar_por("nombre", valor)
 filtro_por_apellido = lambda valor: filtrar_por("apellido", valor)
 
+def imprimir_equipo_platilla(usuario):
+    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], USUARIOS, BBDD_JUGADORES)
+
+    with open("equipo/formacion.html", "w", encoding="utf-8") as f:
+        f.write(html_render)
+
 def añadir_jugadores(usuario, listado_jugadores):
+    """Comando que añade jugadores en base a un usuario dado y un listado de jugadores a agregar
+    Calcula el costo y el presupuesto restante antes de una transaccion, pregunta si desea continuar
+    
+    Utiliza el comando de verificacion de formacion para realizar una validacion anterior
+
+    Args:
+        usuario (dict): Diccionario con la informacion del usuario
+        listado_jugadores (set): Conjunto de jugadores a agregar
+    """
+    flag_repetidos = False
     try:
         if type(usuario) == dict and type(listado_jugadores) == set:
             if not verificacion_de_formacion(usuario, listado_jugadores):
@@ -34,14 +52,22 @@ def añadir_jugadores(usuario, listado_jugadores):
             
             if costo <= usuario["presupuesto"]:
                 if confirmar_seleccion("¿Desea realizar la transacción?"):
-                    usuario["titulares"] = usuario["titulares"] + list(listado_jugadores)
+                    for jugador in listado_jugadores:
+                        if str(jugador) not in usuario["titulares"] and str(jugador) not in usuario["suplentes"]:
+                            usuario["titulares"][str(jugador)] = 0
+                        else:
+                            costo += BBDD_JUGADORES[jugador]["costo"]
+                            flag_repetidos = True
                     usuario["presupuesto"] -= costo
                     print("Transacción realizada con exito")
+                    if flag_repetidos:
+                        print("Algunos jugadores ya estaban en el equipo y no se añadieron")
                     return usuario
             else:
                 print("\nPresupuesto insuficiente para realizar la transacción")
                 return
-
+        elif usuario == "":
+            return "anadir"
         else:
             raise TypeError
 
@@ -51,17 +77,24 @@ def añadir_jugadores(usuario, listado_jugadores):
         registrar_excepciones(e)
 
 def verificacion_de_formacion(usuario, jugadores_a_agregar):
+    """Segun un usuario y un set de jugadores a agregar, verifica si la formacion de un usuario permite la adición de jugadores.
+    Toma en cuenta las 4 posiciones y realiza restados en base a las posiciones de los jugadores a agregar
+
+    Args:
+        usuario (dict): Diccionario con la informacion del usuario
+        jugadores_a_agregar (set): Conjunto de jugadores a agregar
+    """
     try:
-        if type(usuario) == dict and (type(jugadores_a_agregar) == set or type(jugadores_a_agregar) == list):
+        if type(usuario) == dict and type(jugadores_a_agregar) == set:
             formacion = usuario["formacion"].copy()
             contador_suplentes = len(usuario["suplentes"])
 
             for jugador in usuario["titulares"]:
-                formacion[BBDD_JUGADORES[jugador]["posicion"]] -= 1
+                formacion[BBDD_JUGADORES[int(jugador)]["posicion"]] -= 1
 
             for jugador in jugadores_a_agregar:
-                if not formacion[BBDD_JUGADORES[jugador]["posicion"]] <= 0:
-                    formacion[BBDD_JUGADORES[jugador]["posicion"]] -= 1
+                if not formacion[BBDD_JUGADORES[int(jugador)]["posicion"]] <= 0:
+                    formacion[BBDD_JUGADORES[int(jugador)]["posicion"]] -= 1
                 elif contador_suplentes <= 4:
                     contador_suplentes += 1
                 else:
@@ -75,45 +108,43 @@ def verificacion_de_formacion(usuario, jugadores_a_agregar):
 def eliminar_jugadores(usuario, jugadores_a_eliminar):
     jugadores_no_encontrados = []
     try:
-        if jugadores_a_eliminar <= 0:
+        if usuario == "":
+            return "eliminar"
+        if len(jugadores_a_eliminar) <= 0:
             print("No hay jugadores para eliminar")
             return
-        if type(usuario) == dict and (type(jugadores_a_eliminar) == set or type(jugadores_a_eliminar) == list):
-            for jugador in jugadores_a_eliminar:
+        if type(usuario) == dict and type(jugadores_a_eliminar) == set:
+            for int_jugador in jugadores_a_eliminar:
+                jugador = str(int_jugador)
                 if jugador in usuario["titulares"]:
-                    usuario["titulares"].remove(jugador)
-                    usuario["presupuesto"] += BBDD_JUGADORES[jugador]["costo"]
+                    del(usuario["titulares"][jugador])
+                    usuario["presupuesto"] += BBDD_JUGADORES[int_jugador]["costo"]
                 elif jugador in usuario["suplentes"]:
-                    usuario["suplentes"].remove(jugador)
-                    usuario["presupuesto"] += BBDD_JUGADORES[jugador]["costo"]
+                    del(usuario["suplentes"][jugador])
+                    usuario["presupuesto"] += BBDD_JUGADORES[int_jugador]["costo"]
                 else:
-                    jugadores_no_encontrados.append(jugador)
+                    jugadores_no_encontrados.append(int_jugador)
             if len(jugadores_no_encontrados) > 0:
-                print(f"Los siguientes jugadores no fueron encontrados:")
+                print(f"Los siguientes jugadores no fueron encontrados para eliminar:")
                 for jugador in jugadores_no_encontrados:
                     print(f"{BBDD_JUGADORES[jugador]['nombre']} {BBDD_JUGADORES[jugador]['apellido']}")
             return
+        else:
+            raise TypeError
 
     except TypeError:
-        registrar_excepciones(TypeError("El usuario debe ser un diccionario y la lista de jugadores debe ser un conjunto"))
+        registrar_excepciones(TypeError("El usuario debe ser un diccionario y la lista de jugadores debe ser un conjunto o lista"))
     except Exception as e:
         registrar_excepciones(e)
 
 LISTA_DE_COMANDOS = {
     "-e":filtro_por_equipo,
-    "--EQUIPO":filtro_por_equipo,
     "-p":filtro_por_costo,
-    "--PRECIO":filtro_por_costo,
     "-n":filtro_por_nombre,
-    "--NOMBRE":filtro_por_nombre,
-    "-ap":filtro_por_apellido,
-    "--APELLIDO":filtro_por_apellido,
+    "-A":filtro_por_apellido,
     "-v": lambda valor: ver_jugadores("", valor),
-    "--VER": lambda valor: ver_jugadores("", valor),
-    "-an":lambda valor: añadir_jugadores("", valor),
-    "--ANADIR":lambda valor: añadir_jugadores("", valor),
+    "-a":lambda valor: añadir_jugadores("", valor),
     "-r":lambda valor: eliminar_jugadores("", valor),
-    "--REMOVER":lambda valor: eliminar_jugadores("", valor),
     "salir":"salir",
     "exit":"salir",
     "clear": "borrar",
@@ -121,7 +152,7 @@ LISTA_DE_COMANDOS = {
 }
 
 comandos_compilados = re.compile('|'.join(LISTA_DE_COMANDOS.keys()))
-regex_comandos = re.compile("(-[a-z]{0,4}|--[A-Z]+|[a-zA-Z]+) *([a-zA-Z0-9]+ ?[a-zA-Z0-9]*)*")
+regex_comandos = re.compile("(--[A-Z]+|-[a-zA-Z]{0,4}|[a-zA-Z]+) *([a-zA-Z0-9]+ ?[a-zA-Z0-9]*)*")
 regex_help = re.compile("^(-h|help) *(-[a-zA-Z])*")
 
 def ayuda(comando):
@@ -133,7 +164,13 @@ def ayuda(comando):
         print("Bienvenido al buscador de jugadores\npara buscar ayuda sobre alguna funcion puedes colocar -h despues de la misma\n\nej. --EQUIPO -h\n\npara ver todos los comandos puedes usar -h -h\n")
 
 def ver_jugadores(set_jugadores,opciones):
+    """Segun un set de jugadores, realiza una revision de la base de datos y genera una salida por pantalla con diferente
+    Cantidad de datos segun las opciones utilizadas
 
+    Argumentos:
+    set_jugadores (set): Conjunto de jugadores seleccionados
+    opciones (str): El comando utilizado con sus distintas opciones
+    """
     if type(set_jugadores) == set:
         if len(set_jugadores) == 0:
             print("No hay jugadores seleccionados todavia")
@@ -154,7 +191,11 @@ def ver_jugadores(set_jugadores,opciones):
         return ver_jugadores
 
 def limpiar_comandos_duplicados(comandos):
-    """Toma un listado de comandos y remueve los duplicados si existen (util para los varios RegEx en el codigo)"""
+    """Toma un listado de comandos y remueve los duplicados si existen (util para los RegEx en el codigo)
+    
+    Args:
+        comandos (list): lista de comandos
+    """
     comandos_encontrados = []
     for comando in comandos:
         if comando[0] not in comandos_encontrados:
@@ -168,6 +209,9 @@ def limpiar_comandos_duplicados(comandos):
 def reordenar_comandos(comandos):
     """
     Reordena los comandos usando un set especifico de combinaciones para que se ejecuten de manera correcta
+
+    Args:
+        comandos (list): lista de comandos
     """
     #1. si el primer comando es "-v" se mueve al final
     if "-v" in comandos[0][0]:
@@ -177,14 +221,19 @@ def reordenar_comandos(comandos):
 def procesar_comandos(input, listado_jugadores, usuario):
     """
     Procesa todos el string ingresado al programa y lo convierte una lista de comandos para procesar, luego itera cada uno y los ejecuta
+
+    Args:
+        input (str): un string que puede contener una x cantidad de comandos
+        listado_jugadores (set): Conjunto de jugadores a agregar, se utiliza para no perder la informacion entre ejecuciones de la funcion
+        usuario (dict): diccionario con la informacion del usuario para luego realizar modificaciones segun funcion
     """
-    #aqui se otorga una prioridad de ejecucion a los comandos
+    
     comando_help, comandos = regex_help.findall(input), regex_comandos.findall(input)
-    #esta lista por compresion remueve todos los espacios blancos adelante y atras de los comandos 
+
     print(comandos)
     if len(comandos) > 0:
         comandos = limpiar_comandos_duplicados(comandos)
-        comandos = [(comando, valor.strip()) for comando, valor in comandos]
+        comandos = [(comando, valor.strip().lower()) for comando, valor in comandos]
 
         if len(comando_help) > 0:
             ayuda(comando_help[0][1])
@@ -194,34 +243,50 @@ def procesar_comandos(input, listado_jugadores, usuario):
             devolucion = ""
             if LISTA_DE_COMANDOS.get(comando[0]) == "salir":
                 return True
-            if comando[0] in LISTA_DE_COMANDOS:
-                if type(LISTA_DE_COMANDOS[comando[0]]) != str:
-                    devolucion = LISTA_DE_COMANDOS[comando[0]](comando[1])
-                else:
-                    devolucion = LISTA_DE_COMANDOS[comando[0]]
-                if type(devolucion) == set:
-                    if len(listado_jugadores) == 0:
-                        listado_jugadores.update(devolucion)
-                    else:
-                        listado_jugadores = listado_jugadores & devolucion
-                if devolucion == "borrar":
-                    listado_jugadores = set()
-                if devolucion == ver_jugadores:  
-                    ver_jugadores(listado_jugadores, comando[0])
+            if comando[0] in LISTA_DE_COMANDOS or comando[0][:2] in LISTA_DE_COMANDOS:
+                listado_jugadores = ejecutar_comando(comando, listado_jugadores, usuario)
+        return listado_jugadores
+                
+def ejecutar_comando(comando, listado_jugadores, usuario):
+    """Ejecuta un comando, utiliza una u otra funcion dependiendo del comando dado"""
+    try:
+        devolucion = LISTA_DE_COMANDOS[comando[0][:2]](comando[1])
+    except KeyError:
+        devolucion = LISTA_DE_COMANDOS[comando[0]]
+    if type(devolucion) == set:
+        if len(listado_jugadores) == 0:
+            listado_jugadores.update(devolucion)
+        else:
+            listado_jugadores = listado_jugadores & devolucion
+    if devolucion == "borrar":
+        listado_jugadores = set()
+    if devolucion == ver_jugadores:  
+        ver_jugadores(listado_jugadores, comando[0])
+    if devolucion == "anadir":
+        añadir_jugadores(usuario, listado_jugadores)
+        listado_jugadores = set()
+    if devolucion == "eliminar":
+        eliminar_jugadores(usuario, listado_jugadores)
+        listado_jugadores = set()
+    return listado_jugadores
 
 def iniciar_busqueda(usuario):
-    jugadores_seleccionados = set()
-    print("Consola de busqueda\ningresar '-h' para ayuda")
-    print("Comandos basicos:\n-a  --AÑADIR\t-r  --REMOVER\n-n  --NOMBRE [valor]\t-a  --APELLIDO [valor]")
+    """Inicia la consola de busqueda de jugadores, requiere el usuario quien esta realizando las modificaciones
+    
+    args:
+        usuario (dict): Diccionario con la informacion del usuario
+    """
+    print("Consola de busqueda\n\ningresar '-h' para ayuda\n")
+    print("Comandos basicos:\n-a  (Añadir jugadores)\t-r  (Remover jugadores)\n-n  (Nombre de jugador [valor])\t-a  (Apellido de jugador [valor])")
+    listado_jugadores = set()
     while True:
-        lista_devolucion = []
         valor_buscado = input("> ")
-        if procesar_comandos(
-            normalizar_acentos(
-            valor_buscado.lower()), 
-            jugadores_seleccionados,
-            usuario
-            ):
-            return
-        
-iniciar_busqueda("")
+        try:
+            process = procesar_comandos(normalizar_acentos(valor_buscado),listado_jugadores, usuario)
+            if type(process) == set:
+                listado_jugadores = process
+            elif process:
+                return
+
+        except Exception as e:
+            registrar_excepciones(e)

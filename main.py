@@ -14,7 +14,6 @@ from calculo_puntos import *
 
 
 try:
-    # Encoding añadido debido a error extraño con json
     contenido = open("data/jugadores_actualizados.json", "r", encoding="utf8")
     jugadores = contenido.read()
 
@@ -52,6 +51,8 @@ finally:
         contenido.close()
     except NameError:
         pass
+
+from busqueda_de_jugadores import *
 
 # DEFINICIONES
 """
@@ -99,23 +100,11 @@ def print_menu_principal(nombre_usuario):
     print(f"Bienvenido {nombre_usuario}!!\n")
     print("---------------\nMENU PRINCIPAL\n---------------")
     print("Por favor seleccione una opcion:\n",
-          "A. Menu de Equipo\n",
+          "A. Consola de Equipo\n",
           "B. Menu de Torneo\n",
-          # "C. Cambiar de Usuario\n",
-          "C. Salir",
+          "C. Cambiar de Usuario\n",
+          "D. Salir",
           )
-
-
-def print_menu_equipo():
-    print("---------------\nMENU EQUIPO\n---------------")
-    print("Por favor selecciona una opcion:\n",
-          "A. Ver Equipo\n",
-          "B. Añadir Jugadores\n",
-          "C. Remover Jugadores\n",
-          # "D. Asignar Capitan\n",
-          "D. Regresar al menu principal"
-          )
-
 
 def print_menu_torneo():
     print("---------------\nMENU TORNEO\n---------------")
@@ -127,7 +116,6 @@ def print_menu_torneo():
 
 # ---------------------------------------------
 #   LOGICA
-
 
 def main():
     """'Yo soy el alfa y el omega, el principio y el fin'.
@@ -142,15 +130,16 @@ def main():
 
         logica_menu_usuarios(usuarios)
 
-    except (FileNotFoundError, JSONDecodeError):
+    except (FileNotFoundError, JSONDecodeError) as e:
+        registrar_excepciones(e)
         print("No hay usuarios registrados, por favor cree uno\n")
         with open("data/usuarios.json", "w") as contenido:
             json.dump(registrar_usuario(), contenido, indent=4)
 
         main()
 
-    # except Exception as e:
-        # registrar_excepciones(e)
+    except Exception as e:
+        registrar_excepciones(e)
 
 
 def registrar_usuario():
@@ -245,47 +234,6 @@ def registro_de_equipos(jugadores):
     return equipos
 
 
-def seleccion_jugadores_id(lista_jugadores):
-    """Este codigo se ejecuta dentro de añadir jugadores, cuando hay varios con el mismo apellido se ejecuta y fuerza al jugador a seleccionar uno, devuelte una lista de longitud 1
-
-    Args:
-        lista_jugadores (list): [id_jugador]
-
-    Returns:
-        list: [id_jugador]
-    """
-    print("Hay varios jugadores con el mismo apellido",
-          "\nPor favor indique el id del jugador a anadir:\n", end="")
-    for jugador in lista_jugadores:
-        print(
-            f"{jugador} - {BBDD_JUGADORES[jugador]['nombre']} {BBDD_JUGADORES[jugador]['apellido']}")
-
-    while True:
-        respuesta = int(input("> "))
-        if respuesta in lista_jugadores:
-            print(
-                f"Jugador {BBDD_JUGADORES[respuesta]['nombre']} {BBDD_JUGADORES[respuesta]['apellido']} anadido al equipo")
-            return [respuesta]
-        else:
-            print("Id incorrecto, intente nuevamente")
-
-
-def añadir_jugadores(usuario):
-    pass
-
-
-def solicitar_dato_jugador(dato):
-    print(f"Porfavor indique el {dato} del jugador a buscar:")
-    return input("> ")
-
-
-def buscar_jugador(dato):
-    if dato == "nombre, apellido":
-        pass
-    else:
-        pass
-
-
 def logica_menu_usuarios(dic_usuarios):
     while True:
         print_menu_usuarios()
@@ -304,7 +252,6 @@ def logica_menu_usuarios(dic_usuarios):
             return #aca deberia cortar ejecucion
         else:
             print("Opcion no valida")
-
 
 def logica_menu_torneo(usuario, fixture, matriz_posiciones):
 
@@ -326,25 +273,6 @@ def logica_menu_torneo(usuario, fixture, matriz_posiciones):
         else:
             print("Opcion no valida")
 
-
-def logica_menu_equipo(usuario):
-    while True:
-        print_menu_equipo()
-        seleccion = input("> ").lower()
-        if seleccion == "a":
-            imprimir_equipo_platilla(usuario)
-            print()
-
-        elif seleccion == "b":
-            usuario = añadir_jugadores(usuario)
-        elif seleccion == "c":
-            eliminar_jugadores(usuario)
-        elif seleccion == "d":
-            return usuario
-        else:
-            print("Opcion no valida")
-
-
 def logica_menu_principal(usuario):
     """
     Muestra el menu principal y se encarga de llamar a las demas funciones segun la eleccion del usuario
@@ -356,12 +284,12 @@ def logica_menu_principal(usuario):
         print_menu_principal(usuario["nom_usuario"])
         seleccion = input("> ").lower()
         if seleccion == "a":
-            logica_menu_equipo(usuario)
+            iniciar_busqueda(usuario)
         elif seleccion == "b":
             logica_menu_torneo(usuario, fixture, matriz_posiciones)
         elif seleccion == "c":
             logica_menu_usuarios(USUARIOS)
-        elif seleccion == "c":
+        elif seleccion == "d":
             return
         else:
             print("Opcion no valida")
@@ -729,14 +657,6 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
     actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo)
 
     return matriz_posiciones
-
-
-def imprimir_equipo_platilla(usuario):
-    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], USUARIOS, BBDD_JUGADORES)
-
-    with open("equipo/formacion.html", "w", encoding="utf-8") as f:
-        f.write(html_render)
-
 
 lista_equipos = registro_de_equipos(BBDD_JUGADORES)
 fixture = generar_fixture_ida_vuelta(lista_equipos)
