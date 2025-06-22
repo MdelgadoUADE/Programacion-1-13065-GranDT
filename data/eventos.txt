@@ -32238,5 +32238,1585 @@
         "apellido": "Villalba",
         "posicion": "mediocampista",
         "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Boca Juniors",
+        "id_jugador": 8,
+        "nombre": "Kevin",
+        "apellido": "Zenón",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Boca Juniors",
+        "id_jugador": 11,
+        "nombre": "Edinson",
+        "apellido": "Cavani",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Boca Juniors",
+        "id_jugador": 5,
+        "nombre": "Frank",
+        "apellido": "Fabra",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Boca Juniors",
+        "id_jugador": 5,
+        "nombre": "Frank",
+        "apellido": "Fabra",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Roja",
+        "equipo": "Boca Juniors",
+        "id_jugador": 5,
+        "nombre": "Frank",
+        "apellido": "Fabra",
+        "posicion": "defensor",
+        "puntaje_asociado": -4
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Aldosivi",
+        "id_jugador": 221,
+        "nombre": "Elías",
+        "apellido": "Torres",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Aldosivi",
+        "id_jugador": 226,
+        "nombre": "Tiago",
+        "apellido": "Serrago",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Aldosivi",
+        "id_jugador": 227,
+        "nombre": "Tomás",
+        "apellido": "Kummer",
+        "posicion": "defensor",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Aldosivi",
+        "id_jugador": 222,
+        "nombre": "Matías",
+        "apellido": "Garcia",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Aldosivi",
+        "id_jugador": 223,
+        "nombre": "Roberto",
+        "apellido": "Bochi",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Aldosivi",
+        "id_jugador": 231,
+        "nombre": "Jorge",
+        "apellido": "Carranza",
+        "posicion": "arquero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Aldosivi",
+        "id_jugador": 226,
+        "nombre": "Tiago",
+        "apellido": "Serrago",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Aldosivi",
+        "id_jugador": 224,
+        "nombre": "Giuliano",
+        "apellido": "Cerato",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Aldosivi",
+        "id_jugador": 225,
+        "nombre": "Natanael",
+        "apellido": "Guzmán",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Aldosivi",
+        "id_jugador": 229,
+        "nombre": "Rodrigo",
+        "apellido": "González",
+        "posicion": "defensor",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Aldosivi",
+        "id_jugador": 221,
+        "nombre": "Elías",
+        "apellido": "Torres",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Aldosivi",
+        "id_jugador": 229,
+        "nombre": "Rodrigo",
+        "apellido": "González",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "River Plate",
+        "id_jugador": 17,
+        "nombre": "Rodrigo",
+        "apellido": "Aliendro",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "River Plate",
+        "id_jugador": 22,
+        "nombre": "Facundo",
+        "apellido": "Colidio",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "River Plate",
+        "id_jugador": 22,
+        "nombre": "Facundo",
+        "apellido": "Colidio",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "River Plate",
+        "id_jugador": 21,
+        "nombre": "Miguel",
+        "apellido": "Borja",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "River Plate",
+        "id_jugador": 19,
+        "nombre": "Ignacio",
+        "apellido": "Fernández",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "River Plate",
+        "id_jugador": 16,
+        "nombre": "Milton",
+        "apellido": "Casco",
+        "posicion": "defensor",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "River Plate",
+        "id_jugador": 18,
+        "nombre": "Nicolás",
+        "apellido": "De la Cruz",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "River Plate",
+        "id_jugador": 21,
+        "nombre": "Miguel",
+        "apellido": "Borja",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Racing Club",
+        "id_jugador": 30,
+        "nombre": "Agustín",
+        "apellido": "Almendra",
+        "posicion": "mediocampista",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Racing Club",
+        "id_jugador": 26,
+        "nombre": "Nazareno",
+        "apellido": "Colombo",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Independiente",
+        "id_jugador": 43,
+        "nombre": "Alex",
+        "apellido": "Luna",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Independiente",
+        "id_jugador": 42,
+        "nombre": "Matías",
+        "apellido": "Giménez",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Independiente",
+        "id_jugador": 39,
+        "nombre": "Federico",
+        "apellido": "Mancuello",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Independiente",
+        "id_jugador": 39,
+        "nombre": "Federico",
+        "apellido": "Mancuello",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Independiente",
+        "id_jugador": 40,
+        "nombre": "Iván",
+        "apellido": "Marcone",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Independiente",
+        "id_jugador": 35,
+        "nombre": "Mauricio",
+        "apellido": "Isla",
+        "posicion": "defensor",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Independiente",
+        "id_jugador": 43,
+        "nombre": "Alex",
+        "apellido": "Luna",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Colón",
+        "id_jugador": 197,
+        "nombre": "Tomás",
+        "apellido": "Sandoval",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Colón",
+        "id_jugador": 193,
+        "nombre": "Federico",
+        "apellido": "Lértora",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "San Lorenzo",
+        "id_jugador": 49,
+        "nombre": "Malcom",
+        "apellido": "Braida",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "San Lorenzo",
+        "id_jugador": 54,
+        "nombre": "Adam",
+        "apellido": "Bareiro",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 181,
+        "nombre": "Renzo",
+        "apellido": "Tesuri",
+        "posicion": "mediocampista",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 178,
+        "nombre": "Marcelo",
+        "apellido": "Ortiz",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 77,
+        "nombre": "Walter",
+        "apellido": "Bou",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 75,
+        "nombre": "Lucas",
+        "apellido": "Janson",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 75,
+        "nombre": "Lucas",
+        "apellido": "Janson",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 76,
+        "nombre": "Abiel",
+        "apellido": "Osorio",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 67,
+        "nombre": "Tomás",
+        "apellido": "Marchiori",
+        "posicion": "arquero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 77,
+        "nombre": "Walter",
+        "apellido": "Bou",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 76,
+        "nombre": "Abiel",
+        "apellido": "Osorio",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 76,
+        "nombre": "Abiel",
+        "apellido": "Osorio",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 170,
+        "nombre": "Ángelo",
+        "apellido": "Martino",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 170,
+        "nombre": "Ángelo",
+        "apellido": "Martino",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 176,
+        "nombre": "Ramiro",
+        "apellido": "Sordo",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 174,
+        "nombre": "Brian",
+        "apellido": "Aguirre",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Rosario Central",
+        "id_jugador": 161,
+        "nombre": "Ignacio",
+        "apellido": "Malcorra",
+        "posicion": "mediocampista",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Tigre",
+        "id_jugador": 153,
+        "nombre": "Facundo",
+        "apellido": "Colidio",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Tigre",
+        "id_jugador": 148,
+        "nombre": "Sebastián",
+        "apellido": "Prieto",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Lanús",
+        "id_jugador": 102,
+        "nombre": "Matías",
+        "apellido": "Pérez",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Lanús",
+        "id_jugador": 107,
+        "nombre": "Pedro",
+        "apellido": "De La Vega",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Banfield",
+        "id_jugador": 114,
+        "nombre": "Luis",
+        "apellido": "Del Pino Mago",
+        "posicion": "defensor",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Banfield",
+        "id_jugador": 116,
+        "nombre": "Alejandro",
+        "apellido": "Cabrera",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Banfield",
+        "id_jugador": 117,
+        "nombre": "Ignacio",
+        "apellido": "Rodríguez",
+        "posicion": "defensor",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Banfield",
+        "id_jugador": 119,
+        "nombre": "Agustín",
+        "apellido": "Urzi",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Banfield",
+        "id_jugador": 118,
+        "nombre": "Nicolás",
+        "apellido": "Sosa Sánchez",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Banfield",
+        "id_jugador": 120,
+        "nombre": "Milton",
+        "apellido": "Giménez",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Banfield",
+        "id_jugador": 119,
+        "nombre": "Agustín",
+        "apellido": "Urzi",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Banfield",
+        "id_jugador": 118,
+        "nombre": "Nicolás",
+        "apellido": "Sosa Sánchez",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Banfield",
+        "id_jugador": 116,
+        "nombre": "Alejandro",
+        "apellido": "Cabrera",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Banfield",
+        "id_jugador": 120,
+        "nombre": "Milton",
+        "apellido": "Giménez",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Banfield",
+        "id_jugador": 121,
+        "nombre": "Juan",
+        "apellido": "Bisanz",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Banfield",
+        "id_jugador": 115,
+        "nombre": "Emanuel",
+        "apellido": "Insúa",
+        "posicion": "mediocampista",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 129,
+        "nombre": "Alan",
+        "apellido": "Rodríguez",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Gol",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 129,
+        "nombre": "Alan",
+        "apellido": "Rodríguez",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 132,
+        "nombre": "Francisco",
+        "apellido": "González Metilli",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Asistencia",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 128,
+        "nombre": "Fausto",
+        "apellido": "Vera",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 1,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 131,
+        "nombre": "Gabriel",
+        "apellido": "Ávalos",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Instituto",
+        "id_jugador": 219,
+        "nombre": "Adrián",
+        "apellido": "Martínez",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Instituto",
+        "id_jugador": 216,
+        "nombre": "Gastón",
+        "apellido": "Lodico",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Instituto",
+        "id_jugador": 220,
+        "nombre": "Santiago",
+        "apellido": "Rodríguez",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Instituto",
+        "id_jugador": 215,
+        "nombre": "Roberto",
+        "apellido": "Bochi",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Instituto",
+        "id_jugador": 218,
+        "nombre": "Brahian",
+        "apellido": "Cuello",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Instituto",
+        "id_jugador": 218,
+        "nombre": "Brahian",
+        "apellido": "Cuello",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Instituto",
+        "id_jugador": 218,
+        "nombre": "Brahian",
+        "apellido": "Cuello",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Boca Juniors",
+        "id_jugador": 9,
+        "nombre": "Luca",
+        "apellido": "Langoni",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Boca Juniors",
+        "id_jugador": 10,
+        "nombre": "Miguel",
+        "apellido": "Merentiel",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Boca Juniors",
+        "id_jugador": 10,
+        "nombre": "Miguel",
+        "apellido": "Merentiel",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Boca Juniors",
+        "id_jugador": 10,
+        "nombre": "Miguel",
+        "apellido": "Merentiel",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Boca Juniors",
+        "id_jugador": 6,
+        "nombre": "Guillermo",
+        "apellido": "Fernández",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Boca Juniors",
+        "id_jugador": 6,
+        "nombre": "Guillermo",
+        "apellido": "Fernández",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Boca Juniors",
+        "id_jugador": 6,
+        "nombre": "Guillermo",
+        "apellido": "Fernández",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Boca Juniors",
+        "id_jugador": 8,
+        "nombre": "Kevin",
+        "apellido": "Zenón",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Boca Juniors",
+        "id_jugador": 7,
+        "nombre": "Ezequiel",
+        "apellido": "Fernández",
+        "posicion": "mediocampista",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Boca Juniors",
+        "id_jugador": 6,
+        "nombre": "Guillermo",
+        "apellido": "Fernández",
+        "posicion": "mediocampista",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Aldosivi",
+        "id_jugador": 221,
+        "nombre": "Elías",
+        "apellido": "Torres",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "River Plate",
+        "id_jugador": 22,
+        "nombre": "Facundo",
+        "apellido": "Colidio",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "River Plate",
+        "id_jugador": 21,
+        "nombre": "Miguel",
+        "apellido": "Borja",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "River Plate",
+        "id_jugador": 22,
+        "nombre": "Facundo",
+        "apellido": "Colidio",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "River Plate",
+        "id_jugador": 15,
+        "nombre": "Paulo",
+        "apellido": "Díaz",
+        "posicion": "defensor",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "River Plate",
+        "id_jugador": 16,
+        "nombre": "Milton",
+        "apellido": "Casco",
+        "posicion": "defensor",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "River Plate",
+        "id_jugador": 19,
+        "nombre": "Ignacio",
+        "apellido": "Fernández",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "River Plate",
+        "id_jugador": 13,
+        "nombre": "Andrés",
+        "apellido": "Herrera",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 185,
+        "nombre": "Marcelo",
+        "apellido": "Estigarribia",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 187,
+        "nombre": "Mateo",
+        "apellido": "Coronel",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 185,
+        "nombre": "Marcelo",
+        "apellido": "Estigarribia",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 185,
+        "nombre": "Marcelo",
+        "apellido": "Estigarribia",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 183,
+        "nombre": "Ramiro",
+        "apellido": "Carrera",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 181,
+        "nombre": "Renzo",
+        "apellido": "Tesuri",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 180,
+        "nombre": "Matías",
+        "apellido": "Orihuela",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 181,
+        "nombre": "Renzo",
+        "apellido": "Tesuri",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 182,
+        "nombre": "Guillermo",
+        "apellido": "Acosta",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 186,
+        "nombre": "Cristian",
+        "apellido": "Menéndez",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Atlético Tucumán",
+        "id_jugador": 177,
+        "nombre": "Tomás",
+        "apellido": "Marchiori",
+        "posicion": "arquero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Racing Club",
+        "id_jugador": 29,
+        "nombre": "Juan",
+        "apellido": "Nardoni",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Racing Club",
+        "id_jugador": 27,
+        "nombre": "Gabriel",
+        "apellido": "Rojas",
+        "posicion": "defensor",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Racing Club",
+        "id_jugador": 28,
+        "nombre": "Aníbal",
+        "apellido": "Moreno",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Racing Club",
+        "id_jugador": 29,
+        "nombre": "Juan",
+        "apellido": "Nardoni",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Racing Club",
+        "id_jugador": 27,
+        "nombre": "Gabriel",
+        "apellido": "Rojas",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 173,
+        "nombre": "Éver",
+        "apellido": "Banega",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 171,
+        "nombre": "Juan",
+        "apellido": "Sforza",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 175,
+        "nombre": "Francisco",
+        "apellido": "González",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 176,
+        "nombre": "Ramiro",
+        "apellido": "Sordo",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 176,
+        "nombre": "Ramiro",
+        "apellido": "Sordo",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 171,
+        "nombre": "Juan",
+        "apellido": "Sforza",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 172,
+        "nombre": "Iván",
+        "apellido": "Gómez",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 168,
+        "nombre": "Gustavo",
+        "apellido": "Velázquez",
+        "posicion": "defensor",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 171,
+        "nombre": "Juan",
+        "apellido": "Sforza",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Newells Old Boys",
+        "id_jugador": 174,
+        "nombre": "Brian",
+        "apellido": "Aguirre",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Independiente",
+        "id_jugador": 44,
+        "nombre": "Gabriel",
+        "apellido": "Ávalos",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Independiente",
+        "id_jugador": 38,
+        "nombre": "Damián",
+        "apellido": "Pérez",
+        "posicion": "defensor",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Independiente",
+        "id_jugador": 35,
+        "nombre": "Mauricio",
+        "apellido": "Isla",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Independiente",
+        "id_jugador": 37,
+        "nombre": "Ayrton",
+        "apellido": "Costa",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Rosario Central",
+        "id_jugador": 164,
+        "nombre": "Lautaro",
+        "apellido": "Giaccone",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Rosario Central",
+        "id_jugador": 161,
+        "nombre": "Ignacio",
+        "apellido": "Malcorra",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 73,
+        "nombre": "Nicolás",
+        "apellido": "Garayalde",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 72,
+        "nombre": "Máximo",
+        "apellido": "Perrone",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 77,
+        "nombre": "Walter",
+        "apellido": "Bou",
+        "posicion": "delantero",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 74,
+        "nombre": "José",
+        "apellido": "Florentín",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Vélez Sarsfield",
+        "id_jugador": 68,
+        "nombre": "Leonardo",
+        "apellido": "Jara",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Defensa y Justicia",
+        "id_jugador": 134,
+        "nombre": "Nicolás",
+        "apellido": "Tripichio",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Estudiantes",
+        "id_jugador": 82,
+        "nombre": "Emmanuel",
+        "apellido": "Más",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Estudiantes",
+        "id_jugador": 81,
+        "nombre": "Luciano",
+        "apellido": "Lollo",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 130,
+        "nombre": "Thiago",
+        "apellido": "Nuss",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 123,
+        "nombre": "Kevin",
+        "apellido": "Mac Allister",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 128,
+        "nombre": "Fausto",
+        "apellido": "Vera",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 128,
+        "nombre": "Fausto",
+        "apellido": "Vera",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Argentinos Juniors",
+        "id_jugador": 125,
+        "nombre": "Lucas",
+        "apellido": "Villalba",
+        "posicion": "mediocampista",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Gimnasia",
+        "id_jugador": 96,
+        "nombre": "Alan",
+        "apellido": "Lescano",
+        "posicion": "defensor",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Gimnasia",
+        "id_jugador": 90,
+        "nombre": "Bautista",
+        "apellido": "Barros Schelotto",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Gimnasia",
+        "id_jugador": 93,
+        "nombre": "Nicolás",
+        "apellido": "Colazo",
+        "posicion": "defensor",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Gimnasia",
+        "id_jugador": 90,
+        "nombre": "Bautista",
+        "apellido": "Barros Schelotto",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Gol",
+        "equipo": "Gimnasia",
+        "id_jugador": 98,
+        "nombre": "Cristian",
+        "apellido": "Tarragona",
+        "posicion": "delantero",
+        "puntaje_asociado": 6
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Gimnasia",
+        "id_jugador": 92,
+        "nombre": "Leonardo",
+        "apellido": "Morales",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Gimnasia",
+        "id_jugador": 92,
+        "nombre": "Leonardo",
+        "apellido": "Morales",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Gimnasia",
+        "id_jugador": 95,
+        "nombre": "Brahian",
+        "apellido": "Alemán",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Gimnasia",
+        "id_jugador": 95,
+        "nombre": "Brahian",
+        "apellido": "Alemán",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Asistencia",
+        "equipo": "Gimnasia",
+        "id_jugador": 92,
+        "nombre": "Leonardo",
+        "apellido": "Morales",
+        "posicion": "mediocampista",
+        "puntaje_asociado": 3
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Gimnasia",
+        "id_jugador": 98,
+        "nombre": "Cristian",
+        "apellido": "Tarragona",
+        "posicion": "delantero",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Gimnasia",
+        "id_jugador": 96,
+        "nombre": "Alan",
+        "apellido": "Lescano",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Banfield",
+        "id_jugador": 112,
+        "nombre": "Emanuel",
+        "apellido": "Coronel",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
+    },
+    {
+        "fecha": 2,
+        "evento": "Tarjeta Amarilla",
+        "equipo": "Lanús",
+        "id_jugador": 101,
+        "nombre": "Braian",
+        "apellido": "Aguirre",
+        "posicion": "defensor",
+        "puntaje_asociado": -2
     }
 ]

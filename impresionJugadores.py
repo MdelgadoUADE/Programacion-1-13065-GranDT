@@ -2,6 +2,13 @@ import os
 from main import abrir_archivo_json
 
 def imprimir_equipo_platilla(usuario, BBDD_JUGADORES):
+    """
+    Crea un archivo html que muestra la formación del equipo del usuario logueado.
+
+    Args:
+        usuario (dict): Diccionario con la información del usuario.
+        BBDD_JUGADORES (dict): Diccionario con toda la información de los jugadores.
+    """
     usuarios_core = abrir_archivo_json("data/usuarios.json", "r")
     html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], usuarios_core, BBDD_JUGADORES)
 
@@ -10,6 +17,17 @@ def imprimir_equipo_platilla(usuario, BBDD_JUGADORES):
 
 def llenar_titulares(titulares, BBDD_JUGADORES, index=0):
     # Caso base: si procesó todos los titulares, retorna el diccionario vacío
+    """
+    Llena un diccionario con la posición y los nombres de los jugadores.
+    
+    Args:
+        titulares (list): Lista de ids de los jugadores titulares.
+        BBDD_JUGADORES (dict): Diccionario con toda la información de los jugadores.
+        index (int): Indice del título actual en la lista de titulares.
+    
+    Returns:
+        dict: Diccionario con la posición y los nombres de los jugadores.
+    """
     if index >= len(titulares):
         return {
             "arquero": [],
@@ -28,6 +46,18 @@ def llenar_titulares(titulares, BBDD_JUGADORES, index=0):
     return jugadores_por_posicion
 
 def formacion_html(nombre_archivo, usuario, usuarios_core, BBDD_JUGADORES):
+    """
+    Lee un archivo HTML y reemplaza los placeholders para mostrar la formación del equipo del usuario.
+
+    Args:
+        nombre_archivo (str): Ruta del archivo HTML a leer.
+        usuario (str): Nombre del usuario.
+        usuarios_core (dict): Diccionario con toda la información de los usuarios.
+        BBDD_JUGADORES (dict): Diccionario con toda la información de los jugadores.
+
+    Returns:
+        str: El HTML renderizado con la formación del equipo.
+    """
     try:
         directorio_actual = os.path.dirname(os.path.abspath(__file__))
         ruta_archivo = os.path.join(directorio_actual, nombre_archivo)

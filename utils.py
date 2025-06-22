@@ -120,6 +120,15 @@ def registrar_excepciones(e):
 
 
 def abrir_archivo_json(nombre_archivo, modo):
+    """Abre un archivo json y lo devuelve como un diccionario
+
+    Args:
+        nombre_archivo (str): nombre del archivo a abrir
+        modo (str): modo de apertura del archivo, ejemplo: 'r' o 'w'
+
+    Returns:
+        dict: contenido del archivo json
+    """
     try:
         archivo = open(nombre_archivo, modo)
         lineas = archivo.read()
@@ -139,6 +148,20 @@ def abrir_archivo_json(nombre_archivo, modo):
 
 
 def buscar_maximo_evento(posicion, evento, stats):
+    """
+    Busca el jugador con el máximo valor en un evento específico dado su posición.
+
+    Args:
+        posicion (str): La posición del jugador (e.g., "delantero", "mediocampista", "defensor").
+        evento (str): El tipo de evento a considerar (e.g., "goles", "asis", "amarillas", "rojas").
+        stats (dict): Un diccionario que contiene las estadísticas de los jugadores.
+
+    Returns:
+        dict: Un diccionario con los datos del jugador que tiene el máximo valor en el evento especificado. 
+        Incluye el nombre, apellido y el valor del evento. Si no se encuentra ningún jugador, retorna un 
+        diccionario con valores vacíos y el valor del evento como 0.
+    """
+
     maximo = max(
         (data for data in stats.values() if data["posicion"] == posicion),
         key=lambda d: d[evento], default={"nombre": "", "apellido": "", evento: 0})
