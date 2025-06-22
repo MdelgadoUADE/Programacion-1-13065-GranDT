@@ -12,7 +12,7 @@ from utils import *
 from tablaPosiciones import *
 from impresionJugadores import *
 from calculo_puntos import *
-from finalizacion_torneo import *
+from reportes_torneo import *
 from logica import *
 from config_manager import *
 

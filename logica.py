@@ -93,22 +93,22 @@ def simular_eventos(fixture, fecha, resultado_local):
         resultado_visitante = "pierde"
         eventos.append(resultado_visitante)
         while (goles_local <= goles_visitante):
-            goles_local = random.randint(1, 5)
-            goles_visitante = random.randint(0, 4)
+            goles_local = random.randint(1, 4)
+            goles_visitante = random.randint(0, 3)
             asis_local = goles_local
             asis_visitante = goles_visitante
     elif resultado_local == "pierde":
         resultado_visitante = "gana"
         eventos.append(resultado_visitante)
         while (goles_visitante <= goles_local):
-            goles_visitante = random.randint(1, 5)
-            goles_local = random.randint(0, 4)
+            goles_visitante = random.randint(1, 4)
+            goles_local = random.randint(0, 3)
             asis_local = goles_local
             asis_visitante = goles_visitante
     else:
         resultado_visitante = "empata"
         eventos.append(resultado_visitante)
-        goles_local = random.randint(0, 5)
+        goles_local = random.randint(0, 3)
         goles_local = goles_visitante
 
     goles_totales = goles_local + goles_visitante
@@ -143,23 +143,16 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
         nroFecha (list): Fecha y Partido a simular.
     """
 
-    # Probabilidad gol
+    # Probabilidades
     prob_gol = {"arquero": 0.0, "defensor": 0.1,
                 "mediocampista": 0.2, "delantero": 0.7}
-    # Probabilidad asistencia
     prob_asis = {"arquero": 0.1, "defensor": 0.1,
                  "mediocampista": 0.6, "delantero": 0.2}
-    # Probabilidad tarjeta amarilla
     prob_ta = {"arquero": 0.1, "defensor": 0.3,
                "mediocampista": 0.3, "delantero": 0.3}
 
-    goles_local = []
-    asistencias_local = []
-    tarjetas_local = []
-    goles_visita = []
-    asistencias_visita = []
-    tarjetas_visita = []
     aux = []
+    aux2 = []
 
     # LOCAL
     # gol
@@ -171,10 +164,9 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
         aux.extend(goleador)
         aux.append(id_eventos[3]["titulo"])
         aux.append(id_eventos[3]["puntaje_asociado"])
-        goles_local.append(aux)
+        aux2.append(aux)
         aux = []
         eventos[6] -= 1
-    cargar_evento(goles_local, nroFechaPartido)
 
     # asist
     pesos_local = [prob_asis.get(jugador[4], 0.1)
@@ -185,10 +177,9 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
         aux.extend(asistidor)
         aux.append(id_eventos[4]["titulo"])
         aux.append(id_eventos[4]["puntaje_asociado"])
-        asistencias_local.append(aux)
+        aux2.append(aux)
         aux = []
         eventos[-4] -= 1
-    cargar_evento(asistencias_local, nroFechaPartido)
 
     # tarjetas
     amonestadosLocal = {}
@@ -199,25 +190,24 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
             equipo_local, weights=pesos_local, k=1)[0]
         id_jugador = amonestado[0]
         if id_jugador in amonestadosLocal:
-            aux2.extend(amonestado)
-            aux2.append(id_eventos[5]["titulo"])
-            aux2.append(id_eventos[5]["puntaje_asociado"])
-            tarjetas_local.append(aux2)
+            aux3.extend(amonestado)
+            aux3.append(id_eventos[5]["titulo"])
+            aux3.append(id_eventos[5]["puntaje_asociado"])
+            aux2.append(aux3)
 
             aux.extend(amonestado)
             aux.append(id_eventos[6]["titulo"])
             aux.append(id_eventos[6]["puntaje_asociado"])
-            tarjetas_local.append(aux)
+            aux2.append(aux)
         else:
             aux.extend(amonestado)
             aux.append(id_eventos[5]["titulo"])
             aux.append(id_eventos[5]["puntaje_asociado"])
-            tarjetas_local.append(aux)
+            aux2.append(aux)
         amonestadosLocal = amonestado
         aux = []
-        aux2 = []
+        aux3 = []
         eventos[-2] -= 1
-    cargar_evento(tarjetas_local, nroFechaPartido)
 
     # VISITA
     # gol
@@ -229,10 +219,9 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
         aux.extend(goleador)
         aux.append(id_eventos[3]["titulo"])
         aux.append(id_eventos[3]["puntaje_asociado"])
-        goles_visita.append(aux)
+        aux2.append(aux)
         aux = []
         eventos[7] -= 1
-    cargar_evento(goles_visita, nroFechaPartido)
 
     # asist
     pesos_visita = [prob_asis.get(jugador[4], 0.1)
@@ -243,10 +232,9 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
         aux.extend(asistidor)
         aux.append(id_eventos[4]["titulo"])
         aux.append(id_eventos[4]["puntaje_asociado"])
-        asistencias_visita.append(aux)
+        aux2.append(aux)
         aux = []
         eventos[-3] -= 1
-    cargar_evento(asistencias_visita, nroFechaPartido)
 
     # tarjetas
     amonestadosVisita = {}
@@ -257,25 +245,27 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
             equipo_visitante, weights=pesos_visita, k=1)[0]
         id_jugador = amonestado[0]
         if id_jugador in amonestadosVisita:
-            aux2.extend(amonestado)
-            aux2.append(id_eventos[5]["titulo"])
-            aux2.append(id_eventos[5]["puntaje_asociado"])
-            tarjetas_visita.append(aux2)
+            aux3.extend(amonestado)
+            aux3.append(id_eventos[5]["titulo"])
+            aux3.append(id_eventos[5]["puntaje_asociado"])
+            aux2.append(aux3)
 
             aux.extend(amonestado)
             aux.append(id_eventos[6]["titulo"])
             aux.append(id_eventos[6]["puntaje_asociado"])
-            tarjetas_visita.append(aux)
+            aux2.append(aux)
         else:
             aux.extend(amonestado)
             aux.append(id_eventos[5]["titulo"])
             aux.append(id_eventos[5]["puntaje_asociado"])
-            tarjetas_visita.append(aux)
+            aux2.append(aux)
         amonestadosVisita = amonestado
         aux = []
-        aux2 = []
+        aux3 = []
         eventos[-1] -= 1
-    cargar_evento(tarjetas_visita, nroFechaPartido)
+
+    cargar_evento(aux2, nroFechaPartido)
+    aux2 = []
 
 
 def cargar_evento(listaEvento, nroFecha):

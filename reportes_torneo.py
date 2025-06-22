@@ -2,14 +2,17 @@ import json
 from functools import reduce
 from utils import buscar_maximo_evento
 
+
 def reporte_final_usuarios(path_usuarios="data/usuarios.json"):
     with open(path_usuarios, "r", encoding="utf-8") as f:
         usuarios = json.load(f)
 
     # Ordenar usuarios por puntos (descendente)
-    ranking = sorted(usuarios.items(), key=lambda x: x[1]["puntos"], reverse=True)
+    ranking = sorted(usuarios.items(),
+                     key=lambda x: x[1]["puntos"], reverse=True)
     ganador, datos_ganador = ranking[0]
-    print(f"\n El usuario ganador es: {ganador} con {datos_ganador['puntos']} puntos \n")
+    print(
+        f"\n El usuario ganador es: {ganador} con {datos_ganador['puntos']} puntos \n")
     print("Posiciones finales:")
     for i, (nombre, datos) in enumerate(ranking, 1):
         print(f"{i}. {nombre}: {datos['puntos']} puntos")
@@ -18,16 +21,19 @@ def reporte_final_usuarios(path_usuarios="data/usuarios.json"):
 def buscar_maximo_asistidor(stats):
     posicion = "mediocampista"
     evento = "asis"
-    return buscar_maximo_evento(posicion,evento,stats)
+    return buscar_maximo_evento(posicion, evento, stats)
+
+
 def buscar_maximo_tarjetas_amarillas(stats):
     posicion = "defensor"
     evento = "amarillas"
-    return buscar_maximo_evento(posicion,evento,stats)
+    return buscar_maximo_evento(posicion, evento, stats)
+
 
 def buscar_maximo_tarjetas_rojas(stats):
     posicion = "defensor"
     evento = "rojas"
-    return buscar_maximo_evento(posicion,evento,stats)
+    return buscar_maximo_evento(posicion, evento, stats)
 
 
 def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data/usuarios.json"):
@@ -95,7 +101,11 @@ def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data
     max_rojas = buscar_maximo_tarjetas_rojas(stats)
 
     print("\n--- Estadísticas individuales (solo titulares de usuarios) ---")
-    print(f"Rompe redes (Maximo Goleador): {max_goleador['nombre']} {max_goleador['apellido']} con {max_goleador['goles']} goles")
-    print(f"El Mago (Maximo Asistidor): {max_asistidor['nombre']} {max_asistidor['apellido']} con {max_asistidor['asis']} asistencias")
-    print(f"El Tosco (Mas tarjetas amarillas): {max_amarillas['nombre']} {max_amarillas['apellido']} con {max_amarillas['amarillas']} amarillas")
-    print(f"El mas Bostero (Mas tarjetas Rojas): {max_rojas['nombre']} {max_rojas['apellido']} con {max_rojas['rojas']} rojas")
+    print(
+        f"Rompe redes (Maximo Goleador): {max_goleador['nombre']} {max_goleador['apellido']} con {max_goleador['goles']} goles")
+    print(
+        f"El Mago (Maximo Asistidor): {max_asistidor['nombre']} {max_asistidor['apellido']} con {max_asistidor['asis']} asistencias")
+    print(
+        f"El Tosco (Mas tarjetas amarillas): {max_amarillas['nombre']} {max_amarillas['apellido']} con {max_amarillas['amarillas']} amarillas")
+    print(
+        f"El mas Bostero (Mas tarjetas Rojas): {max_rojas['nombre']} {max_rojas['apellido']} con {max_rojas['rojas']} rojas")

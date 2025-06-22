@@ -1,5 +1,4 @@
 flag_end_state: False
-
 flag_comienzo_torneo: False
-
-fecha_actual: 0
+fecha_actual: 3
+matriz_posiciones: [['Boca Juniors', 1, 2, 0, 5], ['River Plate', 2, 1, 0, 7], ['Racing Club', 2, 0, 1, 6], ['Independiente', 0, 2, 1, 2], ['San Lorenzo', 1, 1, 1, 4], ['Vélez Sarsfield', 2, 0, 1, 6], ['Estudiantes', 1, 1, 1, 4], ['Gimnasia', 2, 1, 0, 7], ['Lanús', 1, 2, 0, 5], ['Banfield', 1, 1, 1, 4], ['Argentinos Juniors', 0, 0, 3, 0], ['Defensa y Justicia', 0, 1, 2, 1], ['Tigre', 0, 1, 2, 1], ['Rosario Central', 1, 1, 1, 4], ['Newells Old Boys', 2, 0, 1, 6], ['Atlético Tucumán', 3, 0, 0, 9], ['Colón', 0, 2, 1, 2], ['Unión', 0, 1, 2, 1], ['Instituto', 0, 2, 1, 2], ['Aldosivi', 1, 1, 1, 4]]
