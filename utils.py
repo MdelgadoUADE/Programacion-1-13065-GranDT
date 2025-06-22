@@ -8,6 +8,7 @@ ACENTOS = {
 def normalizar_acentos(string):
     return ''.join([ACENTOS.get(c, c) for c in string])
 
+
 def registro_de_equipos(jugadores):
     """Registra los equipos de la base de jugadores en una lista.
 
@@ -86,49 +87,7 @@ def abrir_archivo_json(nombre_archivo, modo):
         registrar_excepciones(e)
 
 
-def cargar_evento(listaEvento, nroFecha):
-    """
-    Recibe cada lista de eventos individuales, ya asignados, por categoria y los escribe en un archivo de salida.
-
-    Args:
-        listaEvento (list): Lista del tipo de evento para agregar al archivo.
-        nroFecha (list): Numero de fecha que se va a escribir.
-    """
-
-    eventos2json = []
-
-    for evento in listaEvento:
-        eventos2json.append({
-            "fecha": nroFecha,
-            "evento": evento[-2],
-            "equipo": evento[1],
-            "id_jugador": evento[0],
-            "nombre": evento[2],
-            "apellido": evento[3],
-            "posicion": evento[4],
-            "puntaje_asociado": evento[-1]
-        })
-
-    '''
-    if nroFecha != 0:
-        data_path = f"data/eventos{nroFecha}.txt"
-    '''
-
-    data = []
-
-    if os.path.exists("data/eventos.txt"):
-        try:
-            with open("data/eventos.txt", mode="r", encoding="UTF-8") as archivo:
-                data = json.load(archivo)
-        except FileNotFoundError:
-            print("No se encontró el archivo.")
-
-    data.extend(eventos2json)
-
-    with open("data/eventos.txt", mode='w', encoding='utf-8') as archivo:
-        json.dump(data, archivo, indent=4, ensure_ascii=False)
-
-def buscar_maximo_evento(posicion,evento,stats):
+def buscar_maximo_evento(posicion, evento, stats):
     maximo = max(
         (data for data in stats.values() if data["posicion"] == posicion),
         key=lambda d: d[evento], default={"nombre": "", "apellido": "", evento: 0})

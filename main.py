@@ -12,6 +12,7 @@ from tablaPosiciones import *
 from impresionJugadores import *
 from calculo_puntos import *
 from finalizacion_torneo import *
+from logica import *
 
 try:
     contenido = open("data/jugadores_actualizados.json", "r", encoding="utf8")
@@ -37,17 +38,8 @@ finally:
 from busqueda_de_jugadores import *
 
 # DEFINICIONES
-"""
-ARMADO DE JUGADORES
-Matriz [
-jugador [nombre, equipo, titulares, nro capitan, puntos, presupuesto]
-]
 
-"""
 id_eventos = {
-    0: {"titulo": "Partido Ganado", "puntaje_asociado": ""},
-    1: {"titulo": "Partido Empatado", "puntaje_asociado": ""},
-    2: {"titulo": "Partido Perdido", "puntaje_asociado": ""},
     3: {"titulo": "Gol", "puntaje_asociado": 6},
     4: {"titulo": "Asistencia", "puntaje_asociado": 3},
     5: {"titulo": "Tarjeta Amarilla", "puntaje_asociado": -2},
@@ -57,6 +49,7 @@ id_eventos = {
 # ---------------------------------------------
 # FUNCIONES
 #   PRINTS
+
 
 def print_menu_usuarios():
     print("""
@@ -75,6 +68,7 @@ def print_menu_usuarios():
           "D. Salir",
           )
 
+
 def print_menu_principal(nombre_usuario):
     print()
     print(f"Bienvenido {nombre_usuario}!!\n")
@@ -87,6 +81,7 @@ def print_menu_principal(nombre_usuario):
           "E. Salir",
           )
 
+
 def print_menu_torneo():
     print("---------------\nMENU TORNEO\n---------------")
     print("Por favor selecciona una opcion:\n",
@@ -97,6 +92,7 @@ def print_menu_torneo():
 
 # ---------------------------------------------
 #   LOGICA
+
 
 def main():
     """'Yo soy el alfa y el omega, el principio y el fin'.
@@ -122,6 +118,7 @@ def main():
     except Exception as e:
         registrar_excepciones(e)
 
+
 def registrar_usuario():
     print("Por favor ingrese el nombre de usuario a agregar:")
     nombre = input("> ")
@@ -142,6 +139,7 @@ def registrar_usuario():
         }
     }
     return usuario
+
 
 def seleccionar_usuario():
     try:
@@ -169,6 +167,7 @@ def seleccionar_usuario():
         print("No hay usuarios registrados!\nPor favor cree uno\n")
         input("Presione enter para continuar")
 
+
 def remover_usuario():
     while True:
         print("Por favor indique que usuario desea eliminar (con nombre):")
@@ -192,6 +191,7 @@ def remover_usuario():
                 json.dump(usuarios, contenido, indent=4)
             print(f"Usuario {usuario_seleccionado} eliminado con exito")
 
+
 def logica_menu_usuarios(dic_usuarios):
     while True:
         print_menu_usuarios()
@@ -210,6 +210,7 @@ def logica_menu_usuarios(dic_usuarios):
             return  # aca deberia cortar ejecucion
         else:
             print("Opcion no valida")
+
 
 def logica_menu_torneo(usuario, fixture, matriz_posiciones):
 
@@ -233,12 +234,13 @@ def logica_menu_torneo(usuario, fixture, matriz_posiciones):
         else:
             print("Opcion no valida")
 
+
 def logica_menu_principal(usuario):
     """
     Muestra el menu principal y se encarga de llamar a las demas funciones segun la eleccion del usuario
 
-    Parametros:
-    usuario (list): [id_usuario, lista_jugadores, nro_capitan, puntos, presupuesto]
+    Args:
+        usuario (list): [id_usuario, lista_jugadores, nro_capitan, puntos, presupuesto]
     """
     while True:
         print_menu_principal(usuario["nom_usuario"])
@@ -258,7 +260,7 @@ def logica_menu_principal(usuario):
         else:
             print("Opcion no valida")
 
-# Me devuelve los datos de los jugadores cargados en una tupla
+
 def registro_de_jugadores(jugadores):
     players = []
     for clave, valor in jugadores.items():
@@ -272,12 +274,13 @@ def registro_de_jugadores(jugadores):
         players.append((id_jugador, equipo, nombre, apellido, posicion))
     return players
 
+
 def ver_fixture(fixture, usuario):
     """
     Muestra el menú del fixture para ver fechas o ver el fixture completo
 
-    Parametros:
-    fixture (list): lista de listas, cada una con los partidos de una fecha
+    Args:
+        fixture (list): lista de listas, cada una con los partidos de una fecha
     """
 
     print("\n=== Menú del Fixture ===")
@@ -306,294 +309,18 @@ def ver_fixture(fixture, usuario):
     else:
         print("Opcion no valida")
 
-def procesar_equipos(fixture, jugadores):
-    """
-    Extrae equipo local y visitante de la base de datos de jugadores.
 
-    Args:
-        fixture (tuple): Local vs. Visitante.
-        jugadores (dict): Base de jugadores
-
-    Returns:
-        titulares (tuple): Local y visitante.
-    """
-    titulares_local = []
-    titulares_visitante = []
-
-    local, visitante = fixture
-
-    for jugador, data in jugadores.items():
-        if data["id_equipo"] == local:
-            info_jugador = [jugador, data["id_equipo"],
-                            data["nombre"], data["apellido"], data["posicion"]]
-            titulares_local.append(info_jugador)
-
-    for jugador, data in jugadores.items():
-        if data["id_equipo"] == visitante:
-            info_jugador = [jugador, data["id_equipo"],
-                            data["nombre"], data["apellido"], data["posicion"]]
-            titulares_visitante.append(info_jugador)
-
-    # [id_jugador, equipo, nombre, apellido, posicion]
-    return titulares_local, titulares_visitante
-
-def simular_resultado_partido(fixture):
-    """
-    Randomiza el resultado de un partido.
-
-    Args:
-        fixture (tuple): Local vs. Visitante.
-
-    Returns:
-        resultados_partidos (dict): Resultado del partido.
-    """
-
-    resultados_partidos = {}
-    local, visitante = fixture
-
-    casos = ["gana", "pierde", "empata"]
-    resultado_local = random.choice(casos)
-
-    if resultado_local == "gana":
-        resultado_visitante = "pierde"
-    elif resultado_local == "pierde":
-        resultado_visitante = "gana"
-    else:
-        resultado_visitante = "empata"
-
-    resultados_partidos["local"] = (local, resultado_local)
-    resultados_partidos["visitante"] = (visitante, resultado_visitante)
-
-    return resultados_partidos
-
-def simular_eventos(fixture, fecha, resultado_local):
-    """
-    Genera aleatoriamente los valores de los eventos de un partido.
-
-    Args:
-        fixture (tuple): Local vs. Visitante.
-        resultado_local (str): Resultado del equipo local.
-
-    Returns:
-        Eventos (list): Una lista con todos los eventos del partido.
-    """
-
-    eventos = []
-    local, visitante = fixture
-
-    goles_local = 0
-    goles_visitante = 0
-    resultado_visitante = 0
-
-    eventos.append(fecha)
-    eventos.append(local)
-    eventos.append(resultado_local)
-    eventos.append(visitante)
-
-    if resultado_local == "gana":
-        resultado_visitante = "pierde"
-        eventos.append(resultado_visitante)
-        while (goles_local <= goles_visitante):
-            goles_local = random.randint(1, 5)
-            goles_visitante = random.randint(0, 4)
-            asis_local = goles_local
-            asis_visitante = goles_visitante
-    elif resultado_local == "pierde":
-        resultado_visitante = "gana"
-        eventos.append(resultado_visitante)
-        while (goles_visitante <= goles_local):
-            goles_visitante = random.randint(1, 5)
-            goles_local = random.randint(0, 4)
-            asis_local = goles_local
-            asis_visitante = goles_visitante
-    else:
-        resultado_visitante = "empata"
-        eventos.append(resultado_visitante)
-        goles_local = random.randint(0, 5)
-        goles_local = goles_visitante
-
-    goles_totales = goles_local + goles_visitante
-    asis_local = goles_local
-    asis_visitante = goles_visitante
-    eventos.append(goles_totales)
-    eventos.append(goles_local)
-    eventos.append(goles_visitante)
-    eventos.append(asis_local)
-    eventos.append(asis_visitante)
-
-    t_amarilla_local = 2  # random.randint(0, 2)
-    t_amarilla_visita = 2  # random.randint(0, 2)
-    eventos.append(t_amarilla_local)
-    eventos.append(t_amarilla_visita)
-
-    print(f"{local} {goles_local} - {visitante} {goles_visitante}")
-    # print("Goles en el encuentro:", goles_totales)
-    # print("Asistencias equipo local:", asis_local)
-    # print("Asistencias equipo visitante:", asis_visitante)
-    # print("Tarjetas Amarillas Local:", t_amarilla_local)
-    # print("Tarjetas Amarillas Visita:", t_amarilla_visita)
-
-    # [fecha, local, res_local, visi, res_visi, gol_total, gol_local, gol_visi, asis_local, asis_visitante, t_amarilla_local, t_amarilla_visita]
-    return eventos
-
-def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFechaPartido):
-    """
-    Asigna aleatoriamente eventos a jugadores titulares de dos equipos. Pondera cada asignacion segun tipo de evento y posicion del jugador.
-
-    Args:
-        equipo_local (list): Titulares local.
-        equipo_visitante (list): Titulares visitante.
-        eventos (list): Eventos aleatorios del partido.
-        id_eventos (dict): Datos asociados a cada evento.
-        nroFecha (list): Fecha y Partido a simular.
-    """
-
-    # Probabilidad gol
-    prob_gol = {"arquero": 0.0, "defensor": 0.1,
-                "mediocampista": 0.2, "delantero": 0.7}
-# Probabilidad asistencia
-    prob_asis = {"arquero": 0.1, "defensor": 0.1,
-                 "mediocampista": 0.6, "delantero": 0.2}
-# Probabilidad tarjeta amarilla
-    prob_ta = {"arquero": 0.1, "defensor": 0.3,
-               "mediocampista": 0.3, "delantero": 0.3}
-
-    goles_local = []
-    asistencias_local = []
-    tarjetas_local = []
-    goles_visita = []
-    asistencias_visita = []
-    tarjetas_visita = []
-    aux = []
-
-    # LOCAL
-    # gol
-    pesos_local = [prob_gol.get(jugador[4], 0.1)
-                   for jugador in equipo_local]
-    while (eventos[6] != 0):
-        goleador = random.choices(
-            equipo_local, weights=pesos_local, k=1)[0]
-        aux.extend(goleador)
-        aux.append(id_eventos[3]["titulo"])
-        aux.append(id_eventos[3]["puntaje_asociado"])
-        goles_local.append(aux)
-        aux = []
-        eventos[6] -= 1
-    cargar_evento(goles_local, nroFechaPartido)
-
-    # asist
-    pesos_local = [prob_asis.get(jugador[4], 0.1)
-                   for jugador in equipo_local]
-    while (eventos[-4] != 0):
-        asistidor = random.choices(
-            equipo_local, weights=pesos_local, k=1)[0]
-        aux.extend(asistidor)
-        aux.append(id_eventos[4]["titulo"])
-        aux.append(id_eventos[4]["puntaje_asociado"])
-        asistencias_local.append(aux)
-        aux = []
-        eventos[-4] -= 1
-    cargar_evento(asistencias_local, nroFechaPartido)
-
-    # tarjetas
-    amonestadosLocal = {}
-    pesos_local = [prob_ta.get(jugador[4], 0.1)
-                   for jugador in equipo_local]
-    while (eventos[-2] != 0):
-        amonestado = random.choices(
-            equipo_local, weights=pesos_local, k=1)[0]
-        id_jugador = amonestado[0]
-        if id_jugador in amonestadosLocal:
-            aux2.extend(amonestado)
-            aux2.append(id_eventos[5]["titulo"])
-            aux2.append(id_eventos[5]["puntaje_asociado"])
-            tarjetas_local.append(aux2)
-
-            aux.extend(amonestado)
-            aux.append(id_eventos[6]["titulo"])
-            aux.append(id_eventos[6]["puntaje_asociado"])
-            tarjetas_local.append(aux)
-        else:
-            aux.extend(amonestado)
-            aux.append(id_eventos[5]["titulo"])
-            aux.append(id_eventos[5]["puntaje_asociado"])
-            tarjetas_local.append(aux)
-        amonestadosLocal = amonestado
-        aux = []
-        aux2 = []
-        eventos[-2] -= 1
-    cargar_evento(tarjetas_local, nroFechaPartido)
-
-    # VISITA
-    # gol
-    pesos_visita = [prob_gol.get(jugador[4], 0.1)
-                    for jugador in equipo_visitante]
-    while (eventos[7] != 0):
-        goleador = random.choices(
-            equipo_visitante, weights=pesos_visita, k=1)[0]
-        aux.extend(goleador)
-        aux.append(id_eventos[3]["titulo"])
-        aux.append(id_eventos[3]["puntaje_asociado"])
-        goles_visita.append(aux)
-        aux = []
-        eventos[7] -= 1
-    cargar_evento(goles_visita, nroFechaPartido)
-
-    # asist
-    pesos_visita = [prob_asis.get(jugador[4], 0.1)
-                    for jugador in equipo_visitante]
-    while (eventos[-3] != 0):
-        asistidor = random.choices(
-            equipo_visitante, weights=pesos_visita, k=1)[0]
-        aux.extend(asistidor)
-        aux.append(id_eventos[4]["titulo"])
-        aux.append(id_eventos[4]["puntaje_asociado"])
-        asistencias_visita.append(aux)
-        aux = []
-        eventos[-3] -= 1
-    cargar_evento(asistencias_visita, nroFechaPartido)
-
-    # tarjetas
-    amonestadosVisita = {}
-    pesos_visita = [prob_ta.get(jugador[4], 0.1)
-                    for jugador in equipo_visitante]
-    while (eventos[-1] != 0):
-        amonestado = random.choices(
-            equipo_visitante, weights=pesos_visita, k=1)[0]
-        id_jugador = amonestado[0]
-        if id_jugador in amonestadosVisita:
-            aux2.extend(amonestado)
-            aux2.append(id_eventos[5]["titulo"])
-            aux2.append(id_eventos[5]["puntaje_asociado"])
-            tarjetas_visita.append(aux2)
-
-            aux.extend(amonestado)
-            aux.append(id_eventos[6]["titulo"])
-            aux.append(id_eventos[6]["puntaje_asociado"])
-            tarjetas_visita.append(aux)
-        else:
-            aux.extend(amonestado)
-            aux.append(id_eventos[5]["titulo"])
-            aux.append(id_eventos[5]["puntaje_asociado"])
-            tarjetas_visita.append(aux)
-        amonestadosVisita = amonestado
-        aux = []
-        aux2 = []
-        eventos[-1] -= 1
-    cargar_evento(tarjetas_visita, nroFechaPartido)
-
-
-def simular_fecha(fecha_actual, fixture, matriz_posiciones,usuario):
+def simular_fecha(fecha_actual, fixture, matriz_posiciones, usuario):
     """
     Simula una fecha de partidos
 
-    Parametros:
-    fecha_actual (int): numero de la fecha actual
-    fixture (list): lista de listas, cada una con los partidos de una fecha
-    matriz_posiciones (list): matriz con los puntajes de los equipos
+    Args:
+        fecha_actual (int): numero de la fecha actual
+        fixture (list): lista de listas, cada una con los partidos de una fecha
+        matriz_posiciones (list): matriz con los puntajes de los equipos
 
-    Retorna:
-    list: matriz de posiciones actualizada
+    Returns:
+        matriz_posiciones: matriz de posiciones actualizada
     """
     print(f"\n=== FECHA {fecha_actual+1} ===")
 
@@ -604,13 +331,13 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones,usuario):
     i = 0
     for partido in fixture[fecha_actual]:
         resultados_partido = simular_resultado_partido(partido)
+        actualizar_matriz_posiciones(matriz_posiciones, resultados_partido)
         eventos = simular_eventos(
             fixture[fecha_actual][i], fecha_actual+1, resultados_partido["local"][1])
         titulares_local, titulares_visitante = procesar_equipos(
             fixture[fecha_actual][i], BBDD_JUGADORES)
         asignar_eventos(titulares_local, titulares_visitante,
                         eventos, id_eventos, fecha_actual+1)
-        actualizar_matriz_posiciones(matriz_posiciones, resultados_partido)
         i += 1
 
     reporte_maximos_eventos()
@@ -622,7 +349,6 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones,usuario):
     actualizar_posiciones(matriz_posiciones)
 
     return matriz_posiciones
-
 
 
 lista_equipos = registro_de_equipos(BBDD_JUGADORES)
