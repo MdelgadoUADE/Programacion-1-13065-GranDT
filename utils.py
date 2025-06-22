@@ -9,6 +9,28 @@ ACENTOS = {
 def normalizar_acentos(string):
     return ''.join([ACENTOS.get(c, c) for c in string])
 
+def str_bool_literal(string):
+    """El que hizo la funcion de bool de python no evalua si el string dice true o false asi que para solucionar cree mi propia funcion
+
+    Args:
+        string (str): Cadena de texto a evaluar
+
+    Returns:
+        bool: True o False
+    """
+    try:
+        if string.lower() == "true":
+            return True
+        elif string.lower() == "false":
+            return False
+    except AttributeError:
+        if string:
+            return True
+        else:
+            return False
+    except Exception as e:
+        registrar_excepciones(e)
+
 
 def registro_de_equipos(jugadores):
     """Registra los equipos de la base de jugadores en una lista.

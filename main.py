@@ -12,13 +12,11 @@ from utils import *
 from tablaPosiciones import *
 from impresionJugadores import *
 from calculo_puntos import *
-from finalizacion_torneo import *
+from reportes_torneo import *
 from logica import *
 from config_manager import *
 
 configuraciones = cargar_configuracion()
-
-flag_end_state = configuraciones["flag_end_state"]
 
 try:
     contenido = open("data/jugadores_actualizados.json", "r", encoding="utf8")
@@ -69,7 +67,8 @@ def print_menu_usuarios():
           "A. Seleccionar usuario\n",
           "B. Agregar Usuario\n",
           "C. Eliminar Usuario\n",
-          "D. Salir",
+          "D. Restaurar\n",
+          "E. Salir",
           )
 
 
@@ -164,6 +163,13 @@ def seleccionar_usuario():
                 print("No se pudo encontrar el usuario")
                 if not confirmar_seleccion("Desea seguir intentando?"):
                     return
+            except IndexError:
+                if usuario_seleccionado - len(usuarios) <= 0:
+                    return
+                print("No se pudo encontrar el usuario")
+                if not confirmar_seleccion("Desea seguir intentando?"):
+                    return
+            
     except UserWarning:
         print("No hay usuarios registrados!\nPor favor cree uno\n")
         input("Presione enter para continuar")
@@ -171,19 +177,34 @@ def seleccionar_usuario():
 
 def remover_usuario():
     while True:
-        print("Por favor indique que usuario desea eliminar (con nombre):")
-
         usuarios = abrir_archivo_json("data/usuarios.json", "r")
+        contador_letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+                               "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+        
+        print("\nPor favor indique que usuario desea eliminar:")
+        i = 0
         for usuario in usuarios:
-            print(f"{usuario}")
-        print("Salir")
+            print(f"{contador_letras[i].upper()} - {usuario}")
+            i += 1
+        print(f"{contador_letras[i].upper()} - Salir")
 
         usuario_seleccionado = input("> ")
-        if usuario_seleccionado.lower() == "salir":
-            return
+            
         try:
-            usuarios.pop(usuario_seleccionado)
+            if usuario_seleccionado.lower() == "salir":
+                return
+            if usuario_seleccionado in contador_letras:
+                usuario_seleccionado = contador_letras.index(usuario_seleccionado)
+                usuario_seleccionado = list(usuarios.keys())[usuario_seleccionado]
+            del(usuarios[usuario_seleccionado])
+
         except KeyError:
+            print("No se pudo encontrar el usuario")
+            if not confirmar_seleccion("Desea seguir intentando?"):
+                return
+        except IndexError:
+            if usuario_seleccionado - len(usuarios) <= 0: #como el usuario no puede ingresar una letra fuera de rango de la lista puedo usar el <
+                return
             print("No se pudo encontrar el usuario")
             if not confirmar_seleccion("Desea seguir intentando?"):
                 return
@@ -191,10 +212,10 @@ def remover_usuario():
             with open("data/usuarios.json", "w") as contenido:
                 json.dump(usuarios, contenido, indent=4)
             print(f"Usuario {usuario_seleccionado} eliminado con exito")
-
+            input("Presione enter para continuar")
 
 def logica_menu_usuarios(dic_usuarios):
-    flag_comienzo_torneo = configuraciones["flag_comienzo_torneo"]
+    flag_comienzo_torneo = str_bool_literal(configuraciones["flag_comienzo_torneo"])
 
     while True:
         print_menu_usuarios()
@@ -204,16 +225,19 @@ def logica_menu_usuarios(dic_usuarios):
             if usuario != None:
                 logica_menu_principal(usuario)
         elif seleccion == "b":
-            if flag_comienzo_torneo == False:
+            if flag_comienzo_torneo != True:
                 with open("data/usuarios.json", "w") as contenido:
                     dic_usuarios.update(registrar_usuario())
                     json.dump(dic_usuarios, contenido, indent=4)
             else:
-                "El torneo ya ha comenzado, no sera posible registrar un nuevo usuario"
+                print("El torneo ya ha comenzado, no sera posible registrar un nuevo usuario")
                 input("Presione enter para continuar")
         elif seleccion == "c":
             remover_usuario()
         elif seleccion == "d":
+            if confirmar_seleccion("Esta seguro de restaurar el juego? (esta accion no tiene marcha atras)"):
+                restaurar_juego()
+        elif seleccion == "e":
             guardar_configuraciones(configuraciones)
             return  # aca deberia cortar ejecucion
         else:
@@ -225,21 +249,24 @@ def logica_menu_torneo(usuario, fixture, matriz_posiciones):
     fecha_actual = int(configuraciones["fecha_actual"])
 
     while True:
-
         if fecha_actual >= len(fixture):
             configuraciones["flag_end_state"] = True
+
+        fin_torneo = str_bool_literal(configuraciones["flag_end_state"])
 
         print_menu_torneo()
         seleccion = input("> ").lower()
         if seleccion == "a":
-            if fecha_actual < len(fixture):
-                matriz_posiciones = simular_fecha(
-                    fecha_actual, fixture, matriz_posiciones, usuario)
+            if not fin_torneo:
+                matriz_posiciones = simular_fecha(fecha_actual, fixture, matriz_posiciones, usuario)
                 fecha_actual += 1
+                configuraciones["flag_comienzo_torneo"] = True
             else:
                 print("¡El torneo ha terminado!")
                 reporte_final_usuarios()
                 reporte_maximos_eventos()
+                if confirmar_seleccion("Desea volver al menu principal?"):
+                    return
         elif seleccion == "b":
             ver_fixture(fixture, usuario)
         elif seleccion == "c":
@@ -258,18 +285,25 @@ def logica_menu_principal(usuario):
         usuario (list): [id_usuario, lista_jugadores, nro_capitan, puntos, presupuesto]
     """
     while True:
+        fin_torneo = str_bool_literal(configuraciones["flag_end_state"])
+        inicio_torneo = str_bool_literal(configuraciones["flag_comienzo_torneo"])
+
         print_menu_principal(usuario["nom_usuario"])
         seleccion = input("> ").lower()
-        if seleccion == "a":
-            iniciar_busqueda(usuario)
+        if seleccion == "a" and not fin_torneo:
+            if not fin_torneo and not inicio_torneo:
+                iniciar_busqueda(usuario)
+            elif inicio_torneo:
+                print("El torneo ya ha comenzado, no sera posible acceder a la consola de equipo")
+            else:
+                print("El torneo ha terminado, no sera posible acceder a la consola de equipo")
         elif seleccion == "b":
             imprimir_equipo_platilla(usuario, BBDD_JUGADORES)
             input("Presione enter para continuar")
         elif seleccion == "c":
             logica_menu_torneo(usuario, fixture, matriz_posiciones)
         elif seleccion == "d":
-            dic_usuarios = abrir_archivo_json("data/usuarios.json", "r")
-            logica_menu_usuarios(dic_usuarios)
+            return
         elif seleccion == "e":
             guardar_configuraciones(configuraciones)
             exit()
