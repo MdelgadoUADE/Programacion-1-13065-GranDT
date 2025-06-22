@@ -12,7 +12,7 @@ from utils import *
 from tablaPosiciones import *
 from impresionJugadores import *
 from calculo_puntos import *
-from finalizacion_torneo import *
+from reportes_torneo import *
 from logica import *
 from config_manager import *
 
@@ -327,17 +327,20 @@ def ver_fixture(fixture, usuario):
 
 
 def simular_fecha(fecha_actual, fixture, matriz_posiciones, usuario):
+
     """
-    Simula una fecha de partidos
+    Simula los eventos de una fecha de torneo, actualizando las posiciones y generando reportes.
 
     Args:
-        fecha_actual (int): numero de la fecha actual
-        fixture (list): lista de listas, cada una con los partidos de una fecha
-        matriz_posiciones (list): matriz con los puntajes de los equipos
+        fecha_actual (int): Número de la fecha actual en el torneo.
+        fixture (list): Lista de listas, cada una con los partidos programados para una fecha.
+        matriz_posiciones (list): Matriz de posiciones del torneo.
+        usuario (dict): Información del usuario actual.
 
     Returns:
-        matriz_posiciones: matriz de posiciones actualizada
+        list: Matriz de posiciones actualizada tras la simulación de la fecha.
     """
+
     print(f"\n=== FECHA {fecha_actual+1} ===")
 
     eventos = []

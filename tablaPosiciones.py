@@ -1,12 +1,36 @@
 import os
 def crear_matriz_posiciones(equipos):
     
+    """
+    Crea una matriz de posiciones para los equipos proporcionados.
+
+    Cada equipo en la lista de entrada se representa como una fila en la matriz
+    con el formato [equipo, ganados, empatados, perdidos, puntos].
+
+    Args:
+        equipos (list): Lista de nombres de equipos.
+
+    Returns:
+        list: Matriz de posiciones inicializada con 0 en "ganados", "empatados",
+        "perdidos" y "puntos" para cada equipo.
+    """
+
     matriz = []
     for equipo in equipos:
         matriz.append([equipo, 0, 0, 0, 0])  # [equipo, ganados, empatados, perdidos, puntos]
     return matriz
 
 def actualizar_posiciones(matriz_posiciones):
+    """
+    Actualiza la tabla de posiciones del torneo.
+
+    Primero ordena la matriz de posiciones de manera descendente segun los puntos
+    de cada equipo. Luego actualiza el archivo HTML de la tabla de posiciones con
+    los datos de la matriz ordenada.
+
+    Args:
+        matriz_posiciones (list): Matriz de posiciones del torneo.
+    """
     # 2. Ordenar la matriz
     matriz_posiciones = ordenar_matriz(matriz_posiciones)
 
@@ -18,11 +42,11 @@ def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido):
     """
     Actualiza la matriz de posiciones segun los resultados de un partido
 
-    Parametros:
+    Args:
     matriz_posiciones (list): matriz de posiciones
     resultados_partido (dict): diccionario con los resultados del partido. Las claves son los nombres de los equipos y los valores son "gana", "pierde" o "empata"
 
-    Retorna:
+    Returns:
     list: matriz de posiciones actualizada
     """
     for equipo, resultado in resultados_partido.values():
@@ -40,9 +64,32 @@ def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido):
     return matriz_posiciones
 
 def ordenar_matriz(matriz):
+    """
+    Ordena la matriz de posiciones de manera descendente segun los puntos de cada equipo, Luego partidos ganados, luego por empatados, y por ultimo por derrotas.
+
+    Args:
+        matriz (list): Matriz de posiciones del torneo.
+
+    Returns:
+        list: Matriz ordenada de posiciones.
+    """
     return sorted(matriz, key=lambda x: (-x[4], -x[1], -x[2], x[3]))
 
 def actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo):
+    """
+    Actualiza la tabla de posiciones del torneo en el archivo HTML especificado.
+
+    Reemplaza el contenido de la tabla existente con la matriz de posiciones
+    actualizada.
+
+    Args:
+        matriz_posiciones : Matriz de posiciones del torneo.
+        nombre_archivo (str): Ruta del archivo HTML de la tabla de posiciones.
+
+    Raises:
+        Exception: Si no se encuentra el archivo HTML o la estructura de la tabla
+            no se puede encontrar.
+    """
     try:
         directorio_actual = os.path.dirname(os.path.abspath(__file__))
         ruta_archivo = os.path.join(directorio_actual, nombre_archivo)
@@ -80,10 +127,16 @@ def actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo):
 
 def generar_fixture_ida_vuelta(equipos):
     """
-    Genera un fixture para una competencia de ida y vuelta con los equipos dados
-    
-    Parametros:
-    equipos (list): lista de nombres de equipos
+    Genera un fixture de ida y vuelta para una lista de equipos.
+
+    Para cada ronda, se generan encuentros alternando la localía de los equipos.
+    La segunda vuelta invierte los encuentros de la primera vuelta.
+
+    Args:
+        equipos (list): Lista de nombres de equipos.
+
+    Returns:
+        list: Fixture completo con los partidos de ida y vuelta.
     """
 
     cantidad_equipos = len(equipos)
