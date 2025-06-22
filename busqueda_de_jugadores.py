@@ -135,7 +135,7 @@ LISTA_DE_COMANDOS = {
     "-p":filtro_por_costo,
     "-n":filtro_por_nombre,
     "-A":filtro_por_apellido,
-    "-v": lambda valor: ver_jugadores("", valor),
+    "-v": lambda valor: ver_jugadores("", valor, ""),
     "-a":lambda valor: añadir_jugadores("", valor),
     "-r":lambda valor: eliminar_jugadores("", valor),
     "salir":"salir",
@@ -156,7 +156,7 @@ def ayuda(comando):
     elif comando == "":
         print("Bienvenido al buscador de jugadores\npara buscar ayuda sobre alguna funcion puedes colocar -h despues de la misma\n\nej. --EQUIPO -h\n\npara ver todos los comandos puedes usar -h -h\n")
 
-def ver_jugadores(set_jugadores,opciones):
+def ver_jugadores(set_jugadores,opciones,usuario):
     """Segun un set de jugadores, realiza una revision de la base de datos y genera una salida por pantalla con diferente
     Cantidad de datos segun las opciones utilizadas
 
@@ -164,22 +164,59 @@ def ver_jugadores(set_jugadores,opciones):
     set_jugadores (set): Conjunto de jugadores seleccionados
     opciones (str): El comando utilizado con sus distintas opciones
     """
+    print_jugador_long = lambda id_jugador : print(f"{BBDD_JUGADORES[id_jugador]['nombre']} {BBDD_JUGADORES[id_jugador]['apellido']} - Posicion: {BBDD_JUGADORES[id_jugador]['posicion']} - Equipo: {BBDD_JUGADORES[id_jugador]['id_equipo']} - Costo: {BBDD_JUGADORES[id_jugador]['costo']}")
+    print_jugador_short = lambda id_jugador : print(f"{BBDD_JUGADORES[id_jugador]['nombre']} {BBDD_JUGADORES[id_jugador]['apellido']}")
+
     if type(set_jugadores) == set:
-        if len(set_jugadores) == 0:
+        if len(set_jugadores) == 0 and "u" not in opciones:
             print("No hay jugadores seleccionados todavia")
             return
         sumador_costos = 0
-        print("Los jugadores seleccionados son:")
-        if "l" in opciones:
-            for jugador in set_jugadores:
-                print(f"{BBDD_JUGADORES[jugador]['nombre']} {BBDD_JUGADORES[jugador]['apellido']} - Posicion: {BBDD_JUGADORES[jugador]['posicion']} - Equipo: {BBDD_JUGADORES[jugador]['id_equipo']} - Costo: {BBDD_JUGADORES[jugador]['costo']}")
+        
+        if "u" in opciones:
+            print(f"Equipo de usuario {usuario['nom_usuario']}")
+            if "l" in opciones:
+                print("Titulares:")
+                for jugador in usuario["titulares"]:
+                    jugador = int(jugador)
+                    print_jugador_long(jugador)
+
+                print("\nSuplentes:")
+                for jugador in usuario["suplentes"]:
+                    jugador = int(jugador)
+                    print_jugador_long(jugador)
+            else:
+                print("Titulares:")
+                for jugador in usuario["titulares"]:
+                    jugador = int(jugador)
+                    print_jugador_short(jugador)
+
+                print("\nSuplentes:")
+                for jugador in usuario["suplentes"]:
+                    jugador = int(jugador)
+                    print_jugador_short(jugador)
+
+            if "c" in opciones:
+                for jugador in usuario["titulares"]:
+                    jugador = int(jugador)
+                    sumador_costos += BBDD_JUGADORES[jugador]['costo']
+
+                for jugador in usuario["suplentes"]:
+                    jugador = int(jugador)
+                    sumador_costos += BBDD_JUGADORES[jugador]['costo']
+                print(f"El valor total de los jugadores en el equipo es de: {sumador_costos}")
         else:
-            for jugador in set_jugadores:
-                print(f"{BBDD_JUGADORES[jugador]['nombre']} {BBDD_JUGADORES[jugador]['apellido']}")
-        if "c" in opciones:
-            for jugador in set_jugadores:
-                sumador_costos += BBDD_JUGADORES[jugador]['costo']
-            print(f"El costo total de los jugadores es de: {sumador_costos}")
+            print("Los jugadores seleccionados son:")
+            if "l" in opciones:
+                for jugador in set_jugadores:
+                    print_jugador_long(jugador)
+            else:
+                for jugador in set_jugadores:
+                    print_jugador_short(jugador)
+            if "c" in opciones:
+                for jugador in set_jugadores:
+                    sumador_costos += BBDD_JUGADORES[jugador]['costo']
+                print(f"El costo total de los jugadores es de: {sumador_costos}")
     else:
         return ver_jugadores
 
@@ -254,7 +291,7 @@ def ejecutar_comando(comando, listado_jugadores, usuario):
     if devolucion == "borrar":
         listado_jugadores = set()
     if devolucion == ver_jugadores:  
-        ver_jugadores(listado_jugadores, comando[0])
+        ver_jugadores(listado_jugadores, comando[0], usuario)
     if devolucion == "anadir":
         añadir_jugadores(usuario, listado_jugadores)
         listado_jugadores = set()
@@ -279,7 +316,20 @@ def iniciar_busqueda(usuario):
             if type(process) == set:
                 listado_jugadores = process
             elif process:
+                print("Saliendo...")
+                guardar_usuario(usuario)
                 return
 
         except Exception as e:
             registrar_excepciones(e)
+
+def guardar_usuario(usuario):
+    try:
+        listado_usuarios = abrir_archivo_json("data/usuarios.json", "r")
+        listado_usuarios[usuario["nom_usuario"]] = usuario
+        
+        with open("data/usuarios.json", "w") as archivo:
+            json.dump(listado_usuarios, archivo, indent=4)
+
+    except Exception as e:
+        registrar_excepciones(e)
