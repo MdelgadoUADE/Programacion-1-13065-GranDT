@@ -9,6 +9,24 @@ ACENTOS = {
 def normalizar_acentos(string):
     return ''.join([ACENTOS.get(c, c) for c in string])
 
+def registro_de_equipos(jugadores):
+    """Registra los equipos de la base de jugadores en una lista.
+
+    Dado un diccionario de jugadores, recorre cada jugador y agrega su equipo a una lista si no existe ya.
+
+    Argumentos:
+    jugadores (dict): Diccionario con los jugadores como claves y sus datos como valores.
+
+    Return:
+    list: Una lista de los equipos de los jugadores.
+    """
+    equipos = []
+    for jugador in jugadores:
+        equipo = jugadores[jugador]['id_equipo']
+        if equipo not in equipos:
+            equipos.append(equipo)
+    return equipos
+
 def convertir_str_a_matriz(matriz,convertir_casos_a_int):
     """Convierte una cadena de texto a una matriz, da la opcion si la matriz tiene integers de poder convertirlos (para uso de archivo config)
 
@@ -138,3 +156,9 @@ def cargar_evento(listaEvento, nroFecha):
 
     with open("data/eventos.txt", mode='w', encoding='utf-8') as archivo:
         json.dump(data, archivo, indent=4, ensure_ascii=False)
+
+def buscar_maximo_evento(posicion,evento,stats):
+    maximo = max(
+        (data for data in stats.values() if data["posicion"] == posicion),
+        key=lambda d: d[evento], default={"nombre": "", "apellido": "", evento: 0})
+    return maximo

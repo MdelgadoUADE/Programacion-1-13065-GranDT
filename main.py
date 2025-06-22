@@ -11,6 +11,7 @@ from utils import *
 from tablaPosiciones import *
 from impresionJugadores import *
 from calculo_puntos import *
+from finalizacion_torneo import *
 from config_manager import *
 
 configuraciones = cargar_configuracion()
@@ -37,24 +38,6 @@ finally:
     except NameError:
         pass
 
-try:
-    # Encoding añadido debido a error extraño con json
-    contenido = open("data/usuarios.json", "r", encoding="utf8")
-    usuario = contenido.read()
-
-    USUARIOS = json.loads(usuario)
-
-except FileNotFoundError as error:
-    print("No se pudo encontrar el archivo", error)
-
-except Exception as error:
-    print("Error: ", error)
-
-finally:
-    try:  # bloque protegido por si se intenta cerrar un archivo que no se consiguio abrir.
-        contenido.close()
-    except NameError:
-        pass
 
 from busqueda_de_jugadores import *
 
@@ -208,31 +191,6 @@ def remover_usuario():
                 json.dump(usuarios, contenido, indent=4)
             print(f"Usuario {usuario_seleccionado} eliminado con exito")
 
-def registro_de_equipos(jugadores):
-    """Registra los equipos de la base de jugadores en una lista.
-
-    Dado un diccionario de jugadores, recorre cada jugador y agrega su equipo a una lista si no existe ya.
-
-    Argumentos:
-    jugadores (dict): Diccionario con los jugadores como claves y sus datos como valores.
-
-    Return:
-    list: Una lista de los equipos de los jugadores.
-    """
-    equipos = []
-    for jugador in jugadores:
-        equipo = jugadores[jugador]['id_equipo']
-        if equipo not in equipos:
-            equipos.append(equipo)
-    return equipos
-
-def imprimir_equipo_platilla(usuario):
-    usuarios_core = abrir_archivo_json("data/usuarios.json", "r")
-    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], usuarios_core, BBDD_JUGADORES)
-
-    with open("equipo/formacion.html", "w", encoding="utf-8") as f:
-        f.write(html_render)
-
 def logica_menu_usuarios(dic_usuarios):
     flag_comienzo_torneo = configuraciones["flag_comienzo_torneo"]
 
@@ -273,10 +231,12 @@ def logica_menu_torneo(usuario, fixture, matriz_posiciones):
         if seleccion == "a":
             if fecha_actual < len(fixture):
                 matriz_posiciones = simular_fecha(
-                    fecha_actual, fixture, matriz_posiciones)
+                    fecha_actual, fixture, matriz_posiciones, usuario)
                 fecha_actual += 1
             else:
                 print("¡El torneo ha terminado!")
+                reporte_final_usuarios()
+                reporte_maximos_eventos()
         elif seleccion == "b":
             ver_fixture(fixture, usuario)
         elif seleccion == "c":
@@ -300,12 +260,13 @@ def logica_menu_principal(usuario):
         if seleccion == "a":
             iniciar_busqueda(usuario)
         elif seleccion == "b":
-            imprimir_equipo_platilla(usuario)
+            imprimir_equipo_platilla(usuario, BBDD_JUGADORES)
             input("Presione enter para continuar")
         elif seleccion == "c":
             logica_menu_torneo(usuario, fixture, matriz_posiciones)
         elif seleccion == "d":
-            logica_menu_usuarios(USUARIOS)
+            dic_usuarios = abrir_archivo_json("data/usuarios.json", "r")
+            logica_menu_usuarios(dic_usuarios)
         elif seleccion == "e":
             guardar_configuraciones(configuraciones)
             exit()
@@ -418,9 +379,6 @@ def simular_resultado_partido(fixture):
     resultados_partidos["local"] = (local, resultado_local)
     resultados_partidos["visitante"] = (visitante, resultado_visitante)
 
-    # print(f"Equipo local, {local}, {resultado_local}")
-    # print(f"Equipo visitante, {visitante}, {resultado_visitante}")
-    # print()
     return resultados_partidos
 
 def simular_eventos(fixture, fecha, resultado_local):
@@ -640,7 +598,18 @@ def asignar_eventos(equipo_local, equipo_visitante, eventos, id_eventos, nroFech
     cargar_evento(tarjetas_visita, nroFechaPartido)
 
 
-def simular_fecha(fecha_actual, fixture, matriz_posiciones):
+def simular_fecha(fecha_actual, fixture, matriz_posiciones,usuario):
+    """
+    Simula una fecha de partidos
+
+    Parametros:
+    fecha_actual (int): numero de la fecha actual
+    fixture (list): lista de listas, cada una con los partidos de una fecha
+    matriz_posiciones (list): matriz con los puntajes de los equipos
+
+    Retorna:
+    list: matriz de posiciones actualizada
+    """
     print(f"\n=== FECHA {fecha_actual+1} ===")
 
     eventos = []
@@ -659,26 +628,13 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones):
         actualizar_matriz_posiciones(matriz_posiciones, resultados_partido)
         i += 1
 
-    #Cargar usuarios actualizados antes de sumar puntos
+    reporte_maximos_eventos()
 
-    usuarios_core = abrir_archivo_json("data/usuarios.json", "r")
+    calcular_puntos_fecha(fecha_actual+1)
 
-    eventos_json = formato_json("data/eventos.txt")
-    usuarios_core = actualizar_puntos_usuarios(
-        usuarios_core, eventos_json, fecha_actual+1)
-
-    if usuarios_core:
-        with open("data/usuarios.json", "w", encoding="utf-8") as f:
-            json.dump(usuarios_core, f, indent=4)
-    else:
-        print("Error: USUARIOS está vacío, no se guardará el archivo.")
-
-    # 2. Ordenar la matriz
-    matriz_posiciones = ordenar_matriz(matriz_posiciones)
-
-    # 3. Actualizar la tabla HTML
-    nombre_archivo = "html_y_css/tabla_posiciones.html"
-    actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo)
+    imprimir_equipo_platilla(usuario, BBDD_JUGADORES)
+    # 1. Actualizar posiciones
+    actualizar_posiciones(matriz_posiciones)
 
     return matriz_posiciones
 
