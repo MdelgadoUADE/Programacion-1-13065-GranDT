@@ -3,10 +3,7 @@
 
 # IMPORTACIONES
 from busqueda_de_jugadores import *
-import re
-import random
 import json
-import os
 from json.decoder import JSONDecodeError
 from utils import *
 from tablaPosiciones import *
@@ -275,7 +272,7 @@ def logica_menu_torneo(usuario, fixture, matriz_posiciones):
                 if confirmar_seleccion("\nDesea volver al menu principal?"):
                     return
         elif seleccion == "b":
-            ver_fixture(fixture, usuario)
+            ver_fixture(fixture)
         elif seleccion == "c":
             configuraciones["fecha_actual"] = fecha_actual
             configuraciones["matriz_posiciones"] = matriz_posiciones
@@ -332,7 +329,7 @@ def registro_de_jugadores(jugadores):
     return players
 
 
-def ver_fixture(fixture, usuario):
+def ver_fixture(fixture):
     """
     Muestra el menú del fixture para ver fechas o ver el fixture completo
 
@@ -371,7 +368,7 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones, usuario):
 
     """
     Simula los eventos de una fecha de torneo, actualizando las posiciones y generando reportes.
-
+    
     Args:
         fecha_actual (int): Número de la fecha actual en el torneo.
         fixture (list): Lista de listas, cada una con los partidos programados para una fecha.
