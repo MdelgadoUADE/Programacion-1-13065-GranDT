@@ -121,7 +121,10 @@ def actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo):
         print()   
         print(f"Tabla actualizada en: {ruta_archivo}")
         print("Puedes abrir el archivo manualmente en tu navegador para ver la tabla de posiciones.")
-        
+
+    except FileNotFoundError:
+        print(f"Error: No se pudo encontrar el archivo {nombre_archivo}")
+
     except Exception as e:
         print(f"Error al actualizar la tabla: {e}")
 
