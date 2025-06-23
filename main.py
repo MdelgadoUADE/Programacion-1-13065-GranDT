@@ -216,6 +216,7 @@ def remover_usuario():
 
 def logica_menu_usuarios(dic_usuarios):
     flag_comienzo_torneo = str_bool_literal(configuraciones["flag_comienzo_torneo"])
+    flag_restauracion = False
 
     while True:
         print_menu_usuarios()
@@ -240,7 +241,8 @@ def logica_menu_usuarios(dic_usuarios):
                 print("Juego restaurado con exito, debe reiniciar el programa para aplicar los cambios")
                 input("Presione enter para continuar")
         elif seleccion == "e":
-            guardar_configuraciones(configuraciones)
+            if not flag_restauracion:
+                guardar_configuraciones(configuraciones)
             return  # aca deberia cortar ejecucion
         else:
             print("Opcion no valida")
