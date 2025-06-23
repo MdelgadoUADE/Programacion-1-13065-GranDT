@@ -238,6 +238,7 @@ def logica_menu_usuarios(dic_usuarios):
         elif seleccion == "d":
             if confirmar_seleccion("Esta seguro de restaurar el juego? (esta accion no tiene marcha atras)"):
                 restaurar_juego()
+                flag_restauracion = True
                 print("Juego restaurado con exito, debe reiniciar el programa para aplicar los cambios")
                 input("Presione enter para continuar")
         elif seleccion == "e":
