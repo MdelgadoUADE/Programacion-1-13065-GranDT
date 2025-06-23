@@ -106,7 +106,7 @@ def eliminar_jugadores(usuario, jugadores_a_eliminar):
         if len(jugadores_a_eliminar) <= 0:
             print("No hay jugadores para eliminar")
             return
-        if type(usuario) == dict and type(jugadores_a_eliminar) == set:
+        if type(usuario) == dict and type(jugadores_a_eliminar) == set: # Verifica que el usuario sea un diccionario y los jugadores a eliminar sean un set
             for int_jugador in jugadores_a_eliminar:
                 jugador = str(int_jugador)
                 if jugador in usuario["titulares"]:
@@ -307,7 +307,7 @@ def iniciar_busqueda(usuario):
         usuario (dict): Diccionario con la informacion del usuario
     """
     print("Consola de busqueda\n\ningresar '-h' para ayuda\n")
-    print("Comandos basicos:\n-a  (Añadir jugadores)\t-r  (Remover jugadores)\n-n  (Nombre de jugador [valor])\t-A  (Apellido de jugador [valor])")
+    print("Comandos basicos:\n-a  (Añadir jugadores)\t-r  (Remover jugadores)\n-n  (Nombre de jugador [valor])\t-A  (Apellido de jugador [valor])\n-c  (Costo de jugador [valor])\t")
     listado_jugadores = set()
     while True:
         valor_buscado = input("> ")

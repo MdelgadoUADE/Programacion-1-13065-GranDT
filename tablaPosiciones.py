@@ -91,8 +91,8 @@ def actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo):
             no se puede encontrar.
     """
     try:
-        directorio_actual = os.path.dirname(os.path.abspath(__file__))
-        ruta_archivo = os.path.join(directorio_actual, nombre_archivo)
+        directorio_actual = os.path.dirname(os.path.abspath(__file__)) # Obtiene la ruta del directorio actual
+        ruta_archivo = os.path.join(directorio_actual, nombre_archivo) # Ruta completa del archivo
         
         if not os.path.exists(ruta_archivo):
             print(f"Error: No se encontró el archivo {nombre_archivo} en {directorio_actual}")
@@ -140,14 +140,14 @@ def generar_fixture_ida_vuelta(equipos):
     """
 
     cantidad_equipos = len(equipos)
-    mitad = cantidad_equipos // 2 # local/visitante
+    mitad = cantidad_equipos // 2 # para local/visitante
     fechas_ida = []
 
     for ronda in range(cantidad_equipos - 1):
         fecha = []
         for i in range(mitad):
             local = equipos[i]
-            visitante = equipos[-i-1]
+            visitante = equipos[-i-1] 
             # Alternar localía cada ronda para mejor distribución
             if ronda % 2 == 0:
                 partido = (local, visitante)
@@ -158,7 +158,7 @@ def generar_fixture_ida_vuelta(equipos):
         # Rotar los equipos (excepto el primero)
         equipos = [equipos[0]] + [equipos[-1]] + equipos[1:-1]
 
-    # Usamos lambda + map para invertir local/visitante en cada partido de la fecha
+    # Usamos lambda + map para invertir local/visitante en cada partido de la fechas de vuelta
     fechas_vuelta = list(map(lambda fecha: list(map(lambda p: (p[1], p[0]), fecha)), fechas_ida))
 
     fixture_completo = fechas_ida + fechas_vuelta
