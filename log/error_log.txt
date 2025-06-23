@@ -25,3 +25,5 @@ Tipo: <class 'TypeError'> - Mensaje: center expected at least 1 argument, got 0
 Tipo: <class 'TypeError'> - Mensaje: 'NoneType' object is not subscriptable
 Tipo: <class 'TypeError'> - Mensaje: 'NoneType' object is not subscriptable
 Tipo: <class 'IndexError'> - Mensaje: list index out of range
+Tipo: <class 'FileNotFoundError'> - Mensaje: [Errno 2] No such file or directory: 'exports/eventos_temporada_anterior.txt'
+Tipo: <class 'FileNotFoundError'> - Mensaje: [Errno 2] No such file or directory: 'data/eventos.txt'
