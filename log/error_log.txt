@@ -28,3 +28,5 @@ Tipo: <class 'IndexError'> - Mensaje: list index out of range
 Tipo: <class 'FileNotFoundError'> - Mensaje: [Errno 2] No such file or directory: 'exports/eventos_temporada_anterior.txt'
 Tipo: <class 'FileNotFoundError'> - Mensaje: [Errno 2] No such file or directory: 'data/eventos.txt'
 Tipo: <class 'AttributeError'> - Mensaje: 'NoneType' object has no attribute 'center'
+Tipo: <class 'OSError'> - Mensaje: [Errno 22] Invalid argument: 'data/eventos.txt'
+Tipo: <class 'FileNotFoundError'> - Mensaje: [Errno 2] No such file or directory: 'data/eventos.txt'

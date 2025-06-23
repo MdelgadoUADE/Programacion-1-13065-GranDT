@@ -59,7 +59,7 @@ def simular_resultado_partido(fixture):
     else:
         resultado_visitante = "empata"
 
-    resultados_partidos["local"] = (local, resultado_local)
+    resultados_partidos["local"] = (local, resultado_local) 
     resultados_partidos["visitante"] = (visitante, resultado_visitante)
 
     return resultados_partidos

@@ -9,14 +9,15 @@ def imprimir_equipo_platilla(usuario, BBDD_JUGADORES):
         usuario (dict): Diccionario con la información del usuario.
         BBDD_JUGADORES (dict): Diccionario con toda la información de los jugadores.
     """
-    usuarios_core = abrir_archivo_json("data/usuarios.json", "r")
-    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], usuarios_core, BBDD_JUGADORES)
+    usuarios_act = abrir_archivo_json("data/usuarios.json", "r")
+    html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], usuarios_act, BBDD_JUGADORES)
 
     with open("equipo/formacion.html", "w", encoding="utf-8") as f:
         f.write(html_render)
+        print(f"La visualizacion del equipo esta lista. Se ha guardado en equipo/formacion.html")
 
 def llenar_titulares(titulares, BBDD_JUGADORES, index=0):
-    # Caso base: si procesó todos los titulares, retorna el diccionario vacío
+
     """
     Llena un diccionario con la posición y los nombres de los jugadores.
     
@@ -28,6 +29,7 @@ def llenar_titulares(titulares, BBDD_JUGADORES, index=0):
     Returns:
         dict: Diccionario con la posición y los nombres de los jugadores.
     """
+    # Caso base: si procesó todos los titulares, retorna el diccionario vacío
     if index >= len(titulares):
         return {
             "arquero": [],
@@ -45,7 +47,7 @@ def llenar_titulares(titulares, BBDD_JUGADORES, index=0):
             jugadores_por_posicion[posicion].insert(0, f"<li>{jugador['nombre']} {jugador['apellido']}</li>")
     return jugadores_por_posicion
 
-def formacion_html(nombre_archivo, usuario, usuarios_core, BBDD_JUGADORES):
+def formacion_html(nombre_archivo, usuario, usuarios_act, BBDD_JUGADORES):
     """
     Lee un archivo HTML y reemplaza los placeholders para mostrar la formación del equipo del usuario.
 
@@ -59,17 +61,17 @@ def formacion_html(nombre_archivo, usuario, usuarios_core, BBDD_JUGADORES):
         str: El HTML renderizado con la formación del equipo.
     """
     try:
-        directorio_actual = os.path.dirname(os.path.abspath(__file__))
-        ruta_archivo = os.path.join(directorio_actual, nombre_archivo)
+        directorio_actual = os.path.dirname(os.path.abspath(__file__)) # Obtiene la ruta del directorio actual
+        ruta_archivo = os.path.join(directorio_actual, nombre_archivo) # Ruta completa del archivo
         
         if not os.path.exists(ruta_archivo):
             print(f"Error: No se encontró el archivo {nombre_archivo} en {directorio_actual}")
             return ""
 
         with open(ruta_archivo, "r", encoding="utf-8") as archivo:
-            html = archivo.read()
+            html = archivo.read() # Lee el contenido del archivo HTML y lo guarda en la variable html
         
-        datos_usuario = usuarios_core.get(usuario)
+        datos_usuario = usuarios_act.get(usuario)
         if not datos_usuario:
             return "<p>Usuario no encontrado</p>"
 
@@ -83,14 +85,14 @@ def formacion_html(nombre_archivo, usuario, usuarios_core, BBDD_JUGADORES):
         for suplente in suplentes:
             jugador = BBDD_JUGADORES.get(int(suplente))
             if jugador:
-                suplentes_html += f"<li>{jugador['nombre']} {jugador['apellido']}</li>\n"
+                suplentes_html += f"<li>{jugador['nombre']} {jugador['apellido']}</li>\n" 
 
-        # Generar tabla de puntajes de titulares ORDENADA
+        # Generar información tabla de puntajes de titulares
         titulares_info = []
         for id_jugador in titulares:
             jugador = BBDD_JUGADORES.get(int(id_jugador))
-            puntaje = datos_usuario["titulares"].get(id_jugador, 0)
-            if jugador:
+            puntaje = datos_usuario["titulares"].get(id_jugador, 0) # Obtener el puntaje del jugador
+            if jugador: 
                 titulares_info.append((jugador['nombre'], jugador['apellido'], puntaje))
 
         # Ordenar por puntaje descendente
@@ -103,11 +105,9 @@ def formacion_html(nombre_archivo, usuario, usuarios_core, BBDD_JUGADORES):
         # Reemplazos en el HTML
         html = html.replace("{{usuario}}", usuario)
         for pos in jugadores_por_posicion:
-            html = html.replace(f"{{{{{pos}}}}}", "\n".join(jugadores_por_posicion[pos]))
+            html = html.replace(f"{{{{{pos}}}}}", "\n".join(jugadores_por_posicion[pos])) #dinamicamente reemplaza las posiciones
         html = html.replace("{{suplentes}}", suplentes_html)
         html = html.replace("{{tabla_puntajes}}", tabla_puntajes)
-
-        print(f"La visualizacion del equipo esta lista, se puede ver en: {ruta_archivo}")
 
         return html
     

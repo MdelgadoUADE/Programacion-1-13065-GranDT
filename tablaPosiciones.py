@@ -38,7 +38,7 @@ def actualizar_posiciones(matriz_posiciones):
     nombre_archivo = "html_y_css/tabla_posiciones.html"
     actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo)
 
-def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido):
+def actualizar_matriz_posiciones(matriz_posiciones, resultados_partido): # cada partido
     """
     Actualiza la matriz de posiciones segun los resultados de un partido
 
@@ -140,7 +140,7 @@ def generar_fixture_ida_vuelta(equipos):
     """
 
     cantidad_equipos = len(equipos)
-    mitad = cantidad_equipos // 2
+    mitad = cantidad_equipos // 2 # local/visitante
     fechas_ida = []
 
     for ronda in range(cantidad_equipos - 1):

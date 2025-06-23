@@ -38,7 +38,7 @@ def formato_json(path_eventos):
         dict: contenido del archivo json en formato diccionario
     """
     with open(path_eventos, "r", encoding="utf-8") as f:
-        eventos = json.loads(f.read().replace("'", '"'))
+        eventos = json.loads(f.read().replace("'", '"')) 
     return eventos
 
 
@@ -83,7 +83,7 @@ def imprimir_puntos_usuario(puntos, nombre):
 
 def actualizar_puntos_usuarios(usuarios_core, eventos, fecha_actual):
     """
-    Actualiza los puntos de los usuarios en base a la fecha actual y los eventos ocurridos hasta la fecha.
+    Actualiza los puntos de los usuarios en base a la fecha actual y eventos ocurridos en la fecha.
 
     Args:
         usuarios_core (dict): diccionario con la información de cada usuario
@@ -94,8 +94,8 @@ def actualizar_puntos_usuarios(usuarios_core, eventos, fecha_actual):
         dict: diccionario actualizado con la información de cada usuario
     """
     for nombre, usuario in usuarios_core.items():
-        titulares = list(usuario["titulares"].keys())
-        dic_titulares = usuario["titulares"]
+        titulares = list(usuario["titulares"].keys()) # Lista de IDs de los jugadores titulares
+        dic_titulares = usuario["titulares"] # Diccionario con los jugadores titulares y sus puntos
         puntos, dic_titulares = calcular_puntos_usuario(titulares, dic_titulares, eventos, fecha_actual)
         usuario["puntos"] += puntos
         imprimir_puntos_usuario(usuario["puntos"], nombre)
