@@ -31,7 +31,7 @@ def procesar_equipos(fixture, jugadores):
                             data["nombre"], data["apellido"], data["posicion"]]
             titulares_visitante.append(info_jugador)
 
-    # [id_jugador, equipo, nombre, apellido, posicion]
+    
     return titulares_local, titulares_visitante
 
 
@@ -127,7 +127,6 @@ def simular_eventos(fixture, fecha, resultado_local):
 
     print(f"{local} {goles_local} - {visitante} {goles_visitante}")
 
-    # [fecha, local, res_local, visi, res_visi, gol_total, gol_local, gol_visi, asis_local, asis_visitante, t_amarilla_local, t_amarilla_visita]
     return eventos
 
 

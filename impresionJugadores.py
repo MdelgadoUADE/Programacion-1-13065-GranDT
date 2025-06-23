@@ -37,7 +37,7 @@ def llenar_titulares(titulares, BBDD_JUGADORES, index=0):
             "mediocampista": [],
             "delantero": []
         }
-    # Llamada recursiva: obtener el diccionario ya procesado hasta ahora
+
     jugadores_por_posicion = llenar_titulares(titulares, BBDD_JUGADORES, index + 1)
     jugador_id = str(titulares[index])
     jugador = BBDD_JUGADORES.get(int(jugador_id))
@@ -61,15 +61,15 @@ def formacion_html(nombre_archivo, usuario, usuarios_act, BBDD_JUGADORES):
         str: El HTML renderizado con la formación del equipo.
     """
     try:
-        directorio_actual = os.path.dirname(os.path.abspath(__file__)) # Obtiene la ruta del directorio actual
-        ruta_archivo = os.path.join(directorio_actual, nombre_archivo) # Ruta completa del archivo
+        directorio_actual = os.path.dirname(os.path.abspath(__file__)) 
+        ruta_archivo = os.path.join(directorio_actual, nombre_archivo) 
         
         if not os.path.exists(ruta_archivo):
             print(f"Error: No se encontró el archivo {nombre_archivo} en {directorio_actual}")
             return ""
 
         with open(ruta_archivo, "r", encoding="utf-8") as archivo:
-            html = archivo.read() # Lee el contenido del archivo HTML y lo guarda en la variable html
+            html = archivo.read()
         
         datos_usuario = usuarios_act.get(usuario)
         if not datos_usuario:
@@ -80,22 +80,22 @@ def formacion_html(nombre_archivo, usuario, usuarios_act, BBDD_JUGADORES):
 
         jugadores_por_posicion = llenar_titulares(titulares, BBDD_JUGADORES)
 
-        # Armar HTML de suplentes
+        
         suplentes_html = ""
         for suplente in suplentes:
             jugador = BBDD_JUGADORES.get(int(suplente))
             if jugador:
                 suplentes_html += f"<li>{jugador['nombre']} {jugador['apellido']}</li>\n" 
 
-        # Generar información tabla de puntajes de titulares
+        
         titulares_info = []
         for id_jugador in titulares:
             jugador = BBDD_JUGADORES.get(int(id_jugador))
-            puntaje = datos_usuario["titulares"].get(id_jugador, 0) # Obtener el puntaje del jugador
+            puntaje = datos_usuario["titulares"].get(id_jugador, 0) 
             if jugador: 
                 titulares_info.append((jugador['nombre'], jugador['apellido'], puntaje))
 
-        # Ordenar por puntaje descendente
+        
         titulares_info.sort(key=lambda x: x[2], reverse=True)
         tabla_puntajes = "<table border='1'><tr><th>Nombre</th><th>Apellido</th><th>Puntaje</th></tr>"
         for nombre, apellido, puntaje in titulares_info:

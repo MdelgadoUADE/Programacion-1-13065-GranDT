@@ -63,12 +63,10 @@ def calcular_puntos_usuario(titulares, dic_titulares, eventos, fecha_actual):
 
     puntos = 0
     for evento in eventos:
-        # Solo eventos de la fecha actual y con id_jugador válido
         id_jugador = str(evento.get("id_jugador"))
         if evento.get("fecha") == fecha_actual and id_jugador in titulares:
             puntaje = evento.get("puntaje_asociado", 0)
             puntos += puntaje
-            # Sumar el puntaje al jugador titular
             dic_titulares[id_jugador] += puntaje
     return puntos, dic_titulares
 
@@ -97,9 +95,7 @@ def actualizar_puntos_usuarios(usuarios_core, eventos, fecha_actual):
         dict: diccionario actualizado con la información de cada usuario
     """
     for nombre, usuario in usuarios_core.items():
-        # Lista de IDs de los jugadores titulares
         titulares = list(usuario["titulares"].keys())
-        # Diccionario con los jugadores titulares y sus puntos
         dic_titulares = usuario["titulares"]
         puntos, dic_titulares = calcular_puntos_usuario(
             titulares, dic_titulares, eventos, fecha_actual)

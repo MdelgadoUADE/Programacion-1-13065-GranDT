@@ -5,7 +5,7 @@ from impresionJugadores import *
 
 def filtrar_por(filtro, valor_pasado):
 
-    if filtro == "costo": # Validacion a parte por costo para convertir datos a int y poder filtrar entre rangos de valores
+    if filtro == "costo": 
         costos = valor_pasado.split()
         costos = [int(valor) for valor in costos]
         if len(costos) > 1:
@@ -106,7 +106,7 @@ def eliminar_jugadores(usuario, jugadores_a_eliminar):
         if len(jugadores_a_eliminar) <= 0:
             print("No hay jugadores para eliminar")
             return
-        if type(usuario) == dict and type(jugadores_a_eliminar) == set: # Verifica que el usuario sea un diccionario y los jugadores a eliminar sean un set
+        if type(usuario) == dict and type(jugadores_a_eliminar) == set:
             for int_jugador in jugadores_a_eliminar:
                 jugador = str(int_jugador)
                 if jugador in usuario["titulares"]:
@@ -231,7 +231,7 @@ def limpiar_comandos_duplicados(comandos):
         if comando[0] not in comandos_encontrados:
             comandos_encontrados.append(comando[0])
         else:
-            del(comandos[comandos.index(comando)]) # eliminamos el comando duplicado
+            del(comandos[comandos.index(comando)])
     comandos = reordenar_comandos(comandos)
     return comandos
 
@@ -243,7 +243,7 @@ def reordenar_comandos(comandos):
     Args:
         comandos (list): lista de comandos
     """
-    #1. si el primer comando es "-v" se mueve al final
+
     if "-v" in comandos[0][0] or "-a" in comandos[0][0] or "-r" in comandos[0][0]:
        comandos.append(comandos.pop(0))
     return comandos
@@ -307,7 +307,7 @@ def iniciar_busqueda(usuario):
         usuario (dict): Diccionario con la informacion del usuario
     """
     print("Consola de busqueda\n\ningresar '-h' para ayuda\n")
-    print("Comandos basicos:\n-a  (Añadir jugadores)\t-r  (Remover jugadores)\n-n  (Nombre de jugador [valor])\t-A  (Apellido de jugador [valor])\n-c  (Costo de jugador [valor])\t")
+    print("Comandos basicos:\n-a  (Añadir jugadores)\t-r  (Remover jugadores)\n-n  (Nombre de jugador [valor])\t-A  (Apellido de jugador [valor])\n-c  (Costo de jugador [valor])\t ")
     listado_jugadores = set()
     while True:
         valor_buscado = input("> ")

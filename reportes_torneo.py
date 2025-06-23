@@ -37,9 +37,7 @@ def buscar_maximo_asistidor(stats):
 
     Returns:
         dict: Un diccionario con los datos del jugador que tiene el máximo valor en
-        asistencias. Incluye el nombre, apellido y el valor del evento. Si no se
-        encuentra ningún jugador, retorna un diccionario con valores vacíos y el
-        valor del evento como 0.
+        asistencias. 
     """
     posicion = "mediocampista"
     evento = "asis"
@@ -56,9 +54,7 @@ def buscar_maximo_tarjetas_amarillas(stats):
 
     Returns:
         dict: Un diccionario con los datos del jugador que tiene el máximo valor en
-        tarjetas amarillas. Incluye el nombre, apellido y el valor del evento. Si no se
-        encuentra ningún jugador, retorna un diccionario con valores vacíos y el
-        valor del evento como 0.
+        tarjetas amarillas.
     """
 
     posicion = "defensor"
@@ -76,9 +72,7 @@ def buscar_maximo_tarjetas_rojas(stats):
 
     Returns:
         dict: Un diccionario con los datos del jugador que tiene el máximo valor en
-        tarjetas rojas. Incluye el nombre, apellido y el valor del evento. Si no se
-        encuentra ningún jugador, retorna un diccionario con valores vacíos y el
-        valor del evento como 0.
+        tarjetas rojas.
     """
     posicion = "defensor"
     evento = "rojas"
@@ -99,29 +93,28 @@ def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data
             Path archivo JSON de usuarios.
 
     """
-    # 1. Cargar los titulares de todos los usuarios (solo los IDs)
+
     with open(usuarios_path, "r", encoding="utf-8") as f:
         usuarios = json.load(f)
     titulares_ids = set()
     for usuario in usuarios.values():
         titulares_ids.update(str(jid) for jid in usuario["titulares"].keys())
 
-    # 2. Acumuladores por jugador
-    stats = {}  # id_jugador: {"nombre":..., "apellido":..., "posicion":..., "goles":0, "asis":0, "amarillas":0, "rojas":0}
+   
+    stats = {} 
 
-    # 3. Leer eventos.txt línea por línea (asumiendo formato JSON por línea o lista de dicts)
+    
     with open(eventos_path, "r", encoding="utf-8") as f:
         try:
             eventos = json.load(f)
         except Exception:
-            # Si no es un JSON válido, Error
             print("Error: eventos.txt no es un formato JSON válido.")
             return
 
         for evento in eventos:
             id_jugador = str(evento.get("id_jugador"))
             if id_jugador not in titulares_ids:
-                continue  # Solo titulares de usuarios
+                continue  
 
             nombre = evento.get("nombre", "")
             apellido = evento.get("apellido", "")
@@ -146,26 +139,25 @@ def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data
             if tipo == "Tarjeta Roja" and posicion == "defensor":
                 stats[id_jugador]["rojas"] += 1
 
-    # 4. Usar reduce para encontrar los máximos
-    # Máximo goleador (delantero)
+
+    # Máximo goleador
     max_goleador = reduce(
         lambda a, b: a if a["goles"] >= b["goles"] else b,
         (data for data in stats.values() if data["posicion"] == "delantero"),
         {"nombre": "", "apellido": "", "goles": -1}
     )
-    # 5. Busca el jugador que mas asistencias hizo
-    # Máximo asistidor (mediocampista)
+
+    # Máximo asistidor
     max_asistidor = buscar_maximo_asistidor(stats)
 
-    # 5. Busca el jugador que mas tarjetas amarillas tiene
-    # Más amarillas (defensor)
+    # Más amarillas
     max_amarillas = buscar_maximo_tarjetas_amarillas(stats)
 
-    # 6. Busca el jugador que mas tarjetas rojas tiene
-    # Mas rojas (defensor)
+    # Mas rojas 
     max_rojas = buscar_maximo_tarjetas_rojas(stats)
 
-    print("\n=== 📊 Estadísticas individuales (Equipos Fantasia) ===\n".center(160))
+    print(f"=== 📊 Estadísticas individuales (Equipos Fantasia) ===".center(160))
+    print()
     print(
         f"🎯 Rompe redes: {max_goleador['nombre']} {max_goleador['apellido']} con {max_goleador['goles']} goles".center(160))
     print(
