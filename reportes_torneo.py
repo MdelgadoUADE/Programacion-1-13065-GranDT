@@ -165,15 +165,15 @@ def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data
     # Mas rojas (defensor)
     max_rojas = buscar_maximo_tarjetas_rojas(stats)
 
-    print("\n--- Estadísticas individuales (solo titulares de usuarios) ---")
+    print("\n--- 📊 Estadísticas individuales (solo titulares de usuarios) ---\n".center(10))
     print(
-        f"Rompe redes (Maximo Goleador): {max_goleador['nombre']} {max_goleador['apellido']} con {max_goleador['goles']} goles")
+        f"Rompe redes (Maximo Goleador): {max_goleador['nombre']} {max_goleador['apellido']} con {max_goleador['goles']} goles".center(160))
     print(
-        f"El Mago (Maximo Asistidor): {max_asistidor['nombre']} {max_asistidor['apellido']} con {max_asistidor['asis']} asistencias")
+        f"El Mago (Maximo Asistidor): {max_asistidor['nombre']} {max_asistidor['apellido']} con {max_asistidor['asis']} asistencias".center(160))
     print(
-        f"El Tosco (Mas tarjetas amarillas): {max_amarillas['nombre']} {max_amarillas['apellido']} con {max_amarillas['amarillas']} amarillas")
+        f"El Tosco (Mas tarjetas amarillas): {max_amarillas['nombre']} {max_amarillas['apellido']} con {max_amarillas['amarillas']} amarillas".center(160))
     if max_rojas['rojas'] == 0:
-        print("No hubo tarjetas rojas entre los defensores titulares de los usuarios.")
+        print("No hubo tarjetas rojas entre los defensores titulares de los usuarios.".center(160))
     else:
         print(
-            f"El mas Bostero (Mas tarjetas Rojas): {max_rojas['nombre']} {max_rojas['apellido']} con {max_rojas['rojas']} rojas")
+            f"El mas Bostero (Mas tarjetas Rojas): {max_rojas['nombre']} {max_rojas['apellido']} con {max_rojas['rojas']} rojas".center(160))
