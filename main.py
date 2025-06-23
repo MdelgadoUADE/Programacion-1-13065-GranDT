@@ -35,7 +35,6 @@ finally:
     except NameError:
         pass
 
-
 # DEFINICIONES
 
 id_eventos = {
