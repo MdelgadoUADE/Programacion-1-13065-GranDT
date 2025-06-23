@@ -68,12 +68,16 @@ def restaurar_juego():
         with open("data/usuarios.json", "w") as contenido:
             json.dump(restaurar_usuarios, contenido, indent=4)
 
-        archivo_eventos = open("data/eventos.txt","r",encoding="utf8")
-        with open("exports/eventos_temporada_anterior.txt", "w") as contenido:
-            for linea in archivo_eventos:
-                contenido.write(linea)
-        archivo_eventos.close()
-        os.remove("data/eventos.txt")
+        try:
+            archivo_eventos = open("data/eventos.txt","r",encoding="utf8")
+        except FileNotFoundError:
+            pass
+        else:
+            with open("exports/eventos_temporada_anterior.txt", "w") as contenido:
+                for linea in archivo_eventos:
+                    contenido.write(linea)
+            archivo_eventos.close()
+            os.remove("data/eventos.txt")
         
 
     except FileNotFoundError as e:

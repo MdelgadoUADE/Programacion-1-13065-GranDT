@@ -56,10 +56,10 @@ id_eventos = {
 def print_menu_usuarios():
     print("""
   ____                        ____ _____ 
- / ___| _   _ _ __   ___ _ __|  _ \_   _|
- \___ \| | | | '_ \ / _ \ '__| | | || |  
+ / ___| _   _ _ __   ___ _ __|  _ \\_   _|
+ \\___ \\| | | | '_ \\ / _ \\ '__| | | || |  
   ___) | |_| | |_) |  __/ |  | |_| || |  
- |____/ \__,_| .__/ \___|_|  |____/ |_|  
+ |____/ \\__,_| .__/ \\___|_|  |____/ |_|  
              |_|                         
 """)
     print("---------------\nMENU USUARIOS\n---------------")
@@ -237,6 +237,8 @@ def logica_menu_usuarios(dic_usuarios):
         elif seleccion == "d":
             if confirmar_seleccion("Esta seguro de restaurar el juego? (esta accion no tiene marcha atras)"):
                 restaurar_juego()
+                print("Juego restaurado con exito, debe reiniciar el programa para aplicar los cambios")
+                input("Presione enter para continuar")
         elif seleccion == "e":
             guardar_configuraciones(configuraciones)
             return  # aca deberia cortar ejecucion
@@ -263,9 +265,11 @@ def logica_menu_torneo(usuario, fixture, matriz_posiciones):
                 configuraciones["flag_comienzo_torneo"] = True
             else:
                 print("¡El torneo ha terminado!")
+                input("Presione enter para continuar")
                 reporte_final_usuarios()
+                input("Presione enter para continuar")
                 reporte_maximos_eventos()
-                if confirmar_seleccion("Desea volver al menu principal?"):
+                if confirmar_seleccion("\nDesea volver al menu principal?"):
                     return
         elif seleccion == "b":
             ver_fixture(fixture, usuario)
