@@ -166,7 +166,7 @@ def seleccionar_usuario():
                 print("No se pudo encontrar el usuario")
                 if not confirmar_seleccion("Desea seguir intentando?"):
                     return
-            
+
     except UserWarning:
         print("No hay usuarios registrados!\nPor favor cree uno\n")
         input("Presione enter para continuar")
@@ -176,8 +176,8 @@ def remover_usuario():
     while True:
         usuarios = abrir_archivo_json("data/usuarios.json", "r")
         contador_letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
-                               "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-        
+                           "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
         print("\nPor favor indique que usuario desea eliminar:")
         i = 0
         for usuario in usuarios:
@@ -186,21 +186,24 @@ def remover_usuario():
         print(f"{contador_letras[i].upper()} - Salir")
 
         usuario_seleccionado = input("> ")
-            
+
         try:
             if usuario_seleccionado.lower() == "salir":
                 return
             if usuario_seleccionado in contador_letras:
-                usuario_seleccionado = contador_letras.index(usuario_seleccionado)
-                usuario_seleccionado = list(usuarios.keys())[usuario_seleccionado]
-            del(usuarios[usuario_seleccionado])
+                usuario_seleccionado = contador_letras.index(
+                    usuario_seleccionado)
+                usuario_seleccionado = list(usuarios.keys())[
+                    usuario_seleccionado]
+            del (usuarios[usuario_seleccionado])
 
         except KeyError:
             print("No se pudo encontrar el usuario")
             if not confirmar_seleccion("Desea seguir intentando?"):
                 return
         except IndexError:
-            if usuario_seleccionado - len(usuarios) <= 0: #como el usuario no puede ingresar una letra fuera de rango de la lista puedo usar el <
+            # como el usuario no puede ingresar una letra fuera de rango de la lista puedo usar el <
+            if usuario_seleccionado - len(usuarios) <= 0:
                 return
             print("No se pudo encontrar el usuario")
             if not confirmar_seleccion("Desea seguir intentando?"):
@@ -211,8 +214,10 @@ def remover_usuario():
             print(f"Usuario {usuario_seleccionado} eliminado con exito")
             input("Presione enter para continuar")
 
+
 def logica_menu_usuarios(dic_usuarios):
-    flag_comienzo_torneo = str_bool_literal(configuraciones["flag_comienzo_torneo"])
+    flag_comienzo_torneo = str_bool_literal(
+        configuraciones["flag_comienzo_torneo"])
     flag_restauracion = False
 
     while True:
@@ -228,7 +233,8 @@ def logica_menu_usuarios(dic_usuarios):
                     dic_usuarios.update(registrar_usuario())
                     json.dump(dic_usuarios, contenido, indent=4)
             else:
-                print("El torneo ya ha comenzado, no sera posible registrar un nuevo usuario")
+                print(
+                    "El torneo ya ha comenzado, no sera posible registrar un nuevo usuario")
                 input("Presione enter para continuar")
         elif seleccion == "c":
             remover_usuario()
@@ -236,7 +242,8 @@ def logica_menu_usuarios(dic_usuarios):
             if confirmar_seleccion("Esta seguro de restaurar el juego? (esta accion no tiene marcha atras)"):
                 restaurar_juego()
                 flag_restauracion = True
-                print("Juego restaurado con exito, debe reiniciar el programa para aplicar los cambios")
+                print(
+                    "Juego restaurado con exito, debe reiniciar el programa para aplicar los cambios")
                 input("Presione enter para continuar")
         elif seleccion == "e":
             if not flag_restauracion:
@@ -260,7 +267,8 @@ def logica_menu_torneo(usuario, fixture, matriz_posiciones):
         seleccion = input("> ").lower()
         if seleccion == "a":
             if not fin_torneo:
-                matriz_posiciones = simular_fecha(fecha_actual, fixture, matriz_posiciones, usuario)
+                matriz_posiciones = simular_fecha(
+                    fecha_actual, fixture, matriz_posiciones, usuario)
                 fecha_actual += 1
                 configuraciones["flag_comienzo_torneo"] = True
             else:
@@ -290,7 +298,8 @@ def logica_menu_principal(usuario):
     """
     while True:
         fin_torneo = str_bool_literal(configuraciones["flag_end_state"])
-        inicio_torneo = str_bool_literal(configuraciones["flag_comienzo_torneo"])
+        inicio_torneo = str_bool_literal(
+            configuraciones["flag_comienzo_torneo"])
 
         print_menu_principal(usuario["nom_usuario"])
         seleccion = input("> ").lower()
@@ -298,9 +307,11 @@ def logica_menu_principal(usuario):
             if not fin_torneo and not inicio_torneo:
                 iniciar_busqueda(usuario)
             elif inicio_torneo:
-                print("El torneo ya ha comenzado, no sera posible acceder a la consola de equipo")
+                print(
+                    "El torneo ya ha comenzado, no sera posible acceder a la consola de equipo")
             else:
-                print("El torneo ha terminado, no sera posible acceder a la consola de equipo")
+                print(
+                    "El torneo ha terminado, no sera posible acceder a la consola de equipo")
         elif seleccion == "b":
             imprimir_equipo_platilla(usuario, BBDD_JUGADORES)
             input("Presione enter para continuar")
@@ -365,10 +376,9 @@ def ver_fixture(fixture):
 
 
 def simular_fecha(fecha_actual, fixture, matriz_posiciones, usuario):
-
     """
     Simula los eventos de una fecha de torneo, actualizando las posiciones y generando reportes.
-    
+
     Args:
         fecha_actual (int): Número de la fecha actual en el torneo.
         fixture (list): Lista de listas, cada una con los partidos programados para una fecha.
@@ -379,7 +389,7 @@ def simular_fecha(fecha_actual, fixture, matriz_posiciones, usuario):
         list: Matriz de posiciones actualizada tras la simulación de la fecha.
     """
 
-    print(f"\n=== FECHA {fecha_actual+1} ===")
+    print(f"\n=== 🗓️ FECHA {fecha_actual+1} ===")
 
     eventos = []
     titulares_local = []

@@ -59,7 +59,7 @@ def simular_resultado_partido(fixture):
     else:
         resultado_visitante = "empata"
 
-    resultados_partidos["local"] = (local, resultado_local) 
+    resultados_partidos["local"] = (local, resultado_local)
     resultados_partidos["visitante"] = (visitante, resultado_visitante)
 
     return resultados_partidos
@@ -290,11 +290,6 @@ def cargar_evento(listaEvento, nroFecha):
             "posicion": evento[4],
             "puntaje_asociado": evento[-1]
         })
-
-    '''
-    if nroFecha != 0:
-        data_path = f"data/eventos{nroFecha}.txt"
-    '''
 
     data = []
 

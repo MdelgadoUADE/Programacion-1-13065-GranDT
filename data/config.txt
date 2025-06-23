@@ -1,3 +1,5 @@
 flag_end_state: False
+
 flag_comienzo_torneo: False
+
 fecha_actual: 0

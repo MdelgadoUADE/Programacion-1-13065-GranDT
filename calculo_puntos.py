@@ -1,7 +1,8 @@
 import json
 from main import abrir_archivo_json
-def calcular_puntos_fecha(fecha_actual):
 
+
+def calcular_puntos_fecha(fecha_actual):
     """
     Actualiza los puntos de los usuarios en base a la fecha actual y los eventos ocurridos hasta la fecha.
 
@@ -11,13 +12,14 @@ def calcular_puntos_fecha(fecha_actual):
     Returns:
         None
     """
-    
+
     print()
-    print("----Puntaje de Usuarios----".center(160))
+    print("=== Puntaje de Usuarios ===".center(160))
 
     usuarios_core = abrir_archivo_json("data/usuarios.json", "r")
     eventos_json = formato_json("data/eventos.txt")
-    usuarios_core = actualizar_puntos_usuarios(usuarios_core, eventos_json, fecha_actual)
+    usuarios_core = actualizar_puntos_usuarios(
+        usuarios_core, eventos_json, fecha_actual)
     print()
 
     if usuarios_core:
@@ -25,6 +27,7 @@ def calcular_puntos_fecha(fecha_actual):
             json.dump(usuarios_core, f, indent=4)
     else:
         print("Error: USUARIOS está vacío, no se guardará el archivo.")
+
 
 def formato_json(path_eventos):
     """
@@ -38,7 +41,7 @@ def formato_json(path_eventos):
         dict: contenido del archivo json en formato diccionario
     """
     with open(path_eventos, "r", encoding="utf-8") as f:
-        eventos = json.loads(f.read().replace("'", '"')) 
+        eventos = json.loads(f.read().replace("'", '"'))
     return eventos
 
 
@@ -69,6 +72,7 @@ def calcular_puntos_usuario(titulares, dic_titulares, eventos, fecha_actual):
             dic_titulares[id_jugador] += puntaje
     return puntos, dic_titulares
 
+
 def imprimir_puntos_usuario(puntos, nombre):
     """
     Imprime en pantalla los puntos de un usuario en formato centrado
@@ -78,7 +82,6 @@ def imprimir_puntos_usuario(puntos, nombre):
         nombre (str): Nombre del usuario
     """
     print(f"Usuario: {nombre}, Puntos: {puntos}".center(160))
-
 
 
 def actualizar_puntos_usuarios(usuarios_core, eventos, fecha_actual):
@@ -94,9 +97,12 @@ def actualizar_puntos_usuarios(usuarios_core, eventos, fecha_actual):
         dict: diccionario actualizado con la información de cada usuario
     """
     for nombre, usuario in usuarios_core.items():
-        titulares = list(usuario["titulares"].keys()) # Lista de IDs de los jugadores titulares
-        dic_titulares = usuario["titulares"] # Diccionario con los jugadores titulares y sus puntos
-        puntos, dic_titulares = calcular_puntos_usuario(titulares, dic_titulares, eventos, fecha_actual)
+        # Lista de IDs de los jugadores titulares
+        titulares = list(usuario["titulares"].keys())
+        # Diccionario con los jugadores titulares y sus puntos
+        dic_titulares = usuario["titulares"]
+        puntos, dic_titulares = calcular_puntos_usuario(
+            titulares, dic_titulares, eventos, fecha_actual)
         usuario["puntos"] += puntos
         imprimir_puntos_usuario(usuario["puntos"], nombre)
     return usuarios_core
