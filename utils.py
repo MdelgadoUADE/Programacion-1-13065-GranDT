@@ -6,6 +6,23 @@ ACENTOS = {
     "á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u", "Á": "A", "É": "E", "Í": "I", "Ó": "O", "Ú": "U"}
 
 
+def revisar_ruta(ruta_archivo, crear_carpeta):
+    try:
+        if os.path.exists(ruta_archivo):
+            return True
+        else:
+            if crear_carpeta:
+                os.mkdir(ruta_archivo)
+                print(f"Directorio {ruta_archivo} no existia, creado")
+                return True
+            else:
+                return False
+    except Exception as e:
+        registrar_excepciones(e)
+
+    
+
+
 def normalizar_acentos(string):
     return ''.join([ACENTOS.get(c, c) for c in string])
 

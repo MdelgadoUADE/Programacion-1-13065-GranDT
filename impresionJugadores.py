@@ -1,4 +1,5 @@
 import os
+from utils import *
 from main import abrir_archivo_json
 
 def imprimir_equipo_platilla(usuario, BBDD_JUGADORES):
@@ -12,9 +13,14 @@ def imprimir_equipo_platilla(usuario, BBDD_JUGADORES):
     usuarios_act = abrir_archivo_json("data/usuarios.json", "r")
     html_render = formacion_html("html_y_css/formacion.html", usuario["nom_usuario"], usuarios_act, BBDD_JUGADORES)
 
-    with open("equipo/formacion.html", "w", encoding="utf-8") as f:
-        f.write(html_render)
-        print(f"La visualizacion del equipo esta lista. Se ha guardado en equipo/formacion.html")
+    try:
+        with open("equipo/formacion.html", "w", encoding="utf-8") as f:
+            f.write(html_render)
+            print(f"La visualizacion del equipo esta lista. Se ha guardado en equipo/formacion.html")
+    except FileNotFoundError as e:
+        print(f"Error al crear el archivo: {e}")
+    except Exception as e:
+        registrar_excepciones(e)
 
 def llenar_titulares(titulares, BBDD_JUGADORES, index=0):
 

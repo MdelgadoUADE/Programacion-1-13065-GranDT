@@ -43,6 +43,7 @@ def procesar_configuraciones(texto_configuraciones):
     return diccionario_configuraciones
 
 def guardar_configuraciones(configuraciones):
+
     try:
         archivo = open("data/config.txt","w",encoding="utf8")
         for configuracion in configuraciones:

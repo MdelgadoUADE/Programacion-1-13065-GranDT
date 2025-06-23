@@ -20,6 +20,7 @@ filtro_por_equipo = lambda valor: filtrar_por("id_equipo", valor)
 filtro_por_costo = lambda valor: filtrar_por("costo", valor)
 filtro_por_nombre = lambda valor: filtrar_por("nombre", valor)
 filtro_por_apellido = lambda valor: filtrar_por("apellido", valor)
+filtro_por_posicion = lambda valor: filtrar_por("posicion", valor)
 
 def añadir_jugadores(usuario, listado_jugadores):
     """Comando que añade jugadores en base a un usuario dado y un listado de jugadores a agregar
@@ -132,6 +133,7 @@ def eliminar_jugadores(usuario, jugadores_a_eliminar):
 
 LISTA_DE_COMANDOS = {
     "-e":filtro_por_equipo,
+    "-p":filtro_por_posicion,
     "-c":filtro_por_costo,
     "-n":filtro_por_nombre,
     "-A":filtro_por_apellido,
@@ -149,12 +151,20 @@ regex_comandos = re.compile("(--[A-Z]+|-[a-zA-Z]{0,4}|[a-zA-Z]+) *([a-zA-Z0-9]+ 
 regex_help = re.compile("^(-h|help) *(-[a-zA-Z])*")
 
 def ayuda(comando):
+    """Muestra la ayuda de los comandos disponibles en la consola de busqueda de jugadores
+
+    Args: comando (str): Comando que se desea obtener la ayuda"""
+    var_filtros = ["-e","-p","-c","-n","-A"]
+
     if comandos_compilados.match(comando):
         pass
     elif comando == "-h" or comando == "-help":
-        print("El comando ayuda permite ver las funciones de los comandos convocandola antes de ellos\npor ejemplo haciendo -h '--EQUIPO'\npodemos obtener la funcionalidad que cumple el comando '--EQUIPO'")    
+        print("El comando ayuda permite ver las funciones de los comandos convocandola antes de ellos\npor ejemplo haciendo -h -h\npodemos obtener la funcionalidad que cumple el comando 'help'")    
+    elif comando in var_filtros:
+        print(f"Este comando permite filtrar por una de las caracteristicas de los jugadores\npor ejemplo haciendo -e boca juniors\npodemos obtener los jugadores que pertenecen al equipo deseado, en este caso Boca Juniors\notros filtros similares son {', '.join(var_filtros)}")
+    
     elif comando == "":
-        print("Bienvenido al buscador de jugadores\npara buscar ayuda sobre alguna funcion puedes colocar -h despues de la misma\n\nej. --EQUIPO -h\n\npara ver todos los comandos puedes usar -h -h\n")
+        print("Bienvenido al buscador de jugadores\npara buscar ayuda sobre alguna funcion puedes colocar -h despues de la misma\n\nej. -h -h\n\npara ver todos los comandos puedes usar -h -h\n")
 
 def ver_jugadores(set_jugadores,opciones,usuario):
     """Segun un set de jugadores, realiza una revision de la base de datos y genera una salida por pantalla con diferente
@@ -307,7 +317,7 @@ def iniciar_busqueda(usuario):
         usuario (dict): Diccionario con la informacion del usuario
     """
     print("Consola de busqueda\n\ningresar '-h' para ayuda\n")
-    print("Comandos basicos:\n-a  (Añadir jugadores)\t-r  (Remover jugadores)\n-n  (Nombre de jugador [valor])\t-A  (Apellido de jugador [valor])\n-c  (Costo de jugador [valor])\t ")
+    print("Comandos basicos:\n-a  (Añadir jugadores)\t-r  (Remover jugadores)\n-n  (Nombre de jugador [valor])\t-A  (Apellido de jugador [valor])\n-c  (Costo de jugador [valor])\t-p (Posicion de jugador [valor])")
     listado_jugadores = set()
     while True:
         valor_buscado = input("> ")

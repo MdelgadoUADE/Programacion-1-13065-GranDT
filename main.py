@@ -35,7 +35,6 @@ finally:
     except NameError:
         pass
 
-
 # DEFINICIONES
 
 id_eventos = {
@@ -304,11 +303,8 @@ def logica_menu_principal(usuario):
         print_menu_principal(usuario["nom_usuario"])
         seleccion = input("> ").lower()
         if seleccion == "a" and not fin_torneo:
-            if not fin_torneo and not inicio_torneo:
+            if not fin_torneo:
                 iniciar_busqueda(usuario)
-            elif inicio_torneo:
-                print(
-                    "El torneo ya ha comenzado, no sera posible acceder a la consola de equipo")
             else:
                 print(
                     "El torneo ha terminado, no sera posible acceder a la consola de equipo")
