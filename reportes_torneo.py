@@ -172,5 +172,8 @@ def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data
         f"El Mago (Maximo Asistidor): {max_asistidor['nombre']} {max_asistidor['apellido']} con {max_asistidor['asis']} asistencias")
     print(
         f"El Tosco (Mas tarjetas amarillas): {max_amarillas['nombre']} {max_amarillas['apellido']} con {max_amarillas['amarillas']} amarillas")
-    print(
-        f"El mas Bostero (Mas tarjetas Rojas): {max_rojas['nombre']} {max_rojas['apellido']} con {max_rojas['rojas']} rojas")
+    if max_rojas['rojas'] == 0:
+        print("No hubo tarjetas rojas entre los defensores titulares de los usuarios.")
+    else:
+        print(
+            f"El mas Bostero (Mas tarjetas Rojas): {max_rojas['nombre']} {max_rojas['apellido']} con {max_rojas['rojas']} rojas")
