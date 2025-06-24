@@ -1,6 +1,6 @@
 import json
 from functools import reduce
-from utils import buscar_maximo_evento
+from utils import *
 
 
 def reporte_final_usuarios(path_usuarios="data/usuarios.json"):
@@ -13,11 +13,10 @@ def reporte_final_usuarios(path_usuarios="data/usuarios.json"):
             Path archivo JSON de usuarios.
 
     """
-    with open(path_usuarios, "r", encoding="utf-8") as f:
-        usuarios = json.load(f)
+    usuarios_final = abrir_archivo_json("data/usuarios.json", "r")
 
     # Ordenar usuarios por puntos (descendente)
-    ranking = sorted(usuarios.items(),
+    ranking = sorted(usuarios_final.items(),
                      key=lambda x: x[1]["puntos"], reverse=True)
     ganador, datos_ganador = ranking[0]
     print(
@@ -100,10 +99,8 @@ def reporte_maximos_eventos(eventos_path="data/eventos.txt", usuarios_path="data
     for usuario in usuarios.values():
         titulares_ids.update(str(jid) for jid in usuario["titulares"].keys())
 
-   
     stats = {} 
 
-    
     with open(eventos_path, "r", encoding="utf-8") as f:
         try:
             eventos = json.load(f)

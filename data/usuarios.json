@@ -7,9 +7,26 @@
             "mediocampista": 4,
             "delantero": 2
         },
-        "titulares": {},
-        "suplentes": {},
-        "nro_capitan": 0,
+        "titulares": {
+            "20": 0,
+            "2": 0,
+            "4": 0,
+            "8": 0,
+            "7": 0,
+            "24": 0,
+            "25": 0,
+            "40": 0,
+            "41": 0,
+            "231": 0,
+            "9": 0
+        },
+        "suplentes": {
+            "107": 0,
+            "1": 0,
+            "106": 0,
+            "37": 0
+        },
+        "nro_capitan": 231,
         "presupuesto": 42000000,
         "puntos": 0
     },
@@ -21,9 +38,88 @@
             "mediocampista": 4,
             "delantero": 2
         },
-        "titulares": {},
-        "suplentes": {},
+        "titulares": {
+            "177": 0,
+            "178": 0,
+            "179": 0,
+            "189": 0,
+            "190": 0,
+            "192": 0,
+            "193": 0,
+            "194": 0,
+            "202": 0,
+            "195": 0,
+            "196": 0
+        },
+        "suplentes": {
+            "107": 0,
+            "155": 0,
+            "106": 0,
+            "37": 0
+        },
         "nro_capitan": 0,
+        "presupuesto": 42000000,
+        "puntos": 0
+    },
+    "Matias": {
+        "nom_usuario": "Matias",
+        "formacion": {
+            "arquero": 1,
+            "defensor": 4,
+            "mediocampista": 4,
+            "delantero": 2
+        },
+        "titulares": {
+            "221": 0,
+            "222": 0,
+            "223": 0,
+            "224": 0,
+            "225": 0,
+            "226": 0,
+            "227": 0,
+            "228": 0,
+            "229": 0,
+            "230": 0,
+            "231": 0
+        },
+        "suplentes": {
+            "198": 0,
+            "155": 0,
+            "106": 0,
+            "37": 0
+        },
+        "nro_capitan": 227,
+        "presupuesto": 0,
+        "puntos": 0
+    },
+    "Seba": {
+        "nom_usuario": "Seba",
+        "formacion": {
+            "arquero": 1,
+            "defensor": 4,
+            "mediocampista": 4,
+            "delantero": 2
+        },
+        "titulares": {
+            "111": 0,
+            "2": 0,
+            "5": 0,
+            "49": 0,
+            "47": 0,
+            "8": 0,
+            "18": 0,
+            "50": 0,
+            "105": 0,
+            "10": 0,
+            "11": 0
+        },
+        "suplentes": {
+            "1": 0,
+            "139": 0,
+            "159": 0,
+            "174": 0
+        },
+        "nro_capitan": 10,
         "presupuesto": 42000000,
         "puntos": 0
     }

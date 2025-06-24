@@ -106,7 +106,7 @@ def actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo):
         
         if inicio_tabla == -1 or fin_tabla == -1:
             raise Exception("No se pudo encontrar la estructura de la tabla en el archivo HTML")
-        
+    
         nueva_tabla = ""
         for posicion, equipo in enumerate(matriz_posiciones, 1):
             nueva_tabla += f"<tr><td>{posicion}. {equipo[0]}</td><td>{equipo[1]}</td><td>{equipo[2]}</td><td>{equipo[3]}</td><td>{equipo[4]}</td></tr>"
