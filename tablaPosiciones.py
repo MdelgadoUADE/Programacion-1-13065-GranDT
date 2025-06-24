@@ -1,4 +1,5 @@
 import os
+from utils import *
 def crear_matriz_posiciones(equipos):
     
     """
@@ -114,9 +115,14 @@ def actualizar_tabla_posiciones_html(matriz_posiciones, nombre_archivo):
         # Reemplazar el contenido antiguo con el nuevo
         nuevo_contenido = contenido[:inicio_tabla] + nueva_tabla + contenido[fin_tabla:]
         
-        # Guardar el archivo actualizado
-        with open(ruta_archivo, "w", encoding="utf-8") as archivo:
-            archivo.write(nuevo_contenido)
+        # Guardar el archivo actualizado 
+        conseguir_directiorio = nombre_archivo.split('/')[0]
+        try:
+            revisar_ruta(conseguir_directiorio, True)
+            with open(ruta_archivo, "w", encoding="utf-8") as archivo:
+                archivo.write(nuevo_contenido)
+        except OSError:
+            print("Hubo un error, por favor intentelo de vuelta.")
             
         print()   
         print(f"Tabla actualizada en: {ruta_archivo}")
