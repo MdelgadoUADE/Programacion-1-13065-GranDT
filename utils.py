@@ -7,7 +7,17 @@ ACENTOS = {
 
 
 def revisar_ruta(ruta_archivo, crear_carpeta):
+    """Revisa una ruta de archivo y retorna True si existe, tambien permite crear la ruta en caso de que no exista.
+
+    Args:
+        ruta_archivo (str): Ruta de archivo a revisar.
+        crear_carpeta (bool): Indica si se debe crear la carpeta en caso de que no exista.
+
+    Returns:
+        bool: True si la ruta existe, False en caso contrario.
+    """
     try:
+        ruta_archivo = os.path.dirname(os.path.abspath(__file__)) + f"\\{ruta_archivo}"
         if os.path.exists(ruta_archivo):
             return True
         else:
@@ -17,11 +27,11 @@ def revisar_ruta(ruta_archivo, crear_carpeta):
                 return True
             else:
                 return False
+    except OSError as e:
+        print("Error de sistema!, verificar de no estar accediendo a archivos mientas se ejecuta el programa")        
+    
     except Exception as e:
         registrar_excepciones(e)
-
-    
-
 
 def normalizar_acentos(string):
     return ''.join([ACENTOS.get(c, c) for c in string])

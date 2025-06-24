@@ -59,6 +59,7 @@ def restaurar_juego():
     Incluye el archivo de configuraciones, del archivo de usuarios y el archivo de eventos
     """
     try:
+        revisar_ruta("data", True)
         with open("data/config.txt", "w") as contenido:
             contenido.write("\n".join(["flag_end_state: False\n","flag_comienzo_torneo: False\n","fecha_actual: 0\n"]))
         usuarios = abrir_archivo_json("data/usuarios.json", "r")
@@ -66,6 +67,7 @@ def restaurar_juego():
         for usuario in usuarios:
             restaurar_usuario = definicion_usuario(usuario)
             restaurar_usuarios.update(restaurar_usuario)
+        revisar_ruta("data/usuarios.json", True)
         with open("data/usuarios.json", "w") as contenido:
             json.dump(restaurar_usuarios, contenido, indent=4)
 
@@ -74,13 +76,14 @@ def restaurar_juego():
         except FileNotFoundError:
             pass
         else:
+            revisar_ruta("exports", True)
             with open("exports/eventos_temporada_anterior.txt", "w") as contenido:
                 for linea in archivo_eventos:
                     contenido.write(linea)
             archivo_eventos.close()
             os.remove("data/eventos.txt")
         
-
+    
     except FileNotFoundError as e:
         registrar_excepciones(e)
         print("No se pudo encontrar el archivo")
